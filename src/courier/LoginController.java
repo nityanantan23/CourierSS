@@ -10,7 +10,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,6 +42,7 @@ public class LoginController implements Initializable {
             while (((line != null) && (line1 != null))) {
                 String[] information = line.split(",");
                 String[] information1 = line1.split(",");
+                //hard coding the login
                 String username_admin = information[0];
                 String password1_admin = information[1];
                 String username_manager = information1[0];
