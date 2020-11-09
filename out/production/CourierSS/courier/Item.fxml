@@ -17,7 +17,7 @@
                 <Insets left="10.0" />
             </HBox.margin>
         </ImageView>
-        <Label prefHeight="18.0" prefWidth="51.0" text="KeepToo" textFill="#b7c3d7" />
+        <Label prefHeight="18.0" prefWidth="49.0" text="KeepToo" textFill="#b7c3d7" />
         <Label text="JFK" textFill="#b7c3d7">
             <HBox.margin>
                 <Insets />
