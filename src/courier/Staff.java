@@ -7,8 +7,13 @@ import java.io.PrintWriter;
 
 public abstract class Staff extends Person{
     //creating a staff
-    public Staff(Integer age, Integer phone, String name, String username, String password) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
+    private String password,username,credentialfilelocation;
+
+    public Staff(Integer age, String phone, String name, String username, String password,String credentialfilelocation) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
         super(age, phone, name);
+        this.credentialfilelocation=credentialfilelocation;
+        setCredential(this.credentialfilelocation,username,password);
+
     }
 
 
@@ -22,25 +27,21 @@ public abstract class Staff extends Person{
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(username+","+password);
-
+            pw.print("\n"+username+","+password);
+            this.password=password;
+            this.username=username;
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
             try {
-                fw.close();
-                bw.close();
                 pw.close();
+                bw.close();
+                fw.close();
+
             } catch (IOException e) { //instances where the i/o cannot be close
                 e.printStackTrace();
             }
 
         }
     }
-
-
-
-
-
-
 }

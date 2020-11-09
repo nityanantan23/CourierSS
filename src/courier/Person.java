@@ -2,11 +2,11 @@ package courier;
 
 public abstract class Person {
     private Integer age;
-    private Integer phone;
+    private String phone;
     private String name;
     private String spChr = "-/@#$%^&_+=()" ;
 
-    public Person(Integer age, Integer phone, String name) throws InvalidNameException, InvalidPhoneException,InvalidAgeException {
+    public Person(Integer age, String phone, String name) throws InvalidNameException, InvalidPhoneException,InvalidAgeException {
         setAge(age);
         setName(name);
         setPhone(phone);
@@ -30,8 +30,8 @@ public abstract class Person {
         }
     }
 
-    public void setPhone(Integer phone) throws InvalidPhoneException{
-        if(String.valueOf(age).length()> 9&&String.valueOf(age).length()< 11){
+    public void setPhone(String phone) throws InvalidPhoneException{
+        if(phone.length()>9&&phone.length()<12&&phone.matches("[0-9]+")){
             this.phone = phone;
         }else{
             throw new InvalidPhoneException(phone +" is not a valid phone number.A phone number can only have a minimum of 9 digits and maximum of 11 digits.");
@@ -47,7 +47,14 @@ public abstract class Person {
         return age;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
+
+    public static void main(String[] args) throws InvalidAgeException, InvalidPhoneException, InvalidNameException {
+        Admin a= new Admin(20,"0168865380","bla","asd","456","Admin_accounts.txt");
+
+    }
+
+
 }
