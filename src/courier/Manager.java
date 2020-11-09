@@ -1,8 +1,11 @@
 package courier;
 
+
 public class Manager extends Staff{
-    //manager class creation
-    public Manager(Integer age, Integer phone, String name) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
-        super(age, phone, name);
+    public Manager(Integer age, Integer phone, String name, String username, String password) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
+        super(age, phone, name, username, password);
     }
+
+    //manager class creation
+
 }
