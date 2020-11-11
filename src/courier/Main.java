@@ -9,6 +9,7 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
@@ -20,6 +21,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+//        launch(args);
+        StaffLogin LoginPage= new StaffLogin();
+
     }
 }

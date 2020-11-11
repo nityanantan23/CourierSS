@@ -1,8 +1,16 @@
 package courier;
+import java.util.ArrayList;
 
 public class Customer extends Person{
+
+
     //customer class creation
-    public Customer(Integer age, String phone, String name) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
-        super(age, phone, name);
+    public Customer(String name,Integer age, String phone ) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
+        super(name,age, phone);
+    }
+
+    @Override
+    public void readfile() {
+
     }
 }

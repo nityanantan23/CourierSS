@@ -30,10 +30,10 @@ public class LoginController implements Initializable {
 
     public void sign_in() {
         File tempFile = new File("tempAccounts.txt");
-        File orifile = new File("Admin_accounts.txt");
+        File orifile = new File("Admin_account.txt");
 
-        try (BufferedReader reader_admin = new BufferedReader(new FileReader("Admin_accounts.txt"));
-             BufferedReader reader_manager = new BufferedReader(new FileReader("Manager_accounts.txt"))) {
+        try (BufferedReader reader_admin = new BufferedReader(new FileReader("Admin_account.txt"));
+             BufferedReader reader_manager = new BufferedReader(new FileReader("Manager_account.txt"))) {
             String line = reader_admin.readLine();
             String line1 = reader_manager.readLine();
             String email = Email.getText();
