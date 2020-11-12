@@ -14,6 +14,15 @@ import javax.swing.border.*;
 public class ManagerHome {
     public ManagerHome() {
         initComponents();
+
+    }
+
+    public static JFrame getJfManager() {
+        return jfManager;
+    }
+
+    public static JLabel getLblManagerName() {
+        return lblManagerName;
     }
 
     private void initComponents() {
@@ -22,16 +31,16 @@ public class ManagerHome {
         jfManager = new JFrame();
         pnlManager = new JPanel();
         sPnlManager = new JPanel();
-        label1 = new JLabel();
-        label2 = new JLabel();
-        button1 = new JButton();
-        button2 = new JButton();
-        button3 = new JButton();
-        button4 = new JButton();
-        button5 = new JButton();
+        lblMHomeTitle = new JLabel();
+        lblManagerName = new JLabel();
+        btnOverview = new JButton();
+        btnOrder = new JButton();
+        btnRider = new JButton();
+        btnReport = new JButton();
+        btnFeedback = new JButton();
         btnLogout = new JButton();
         sclManager = new JScrollBar();
-        label3 = new JLabel();
+        lblTitle = new JLabel();
 
         //======== jfManager ========
         {
@@ -43,13 +52,13 @@ public class ManagerHome {
             //======== pnlManager ========
             {
                 pnlManager.setBackground(Color.white);
-                pnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
-                .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
-                .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
-                awt.Font.BOLD,12),java.awt.Color.red),pnlManager. getBorder()))
-                ;pnlManager. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
-                ;
+                pnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax .
+                swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border
+                . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog"
+                , java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,pnlManager. getBorder
+                () ) ); pnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java
+                . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException
+                ( ) ;} } );
                 pnlManager.setLayout(null);
 
                 //======== sPnlManager ========
@@ -57,49 +66,50 @@ public class ManagerHome {
                     sPnlManager.setBackground(new Color(0, 0, 51));
                     sPnlManager.setLayout(null);
 
-                    //---- label1 ----
-                    label1.setText("Manager Portal");
-                    label1.setFont(new Font("Myanmar Text", Font.BOLD, 26));
-                    label1.setForeground(Color.white);
-                    sPnlManager.add(label1);
-                    label1.setBounds(20, 15, 195, 50);
+                    //---- lblMHomeTitle ----
+                    lblMHomeTitle.setText("Manager Portal");
+                    lblMHomeTitle.setFont(new Font("Myanmar Text", Font.BOLD, 27));
+                    lblMHomeTitle.setForeground(Color.white);
+                    sPnlManager.add(lblMHomeTitle);
+                    lblMHomeTitle.setBounds(20, 15, 210, 50);
 
-                    //---- label2 ----
-                    label2.setText("Loges");
-                    label2.setFont(new Font("Myanmar Text", Font.BOLD, 26));
-                    label2.setForeground(Color.white);
-                    sPnlManager.add(label2);
-                    label2.setBounds(85, 100, 80, 35);
+                    //---- lblManagerName ----
+                    lblManagerName.setText("Loges");
+                    lblManagerName.setFont(new Font("Myanmar Text", Font.BOLD, 26));
+                    lblManagerName.setForeground(Color.white);
+                    lblManagerName.setHorizontalAlignment(SwingConstants.CENTER);
+                    sPnlManager.add(lblManagerName);
+                    lblManagerName.setBounds(25, 75, 200, 60);
 
-                    //---- button1 ----
-                    button1.setText("Order");
-                    button1.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                    sPnlManager.add(button1);
-                    button1.setBounds(45, 160, 145, 45);
+                    //---- btnOverview ----
+                    btnOverview.setText("Overview");
+                    btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                    sPnlManager.add(btnOverview);
+                    btnOverview.setBounds(45, 160, 145, 45);
 
-                    //---- button2 ----
-                    button2.setText("text");
-                    button2.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                    sPnlManager.add(button2);
-                    button2.setBounds(45, 230, 145, 45);
+                    //---- btnOrder ----
+                    btnOrder.setText("Order");
+                    btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                    sPnlManager.add(btnOrder);
+                    btnOrder.setBounds(45, 235, 145, 45);
 
-                    //---- button3 ----
-                    button3.setText("text");
-                    button3.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                    sPnlManager.add(button3);
-                    button3.setBounds(45, 300, 145, 45);
+                    //---- btnRider ----
+                    btnRider.setText("Rider");
+                    btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                    sPnlManager.add(btnRider);
+                    btnRider.setBounds(45, 300, 145, 45);
 
-                    //---- button4 ----
-                    button4.setText("text");
-                    button4.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                    sPnlManager.add(button4);
-                    button4.setBounds(45, 370, 145, 45);
+                    //---- btnReport ----
+                    btnReport.setText("Report");
+                    btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                    sPnlManager.add(btnReport);
+                    btnReport.setBounds(45, 370, 145, 45);
 
-                    //---- button5 ----
-                    button5.setText("text");
-                    button5.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                    sPnlManager.add(button5);
-                    button5.setBounds(45, 435, 145, 45);
+                    //---- btnFeedback ----
+                    btnFeedback.setText("Feedback");
+                    btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                    sPnlManager.add(btnFeedback);
+                    btnFeedback.setBounds(45, 435, 145, 45);
 
                     //---- btnLogout ----
                     btnLogout.setText("Logout");
@@ -127,13 +137,15 @@ public class ManagerHome {
                 pnlManager.add(sclManager);
                 sclManager.setBounds(1095, 0, 10, 605);
 
-                //---- label3 ----
-                label3.setText("Order");
-                label3.setFont(new Font("Myanmar Text", Font.BOLD, 46));
-                label3.setForeground(Color.black);
-                label3.setAlignmentY(0.0F);
-                pnlManager.add(label3);
-                label3.setBounds(300, 35, 155, 55);
+                //---- lblTitle ----
+                lblTitle.setText("Order");
+                lblTitle.setFont(new Font("Myanmar Text", Font.BOLD, 46));
+                lblTitle.setForeground(Color.black);
+                lblTitle.setAlignmentY(0.0F);
+                lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+                lblTitle.setIconTextGap(3);
+                pnlManager.add(lblTitle);
+                lblTitle.setBounds(300, 25, 155, 65);
 
                 {
                     // compute preferred size
@@ -175,18 +187,19 @@ public class ManagerHome {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JFrame jfManager;
-    private JPanel pnlManager;
-    private JPanel sPnlManager;
-    private JLabel label1;
-    private JLabel label2;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JButton button5;
-    private JButton btnLogout;
+    private static JFrame jfManager;
+    private static JPanel pnlManager;
+    private static JPanel sPnlManager;
+    private static JLabel lblMHomeTitle;
+    private static JLabel lblManagerName;
+    private static JButton btnOverview;
+    private static JButton btnOrder;
+    private static JButton btnRider;
+    private static JButton btnReport;
+    private static JButton btnFeedback;
+    private static JButton btnLogout;
     private JScrollBar sclManager;
-    private JLabel label3;
+    protected static JLabel lblTitle;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+    
 }

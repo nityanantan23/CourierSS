@@ -4,6 +4,8 @@
 
 package courier;
 
+import courier.manager.ManagerHome;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class StaffLogin {
                 pass1=true;
                 pass2=true;
                 JOptionPane.showMessageDialog(null,"Successfully login as Admin","Login Successfully",1);
+
             }
         }
         if (pass1!=true){
@@ -52,6 +55,9 @@ public class StaffLogin {
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Manager","Login Successfully",1);
+                    ManagerHome.getJfManager().setVisible(true);
+                    ManagerHome.getLblManagerName().setText(Manager.managerAl.get(i).name);
+                    jfLogin.setVisible(false);
                 }
             }
         }else if (pass2!=true){
@@ -65,18 +71,24 @@ public class StaffLogin {
         }
         if(pass1==false&&pass2==false){
             JOptionPane.showMessageDialog(null,"Invalid Login ID or password. Please try again!","Wrong Credential",2);
+            resetField();
         }
-//        txtUser.setText("");
-//        txtPw.setText("");
+
     }
+
+    private static void resetField(){
+        txtUser.setText("");
+        txtPw.setText("");
+        txtUser.grabFocus();
+    }
+
 
 
     private void txtUserKeyTyped(KeyEvent e) {
         if (txtUser.getText().length()>10){
             JOptionPane.showMessageDialog(null,"Username does not exceed 10 character.Please enter the correct username.","Invalid Username",2);
             e.consume();
-            txtUser.setText("");
-            txtPw.setText("");
+            resetField();
         }
     }
 
@@ -84,8 +96,7 @@ public class StaffLogin {
         if (txtPw.getText().length()>16){
             JOptionPane.showMessageDialog(null,"Password does not exceed 16 character.Please enter the correct password.","Invalid Password",2);
             e.consume();
-            txtUser.setText("");
-            txtPw.setText("");
+            resetField();
         }
     }
 
@@ -93,8 +104,7 @@ public class StaffLogin {
         if (e.getKeyCode()==32){
             JOptionPane.showMessageDialog(null,"User should not contain space or tab.Please enter the correct username.","Invalid Username",2);
             e.consume();
-            txtUser.setText("");
-            txtPw.setText("");
+            resetField();
         }else if (e.getKeyCode()==9){
             txtUser.transferFocus();
             e.consume();
@@ -107,8 +117,7 @@ public class StaffLogin {
             String id= txtUser.getText();
             String pw= String.valueOf(txtPw.getPassword());
             credentialChecker(id,pw);
-            txtUser.setText("");
-            txtPw.setText("");
+            resetField();
         }
 
     }
@@ -140,13 +149,13 @@ public class StaffLogin {
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax
-                .swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing
-                .border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.
-                Font("D\u0069alog",java.awt.Font.BOLD,12),java.awt.Color.red
-                ),panel1. getBorder()));panel1. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override
-                public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".equals(e.getPropertyName(
-                )))throw new RuntimeException();}});
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
+                javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax
+                . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
+                .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
+                . Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (new java. beans.
+                PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .
+                equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 panel1.setLayout(null);
 
                 //---- lblLoginTitle ----
@@ -255,15 +264,15 @@ public class StaffLogin {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JFrame jfLogin;
-    private JPanel panel1;
-    private JLabel lblLoginTitle;
-    private JLabel lblUsername;
-    private JLabel lblPassword;
-    private JTextArea txtUser;
-    private JPasswordField txtPw;
-    private JButton btnLogin;
-    private JLabel lblPic;
-    private JLabel lblPic2;
+    private static JFrame jfLogin;
+    private static JPanel panel1;
+    private static JLabel lblLoginTitle;
+    private static JLabel lblUsername;
+    private static JLabel lblPassword;
+    private static JTextArea txtUser;
+    private static JPasswordField txtPw;
+    private static JButton btnLogin;
+    private static JLabel lblPic;
+    private static JLabel lblPic2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
