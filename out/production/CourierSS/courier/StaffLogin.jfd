@@ -1,0 +1,156 @@
+JFDML JFormDesigner: "7.0.2.6.321" Java: "11.0.8" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "jfLogin"
+			"background": new java.awt.Color( 198, 206, 211, 255 )
+			"title": "Staff Login"
+			"defaultCloseOperation": 3
+			"focusTraversalPolicyProvider": true
+			auxiliary() {
+				"JavaCodeGenerator.variableModifiers": 10
+				"JavaCodeGenerator.variableGetter": true
+			}
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+				"autoSize": false
+			} ) {
+				name: "panel1"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				auxiliary() {
+					"JavaCodeGenerator.variableModifiers": 10
+				}
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblLoginTitle"
+					"text": "Staff Login"
+					"font": new java.awt.Font( "Montserrat Light", 1, 69 )
+					"foreground": new java.awt.Color( 51, 51, 51, 255 )
+					"background": new java.awt.Color( 0, 0, 0, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 195
+					"y": 30
+					"width": 475
+					"height": 125
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblUsername"
+					"text": "Username"
+					"font": &Font0 new java.awt.Font( "Montserrat Light", 0, 38 )
+					"foreground": &Color0 new java.awt.Color( 102, 102, 102, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 105
+					"y": 200
+					"width": 245
+					"height": 60
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblPassword"
+					"text": "Password"
+					"font": #Font0
+					"foreground": #Color0
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 245
+					"height": 60
+					"x": 105
+					"y": 300
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "txtUser"
+					"background": new java.awt.Color( 239, 234, 234, 255 )
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 3, true )
+					"font": new java.awt.Font( "Montserrat Light", 0, 31 )
+					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					"toolTipText": "Username"
+					"margin": new java.awt.Insets( 1, 1, 1, 1 )
+					"cursor": new java.awt.Cursor( 2 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtUserKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtUserKeyPressed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 430
+					"y": 210
+					"width": 285
+					"height": 50
+				} )
+				add( new FormComponent( "javax.swing.JPasswordField" ) {
+					name: "txtPw"
+					"background": new java.awt.Color( 221, 226, 227, 255 )
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 3, true )
+					"font": new java.awt.Font( "Montserrat Light", 0, 31 )
+					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					"toolTipText": "Password"
+					"margin": new java.awt.Insets( 10, 10, 10, 10 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtPwKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtPwKeyPressed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 430
+					"y": 310
+					"width": 290
+					"height": 50
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnLogin"
+					"text": "Sign In"
+					"font": new java.awt.Font( "Montserrat Light", 1, 30 )
+					"foreground": sfield java.awt.Color black
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLoginActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 325
+					"y": 415
+					"width": 235
+					"height": 65
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblPic"
+					"icon": new com.jformdesigner.model.SwingIcon( 1, "D:\\OneDrive - Asia Pacific University\\Bachelor\\OODJ\\Lab\\CourierSS\\Pic\\bg-01.png" )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 570
+					"y": 365
+					"width": 355
+					"height": 270
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblPic2"
+					"icon": new com.jformdesigner.model.SwingIcon( 1, "D:\\OneDrive - Asia Pacific University\\Bachelor\\OODJ\\Lab\\CourierSS\\Pic\\logo-01.png" )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 150
+					"height": 155
+					"x": 10
+					"y": 10
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"height": 625
+				"width": 920
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 195, 25 )
+			"size": new java.awt.Dimension( 920, 655 )
+		} )
+	}
+}
