@@ -8,12 +8,11 @@ import java.util.Scanner;
 
 public class NonPickupOrder extends Order implements PriceCal {
     public static ArrayList<NonPickupOrder> nonPickupOrdersAl= new ArrayList<>();
-
     public NonPickupOrder(){};
 
 
-    public NonPickupOrder(String orderID, String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice, ArrayList<courier.orderPackage> orderPackage, String street, String city, String state, Integer postcode) {
-        super(orderID, customerID, orderDate, riderID, expectedDelivery, orderPrice, orderPackage, street, city, state, postcode);
+    public NonPickupOrder(String orderID, String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice, ArrayList<courier.orderPackage> orderPackage, String street, String city, String state, Integer postcode,String status) {
+        super(orderID, customerID, orderDate, riderID, expectedDelivery, orderPrice, orderPackage, street, city, state, postcode,status);
     }
 
     //getter and setter
@@ -51,6 +50,7 @@ public class NonPickupOrder extends Order implements PriceCal {
                 setCity(scanner.nextLine());
                 setState(scanner.nextLine());
                 setPostcode(Integer.parseInt(scanner.nextLine()));
+                setDeliveryStatus(scanner.nextLine());
                 while ( scanner.hasNext()&&!(line=scanner.nextLine()).isEmpty()){
                     //build a arraylist searcher for package
                     for (int i =0;i< courier.orderPackage.getOrderPackagesAl().size();i++){
@@ -61,7 +61,7 @@ public class NonPickupOrder extends Order implements PriceCal {
                     }
                 }
                 setOrderPackage(orderPackageArrayList);
-                NonPickupOrder np= new NonPickupOrder(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),getOrderPrice(),getOrderPackage(),getStreet(),getCity(),getState(),getPostcode());
+                NonPickupOrder np= new NonPickupOrder(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),getOrderPrice(),getOrderPackage(),getStreet(),getCity(),getState(),getPostcode(),getDeliveryStatus());
                 nonPickupOrdersAl.add(np);
                 if (scanner.hasNext()){
                     scanner.nextLine();

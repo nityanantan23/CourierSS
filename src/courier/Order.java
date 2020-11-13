@@ -12,11 +12,12 @@ public abstract class Order {
     private ArrayList<courier.orderPackage> orderPackage= new ArrayList<>();
     private String street,city,state;
     private Integer postcode;
+    private String deliveryStatus;
 
     public Order(){};
 
     public Order(String orderID,String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice,
-                 ArrayList<courier.orderPackage> orderPackage,String street,String city,String state,Integer postcode){
+                 ArrayList<courier.orderPackage> orderPackage,String street,String city,String state,Integer postcode, String deliveryStatus){
         //place all setter method here
         setOrderID(orderID);
         setCustomerID(customerID);
@@ -29,6 +30,7 @@ public abstract class Order {
         setState(state);
         setStreet(street);
         setPostcode(postcode);
+        setDeliveryStatus(deliveryStatus);
 
     }
 
@@ -51,6 +53,7 @@ public abstract class Order {
     public void setCity(String city) {this.city = city;}
     public void setState(String state) {this.state = state;}
     public void setPostcode(Integer postcode) {this.postcode = postcode;}
+    public void setDeliveryStatus(String deliveryStatus){this.deliveryStatus=deliveryStatus;}
 
     //getter
     public ArrayList getOrderPackage() {return orderPackage;}
@@ -64,6 +67,7 @@ public abstract class Order {
     public String getState() {return state;}
     public String getCity() {return city;}
     public Integer getPostcode() { return postcode; }
+    public String getDeliveryStatus(){return deliveryStatus;}
 
 //##############################################################
     //Getter and Setters

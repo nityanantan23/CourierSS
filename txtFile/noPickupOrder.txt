@@ -12,5 +12,6 @@ No 2, Jalan Teknologi 5, Taman Teknologi Malaysia
 Kuala Lumpur
 KUL
 57000
+Delivered
 P001
 P002
