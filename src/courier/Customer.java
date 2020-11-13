@@ -5,8 +5,8 @@ public class Customer extends Person{
 
 
     //customer class creation
-    public Customer(String name,Integer age, String phone ) throws InvalidNameException, InvalidPhoneException, InvalidAgeException {
-        super(name,age, phone);
+    public Customer(String id,String name,Integer age, String phone ){
+        super(id,name,age, phone);
     }
 
     @Override

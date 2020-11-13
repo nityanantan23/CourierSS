@@ -7,6 +7,7 @@ new FormModel {
 			name: "jfManager"
 			"background": new java.awt.Color( 204, 204, 204, 255 )
 			"title": "Manager Portal"
+			"defaultCloseOperation": 3
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 10
 				"JavaCodeGenerator.variableGetter": true

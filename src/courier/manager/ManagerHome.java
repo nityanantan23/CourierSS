@@ -46,19 +46,20 @@ public class ManagerHome {
         {
             jfManager.setBackground(new Color(204, 204, 204));
             jfManager.setTitle("Manager Portal");
+            jfManager.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             var jfManagerContentPane = jfManager.getContentPane();
             jfManagerContentPane.setLayout(null);
 
             //======== pnlManager ========
             {
                 pnlManager.setBackground(Color.white);
-                pnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax .
-                swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border
-                . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog"
-                , java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,pnlManager. getBorder
-                () ) ); pnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java
-                . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException
-                ( ) ;} } );
+                pnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
+                . border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax. swing. border. TitledBorder
+                . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .
+                awt .Font .BOLD ,12 ), java. awt. Color. red) ,pnlManager. getBorder( )) )
+                ; pnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("bord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
+                ;
                 pnlManager.setLayout(null);
 
                 //======== sPnlManager ========

@@ -1,7 +1,12 @@
 package courier;
 
+import courier.manager.ManagerHome;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
+
+import static courier.StaffLogin.resetField;
 
 public abstract class Staff extends Person{
     //creating a staff
@@ -10,11 +15,10 @@ public abstract class Staff extends Person{
 
     public Staff(){
         super();
-
     }
 
-    public Staff( String name,Integer age, String phone,String username, String password) {
-        super(name,age, phone);
+    public Staff(String id ,String name,Integer age, String phone,String username, String password) {
+        super(id,name,age, phone);
         setUsername(username);
         setPassword(password);
     }
@@ -53,9 +57,52 @@ public abstract class Staff extends Person{
             setPhone(s.nextLine());
             setUsername(s.nextLine());
             setPassword(s.nextLine());
+            if(s.nextLine().isEmpty()){
+
+            }
             if (s.hasNext()) {
                 s.nextLine();
             }
+    }
+    public static void credentialChecker(String  id, String pw){
+        boolean pass1 = false,pass2= false;
+        //check for admin first
+        for (int i=0;i<Admin.adminAl.size();i++){
+
+            if(Admin.adminAl.get(i).username.equals(id)&&Admin.adminAl.get(i).password.equals(pw)){
+                System.out.println(Admin.adminAl.get(i).username);
+                System.out.println(Admin.adminAl.get(i).password);
+                pass1=true;
+                pass2=true;
+                JOptionPane.showMessageDialog(null,"Successfully login as Admin","Login Successfully",1);
+
+            }
+        }
+        if (pass1!=true){
+            for (int i=0;i<Manager.managerAl.size();i++){
+                if(Manager.managerAl.get(i).username.equals(id)&&Manager.managerAl.get(i).password.equals(pw)){
+                    pass1=true;
+                    pass2=true;
+                    JOptionPane.showMessageDialog(null,"Successfully login as Manager","Login Successfully",1);
+                    ManagerHome.getJfManager().setVisible(true);
+                    ManagerHome.getLblManagerName().setText(Manager.managerAl.get(i).name);
+                    StaffLogin.getJfLogin().setVisible(false);
+                }
+            }
+        }else if (pass2!=true){
+            for (int i=0;i<Rider.riderAl.size();i++){
+                if(Rider.riderAl.get(i).username.equals(id)&&Rider.riderAl.get(i).password.equals(pw)){
+                    pass1=true;
+                    pass2=true;
+                    JOptionPane.showMessageDialog(null,"Successfully login as Rider","Login Successfully",1);
+                }
+            }
+        }
+        if(pass1==false&&pass2==false){
+            JOptionPane.showMessageDialog(null,"Invalid Login ID or password. Please try again!","Wrong Credential",2);
+            resetField();
+        }
+
     }
 
 

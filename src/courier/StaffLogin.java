@@ -31,52 +31,13 @@ public class StaffLogin {
         // TODO add your code here
         String id= txtUser.getText();
         String pw= String.valueOf(txtPw.getPassword());
-        credentialChecker(id,pw);
+        Staff.credentialChecker(id,pw);
 
     }
 
-    private static void credentialChecker(String  id, String pw){
-        boolean pass1 = false,pass2= false;
-        //check for admin first
-        for (int i=0;i<Admin.adminAl.size();i++){
 
-            if(Admin.adminAl.get(i).username.equals(id)&&Admin.adminAl.get(i).password.equals(pw)){
-                System.out.println(Admin.adminAl.get(i).username);
-                System.out.println(Admin.adminAl.get(i).password);
-                pass1=true;
-                pass2=true;
-                JOptionPane.showMessageDialog(null,"Successfully login as Admin","Login Successfully",1);
 
-            }
-        }
-        if (pass1!=true){
-            for (int i=0;i<Manager.managerAl.size();i++){
-                if(Manager.managerAl.get(i).username.equals(id)&&Manager.managerAl.get(i).password.equals(pw)){
-                    pass1=true;
-                    pass2=true;
-                    JOptionPane.showMessageDialog(null,"Successfully login as Manager","Login Successfully",1);
-                    ManagerHome.getJfManager().setVisible(true);
-                    ManagerHome.getLblManagerName().setText(Manager.managerAl.get(i).name);
-                    jfLogin.setVisible(false);
-                }
-            }
-        }else if (pass2!=true){
-            for (int i=0;i<Rider.riderAl.size();i++){
-                if(Rider.riderAl.get(i).username.equals(id)&&Rider.riderAl.get(i).password.equals(pw)){
-                    pass1=true;
-                    pass2=true;
-                    JOptionPane.showMessageDialog(null,"Successfully login as Rider","Login Successfully",1);
-                }
-            }
-        }
-        if(pass1==false&&pass2==false){
-            JOptionPane.showMessageDialog(null,"Invalid Login ID or password. Please try again!","Wrong Credential",2);
-            resetField();
-        }
-
-    }
-
-    private static void resetField(){
+    public static void resetField(){
         txtUser.setText("");
         txtPw.setText("");
         txtUser.grabFocus();
@@ -116,10 +77,14 @@ public class StaffLogin {
         if (e.getKeyCode()==KeyEvent.VK_ENTER){
             String id= txtUser.getText();
             String pw= String.valueOf(txtPw.getPassword());
-            credentialChecker(id,pw);
+            Staff.credentialChecker(id,pw);
             resetField();
         }
 
+    }
+
+    public static JFrame getJfLogin() {
+        return jfLogin;
     }
 
 
@@ -149,13 +114,12 @@ public class StaffLogin {
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
-                javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax
-                . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
-                .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-                . Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (new java. beans.
-                PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .
-                equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                panel1.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder
+                ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border
+                .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt
+                . Color .red ) ,panel1. getBorder () ) ); panel1. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void
+                propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
+                ;} } );
                 panel1.setLayout(null);
 
                 //---- lblLoginTitle ----

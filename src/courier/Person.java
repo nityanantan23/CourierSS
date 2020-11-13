@@ -1,7 +1,8 @@
 package courier;
 
 public abstract class Person {
-   protected Integer age;
+    protected String id;
+    protected Integer age;
    protected String phone;
    protected String name;
    protected static final String spChr = "-/@#$%^&_+=()" ;
@@ -9,18 +10,20 @@ public abstract class Person {
     public Person(){}
 
 
-    public Person(String name,Integer age, String phone) {
+    public Person(String id,String name,Integer age, String phone) {
+        setId(id);
         setAge(age);
         setName(name);
         setPhone(phone);
+    }
 
+    public void setId(String id){
+        this.id=id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
-
     public void setAge(Integer age){
         this.age = age;
     }
@@ -39,6 +42,10 @@ public abstract class Person {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getId(){
+        return id;
     }
 
 

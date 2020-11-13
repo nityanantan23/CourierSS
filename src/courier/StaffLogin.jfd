@@ -11,6 +11,7 @@ new FormModel {
 			"focusTraversalPolicyProvider": true
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 10
+				"JavaCodeGenerator.variableGetter": true
 			}
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 				"autoSize": false
