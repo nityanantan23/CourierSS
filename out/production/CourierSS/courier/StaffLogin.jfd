@@ -38,7 +38,7 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "lblUsername"
-					"text": "Username"
+					"text": "ID"
 					"font": &Font0 new java.awt.Font( "Montserrat Light", 0, 38 )
 					"foreground": &Color0 new java.awt.Color( 102, 102, 102, 255 )
 					auxiliary() {

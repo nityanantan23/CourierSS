@@ -74,17 +74,17 @@ public class NonPickupOrder extends Order implements PriceCal {
         }
     }
 
-    public static void main(String[] args){
-        orderPackage op= new orderPackage();
-        op.loadPackages("txtFile/Packages.txt");
-        NonPickupOrder np= new NonPickupOrder();
-        np.readOrderFile("txtFile/noPickupOrder.txt");
-        for (int i=0;i<nonPickupOrdersAl.size();i++){
-            System.out.println(nonPickupOrdersAl.get(i).getOrderID()+" "+nonPickupOrdersAl.get(i).getState()+" "+
-                    nonPickupOrdersAl.get(i).getOrderPackage().get(i));
-        }
-
-    }
+//    public static void main(String[] args){
+//        orderPackage op= new orderPackage();
+//        op.loadPackages("txtFile/Packages.txt");
+//        NonPickupOrder np= new NonPickupOrder();
+//        np.readOrderFile("txtFile/noPickupOrder.txt");
+//        for (int i=0;i<nonPickupOrdersAl.size();i++){
+//            System.out.println(nonPickupOrdersAl.get(i).getOrderID()+" "+nonPickupOrdersAl.get(i).getState()+" "+
+//                    nonPickupOrdersAl.get(i).getOrderPackage().get(i));
+//        }
+//
+//    }
 
 
 }

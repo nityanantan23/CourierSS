@@ -7,8 +7,8 @@ public class Rider extends Staff{
 
     public Rider(){}
 
-    public Rider(String id , String name,Integer age, String phone, String username, String password  ) {
-        super(id, name,age, phone,  username, password);
+    public Rider(String id , String name,Integer age, String phone,  String password  ) {
+        super(id, name,age, phone,  password);
     }//rider class creation
 
     @Override
@@ -16,7 +16,7 @@ public class Rider extends Staff{
         findStaffFile("txtFile/Rider_account.txt");
         while (s.hasNext()){
             readfile();
-            Rider r= new Rider(getId(),getName(),getAge(),getPhone(),getUsername(),getPassword());
+            Rider r= new Rider(getId(),getName(),getAge(),getPhone(),getPassword());
             riderAl.add(r);
         }
     }

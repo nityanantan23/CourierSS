@@ -10,37 +10,26 @@ import static courier.StaffLogin.resetField;
 
 public abstract class Staff extends Person{
     //creating a staff
-    protected String password,username;
+    protected String password;
     public static Scanner s;
 
     public Staff(){
         super();
     }
 
-    public Staff(String id ,String name,Integer age, String phone,String username, String password) {
-        super(id,name,age, phone);
-        setUsername(username);
+    public Staff(String id ,String name,Integer age, String phone,String password) {
+        super(id,name,age,phone);
         setPassword(password);
     }
 
     public abstract void loadStaff() ;
-
-    public void setUsername(String username){
-        this.username=username;
-    }
-
     public void setPassword(String password){
         this.password=password;
     }
-
-
-    public String getUsername(){
-        return username;
-    }
-
     public String getPassword(){
         return password;
     }
+
 
     public void findStaffFile(String fileName){
         try {
@@ -52,14 +41,11 @@ public abstract class Staff extends Person{
 
     @Override
     public void readfile() {
+            setId(s.nextLine());
             setName(s.nextLine()) ;
             setAge( Integer.parseInt(s.nextLine()));
             setPhone(s.nextLine());
-            setUsername(s.nextLine());
             setPassword(s.nextLine());
-            if(s.nextLine().isEmpty()){
-
-            }
             if (s.hasNext()) {
                 s.nextLine();
             }
@@ -67,10 +53,11 @@ public abstract class Staff extends Person{
     public static void credentialChecker(String  id, String pw){
         boolean pass1 = false,pass2= false;
         //check for admin first
+        id=id.toUpperCase();
         for (int i=0;i<Admin.adminAl.size();i++){
 
-            if(Admin.adminAl.get(i).username.equals(id)&&Admin.adminAl.get(i).password.equals(pw)){
-                System.out.println(Admin.adminAl.get(i).username);
+            if(Admin.adminAl.get(i).getId().equals(id)&&Admin.adminAl.get(i).password.equals(pw)){
+                System.out.println(Admin.adminAl.get(i).getId());
                 System.out.println(Admin.adminAl.get(i).password);
                 pass1=true;
                 pass2=true;
@@ -80,7 +67,7 @@ public abstract class Staff extends Person{
         }
         if (pass1!=true){
             for (int i=0;i<Manager.managerAl.size();i++){
-                if(Manager.managerAl.get(i).username.equals(id)&&Manager.managerAl.get(i).password.equals(pw)){
+                if(Manager.managerAl.get(i).getId().equals(id)&&Manager.managerAl.get(i).password.equals(pw)){
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Manager","Login Successfully",1);
@@ -91,7 +78,7 @@ public abstract class Staff extends Person{
             }
         }else if (pass2!=true){
             for (int i=0;i<Rider.riderAl.size();i++){
-                if(Rider.riderAl.get(i).username.equals(id)&&Rider.riderAl.get(i).password.equals(pw)){
+                if(Rider.riderAl.get(i).getId().equals(id)&&Rider.riderAl.get(i).password.equals(pw)){
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Rider","Login Successfully",1);

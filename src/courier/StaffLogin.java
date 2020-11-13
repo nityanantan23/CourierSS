@@ -59,6 +59,7 @@ public class StaffLogin {
             e.consume();
             resetField();
         }
+
     }
 
     private void txtUserKeyPressed(KeyEvent e) {
@@ -70,6 +71,7 @@ public class StaffLogin {
             txtUser.transferFocus();
             e.consume();
         }
+
 
     }
 
@@ -114,12 +116,12 @@ public class StaffLogin {
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder
-                ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border
-                .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt
-                . Color .red ) ,panel1. getBorder () ) ); panel1. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void
-                propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
-                ;} } );
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
+                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing. border. TitledBorder. CENTER
+                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069al\u006fg" ,java .awt .Font
+                .BOLD ,12 ), java. awt. Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (
+                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062or\u0064er"
+                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 panel1.setLayout(null);
 
                 //---- lblLoginTitle ----
@@ -131,7 +133,7 @@ public class StaffLogin {
                 lblLoginTitle.setBounds(195, 30, 475, 125);
 
                 //---- lblUsername ----
-                lblUsername.setText("Username");
+                lblUsername.setText("ID");
                 lblUsername.setFont(new Font("Montserrat Light", Font.PLAIN, 38));
                 lblUsername.setForeground(new Color(102, 102, 102));
                 panel1.add(lblUsername);

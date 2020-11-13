@@ -109,17 +109,17 @@ public class PickupOrder extends Order implements PriceCal {
         }
     }
 
-    public static void main(String[] args){
-        orderPackage op= new orderPackage();
-        op.loadPackages("txtFile/Packages.txt");
-        PickupOrder po= new PickupOrder();
-        po.readOrderFile("txtFile/PickupOrder.txt");
-        for (int i=0;i<pickupOrdersAl.size();i++){
-            System.out.println(pickupOrdersAl.get(i).getOrderID()+" "+pickupOrdersAl.get(i).getOriginStreet()+" "+
-                    " "+pickupOrdersAl.get(i).getStreet()+" "+pickupOrdersAl.get(i).getOrderPackage().get(i)+" "+
-                    pickupOrdersAl.get(i).getPickupStatus()+" ");
-        }
-    }
+//    public static void main(String[] args){
+//        orderPackage op= new orderPackage();
+//        op.loadPackages("txtFile/Packages.txt");
+//        PickupOrder po= new PickupOrder();
+//        po.readOrderFile("txtFile/PickupOrder.txt");
+//        for (int i=0;i<pickupOrdersAl.size();i++){
+//            System.out.println(pickupOrdersAl.get(i).getOrderID()+" "+pickupOrdersAl.get(i).getOriginStreet()+" "+
+//                    " "+pickupOrdersAl.get(i).getStreet()+" "+pickupOrdersAl.get(i).getOrderPackage().get(i)+" "+
+//                    pickupOrdersAl.get(i).getPickupStatus()+" ");
+//        }
+//    }
 
 
 
