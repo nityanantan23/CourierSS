@@ -1,17 +1,1 @@
-O001
-C001
-13
-11
-2020
-R001
-15
-11
-2020
-50
-No 2, Jalan Teknologi 5, Taman Teknologi Malaysia
-Kuala Lumpur
-KUL
-57000
-Delivered
-P001
-P002
+O001;C001;13;11;2020;R001;15;11;2020;50;No 2, Jalan Teknologi 5, Taman Teknologi Malaysia;Kuala Lumpur;KUL;57000;Delivered;P001;P002

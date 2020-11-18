@@ -28,7 +28,7 @@ public class StaffLogin {
     }
 
     private void btnLoginActionPerformed(ActionEvent e) {
-        // TODO add your code here
+
         String id= txtUser.getText();
         String pw= String.valueOf(txtPw.getPassword());
         Staff.credentialChecker(id,pw);

@@ -15,15 +15,11 @@ public class Rider extends Staff{
     public void loadStaff() {
         findStaffFile("txtFile/Rider_account.txt");
         while (s.hasNext()){
-            readfile();
+            readFile();
             Rider r= new Rider(getId(),getName(),getAge(),getPhone(),getPassword());
             riderAl.add(r);
         }
     }
 
-//    public static void main(String[] Args){
-//
-//
-//    }
 
 }

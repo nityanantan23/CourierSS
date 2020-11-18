@@ -14,7 +14,7 @@ public class Manager extends Staff{
     public void loadStaff() {
         findStaffFile("txtFile/Manager_account.txt");
         while (s.hasNext()){
-            readfile();
+            readFile();
             Manager m= new Manager(getId(),getName(),getAge(),getPhone(),getPassword());
             managerAl.add(m);
         }

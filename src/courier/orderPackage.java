@@ -7,7 +7,7 @@ import java.util.Scanner;
 import org.apache.commons.lang3.ArrayUtils;
 
 
-public class orderPackage implements PriceCal {
+public class orderPackage implements PriceCal,fileReader {
     private String packageID;
     private double packageWeight;
     private double packagePrice;
@@ -16,6 +16,8 @@ public class orderPackage implements PriceCal {
     private static final String[] mediumPriceState={"JHR","PHG","PRK","PNG"};
     private static final String[] highPriceState={"TRG","KTN","PLS","KDH"};
     private static ArrayList<orderPackage> orderPackagesAl= new ArrayList<>();
+    private String line;
+    private String[] lineV;
 
     public orderPackage(){}
 
@@ -28,8 +30,6 @@ public class orderPackage implements PriceCal {
 
     //##############
     //setter and getter
-
-
     public void setPackageID(String packageID) {this.packageID = packageID;}
     public void setOrderID(String orderID) { this.orderID = orderID; }
     public void setPackagePrice(double packagePrice) {   this.packagePrice = packagePrice; }
@@ -41,15 +41,20 @@ public class orderPackage implements PriceCal {
     public static ArrayList<orderPackage> getOrderPackagesAl() { return orderPackagesAl; }
     //###############
 
-    public void loadPackages(String fileLocation){
+    //reading and initialising objects
+    //delim for packages and order is semi colon
+    @Override
+    public void readFile() {
         Scanner sc= null;
         try {
-            sc = new Scanner(new File(fileLocation));
+            sc = new Scanner(new File("txtFile/Packages.txt"));
             while(sc.hasNext()){
-                setPackageID(sc.nextLine());
-                setOrderID(sc.nextLine());
-                setPackagePrice(Double.parseDouble(sc.nextLine()));
-                setPackageWeight(Double.parseDouble(sc.nextLine()));
+                line=sc.nextLine();
+                lineV=line.split(";");
+                setPackageID(lineV[0]);
+                setOrderID(lineV[1]);
+                setPackagePrice(Double.parseDouble(lineV[2]));
+                setPackageWeight(Double.parseDouble(lineV[3]));
                 orderPackage o= new orderPackage(getPackageID(),getOrderID(),getPackageWeight(),getPackagePrice());
                 orderPackagesAl.add(o);
                 if (sc.hasNext()){
@@ -59,12 +64,10 @@ public class orderPackage implements PriceCal {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
 
+    //calculation of price
     @Override
     public double priceCal() throws InvalidLocationException {
         boolean pass=false;
@@ -100,10 +103,5 @@ public class orderPackage implements PriceCal {
         }
         return 0;
     }
-
-
-
-
-
 
 }

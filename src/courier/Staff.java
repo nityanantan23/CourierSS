@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 import static courier.StaffLogin.resetField;
 
-public abstract class Staff extends Person{
+public abstract class Staff extends Person {
     //creating a staff
     protected String password;
     public static Scanner s;
+    private String line;
+    private String[] lineV;
 
     public Staff(){
         super();
@@ -40,16 +42,19 @@ public abstract class Staff extends Person{
     }
 
     @Override
-    public void readfile() {
-            setId(s.nextLine());
-            setName(s.nextLine()) ;
-            setAge( Integer.parseInt(s.nextLine()));
-            setPhone(s.nextLine());
-            setPassword(s.nextLine());
-            if (s.hasNext()) {
-                s.nextLine();
-            }
+    public void readFile() {
+        line=s.nextLine();
+        lineV=line.split(",");
+        setId(lineV[0]);
+        setName(lineV[1]) ;
+        setAge( Integer.parseInt(lineV[2]));
+        setPhone(lineV[3]);
+        setPassword(lineV[4]);
+        if (s.hasNext()) {
+            s.nextLine();
+        }
     }
+
     public static void credentialChecker(String  id, String pw){
         boolean pass1 = false,pass2= false;
         //check for admin first

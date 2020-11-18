@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class Customer extends Person{
     private String ic;
     private static ArrayList<Customer> customerAl= new ArrayList<>();
+    private String line;
+    private String[] lineV;
 
     public Customer(){}
     //customer class creation
@@ -24,17 +26,22 @@ public class Customer extends Person{
     }
 
     @Override
-    public void readfile() {
+    public void readFile() {
         try {
             Scanner s= new Scanner(new File("txtFile/Customer.txt"));
             while (s.hasNext()){
-                setId(s.nextLine());
-                setName(s.nextLine());
-                setAge(Integer.parseInt(s.nextLine()));
-                setPhone(s.nextLine());
-                setIc(s.nextLine());
+                //read single line first
+                line=s.nextLine();
+                //split the line and store it as array
+                lineV= line.split(",");
+                //assigning the read variable to the object.
+                setId(lineV[0]);
+                setName(lineV[1]);
+                setAge(Integer.parseInt(lineV[2]));
+                setPhone(lineV[3]);
+                setIc(lineV[4]);
                 if (s.hasNext()){
-                    s.nextLine();
+                    s.next();
                 }
                 Customer c= new Customer(getId(),getName(),getAge(),getPhone(),getIc());
                 customerAl.add(c);
@@ -45,10 +52,4 @@ public class Customer extends Person{
             e.printStackTrace();
         }
     }
-
-//    public static void main(String[] args){
-//        Customer c= new Customer();
-//        c.readfile();
-//        System.out.println(customerAl.get(0).ic);
-//    }
 }

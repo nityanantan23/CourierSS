@@ -2,7 +2,7 @@ package courier;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public abstract class Order {
+public abstract class Order implements fileReader{
     private String orderID;
     private String customerID;
     private GregorianCalendar orderDate;
@@ -13,6 +13,7 @@ public abstract class Order {
     private String street,city,state;
     private Integer postcode;
     private String deliveryStatus;
+    private static Integer orderCount=100;
 
     public Order(){};
 
@@ -55,6 +56,7 @@ public abstract class Order {
     public void setPostcode(Integer postcode) {this.postcode = postcode;}
     public void setDeliveryStatus(String deliveryStatus){this.deliveryStatus=deliveryStatus;}
 
+
     //getter
     public ArrayList getOrderPackage() {return orderPackage;}
     public double getOrderPrice() {return orderPrice;}
@@ -68,15 +70,18 @@ public abstract class Order {
     public String getCity() {return city;}
     public Integer getPostcode() { return postcode; }
     public String getDeliveryStatus(){return deliveryStatus;}
+    public static Integer getOrderCount(){return  orderCount;}
+
+    public static void orderCounter(){
+        orderCount=orderCount+1;
+    }
+
 
 //##############################################################
     //Getter and Setters
 //##############################################################
 
-    public abstract void readOrderFile(String fileLocation);
-
-
-//    public static void main(String[] args){
+    //    public static void main(String[] args){
 //        expectedDelivery = new GregorianCalendar();
 //        System.out.println(expectedDelivery.getTime());
 //    }

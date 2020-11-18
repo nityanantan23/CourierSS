@@ -1,6 +1,6 @@
 package courier;
 
-public abstract class Person {
+public abstract class Person implements fileReader{
     protected String id;
     protected Integer age;
    protected String phone;
@@ -48,18 +48,8 @@ public abstract class Person {
         return id;
     }
 
-
-
-
-    //reader
-    public abstract void readfile();
-
-
-//    public static void main(String[] args) throws InvalidAgeException, InvalidPhoneException, InvalidNameException {
-//        Admin a= new Admin(20,"0168865380","bla","asd","456","Admin_account.txt");
-//
-//    }
-
+    @Override
+    public void readFile() {}
     //public void setName(String name) throws InvalidNameException{
 //
 //        if (name.matches("[" + spChr + "]+")|| name.matches("[0-9]+")){
@@ -88,6 +78,7 @@ public abstract class Person {
 //        }
 //
 //    }
+
 
 
 }
