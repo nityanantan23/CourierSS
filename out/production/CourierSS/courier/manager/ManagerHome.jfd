@@ -20,7 +20,7 @@ new FormModel {
 				}
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "sPnlManager"
-					"background": new java.awt.Color( 0, 0, 51, 255 )
+					"background": new java.awt.Color( 21, 29, 65, 255 )
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
@@ -138,30 +138,84 @@ new FormModel {
 					"x": 0
 					"y": 0
 				} )
-				add( new FormComponent( "javax.swing.JScrollBar" ) {
-					name: "sclManager"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+					name: "panel1"
+					"background": new java.awt.Color( 186, 201, 245, 255 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblTitle"
+						"text": "Order Form"
+						"font": new java.awt.Font( "Myanmar Text", 1, 46 )
+						"foreground": sfield java.awt.Color black
+						"alignmentY": 0.0f
+						"horizontalAlignment": 0
+						"iconTextGap": 3
+						"background": new java.awt.Color( 51, 204, 255, 255 )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 12
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 270
+						"height": 65
+						"x": 20
+						"y": 20
+					} )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 1095
+					"x": 255
 					"y": 0
-					"width": 10
-					"height": 605
+					"height": 80
+					"width": 850
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "lblTitle"
-					"text": "Order"
-					"font": new java.awt.Font( "Myanmar Text", 1, 46 )
-					"foreground": sfield java.awt.Color black
-					"alignmentY": 0.0f
-					"horizontalAlignment": 0
-					"iconTextGap": 3
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 12
-					}
+					name: "lblID"
+					"text": "Order ID"
+					"font": &Font1 new java.awt.Font( "Nirmala UI", 1, 24 )
+					"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 155
-					"height": 65
-					"x": 300
-					"y": 25
+					"x": 315
+					"y": 125
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblType"
+					"text": "Order Type"
+					"font": #Font1
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 135
+					"height": 32
+					"x": 315
+					"y": 185
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblIC"
+					"text": "Customer IC"
+					"font": #Font1
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 180
+					"height": 45
+					"x": 315
+					"y": 245
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "txtID"
+					"background": new java.awt.Color( 239, 234, 234, 255 )
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 3, true )
+					"font": new java.awt.Font( "Montserrat Light", 0, 24 )
+					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					"toolTipText": "Username"
+					"margin": new java.awt.Insets( 1, 1, 1, 1 )
+					"cursor": new java.awt.Cursor( 2 )
+					"text": "asd"
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtUserKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtUserKeyPressed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 245
+					"height": 40
+					"x": 530
+					"y": 130
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 1105
