@@ -5,8 +5,8 @@ public class Admin extends Staff{
 
     public Admin(){}
 
-    public Admin(String id,String name,Integer age, String phone, String password  ){
-        super(id,name,age, phone,  password);
+    public Admin(String id,String name, String phone, String password  ){
+        super(id,name, phone,  password);
 
     }
 
@@ -15,7 +15,7 @@ public class Admin extends Staff{
         findStaffFile("txtFile/Admin_account.txt");
         while(s.hasNext()){
             readFile();
-            Admin a= new Admin(getId(),getName(),getAge(),getPhone(),getPassword());
+            Admin a= new Admin(getId(),getName(),getPhone(),getPassword());
             adminAl.add(a);
         }
     }

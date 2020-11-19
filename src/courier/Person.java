@@ -2,17 +2,16 @@ package courier;
 
 public abstract class Person implements fileReader{
     protected String id;
-    protected Integer age;
    protected String phone;
    protected String name;
-   protected static final String spChr = "-/@#$%^&_+=()" ;
+
 
     public Person(){}
 
 
-    public Person(String id,String name,Integer age, String phone) {
+    public Person(String id,String name, String phone) {
         setId(id);
-        setAge(age);
+
         setName(name);
         setPhone(phone);
     }
@@ -24,9 +23,6 @@ public abstract class Person implements fileReader{
     public void setName(String name) {
         this.name = name;
     }
-    public void setAge(Integer age){
-        this.age = age;
-    }
     public void setPhone(String phone){
         this.phone = phone;
     }
@@ -36,9 +32,6 @@ public abstract class Person implements fileReader{
         return name;
     }
 
-    public Integer getAge() {
-        return age;
-    }
 
     public String getPhone() {
         return phone;

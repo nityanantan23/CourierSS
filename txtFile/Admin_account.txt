@@ -1,2 +1,2 @@
-A001,loges,50,0191234561,admin
-A002,raja,60,0111234561,admin
+A001,loges,0191234561,admin
+A002,raja,0111234561,admin

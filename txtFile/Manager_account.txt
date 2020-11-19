@@ -1,1 +1,1 @@
-M001,weng keat,20,0161234416,manager
+M001,weng keat,0161234416,manager

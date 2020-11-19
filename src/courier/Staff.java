@@ -19,8 +19,8 @@ public abstract class Staff extends Person {
         super();
     }
 
-    public Staff(String id ,String name,Integer age, String phone,String password) {
-        super(id,name,age,phone);
+    public Staff(String id ,String name , String phone,String password) {
+        super(id,name,phone);
         setPassword(password);
     }
 
@@ -47,9 +47,8 @@ public abstract class Staff extends Person {
         lineV=line.split(",");
         setId(lineV[0]);
         setName(lineV[1]) ;
-        setAge( Integer.parseInt(lineV[2]));
-        setPhone(lineV[3]);
-        setPassword(lineV[4]);
+        setPhone(lineV[2]);
+        setPassword(lineV[3]);
         if (s.hasNext()) {
             s.nextLine();
         }

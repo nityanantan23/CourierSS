@@ -5,8 +5,8 @@ public class Manager extends Staff{
     public static ArrayList<Manager> managerAl=new ArrayList();
 
     public Manager(){};
-    public Manager( String id,String name,Integer age, String phone, String password){
-        super(id,name,age, phone, password);
+    public Manager( String id,String name, String phone, String password){
+        super(id,name, phone, password);
 
     }
 
@@ -15,7 +15,7 @@ public class Manager extends Staff{
         findStaffFile("txtFile/Manager_account.txt");
         while (s.hasNext()){
             readFile();
-            Manager m= new Manager(getId(),getName(),getAge(),getPhone(),getPassword());
+            Manager m= new Manager(getId(),getName(),getPhone(),getPassword());
             managerAl.add(m);
         }
     }
