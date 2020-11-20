@@ -7,7 +7,7 @@ import java.util.Scanner;
 import org.apache.commons.lang3.ArrayUtils;
 
 
-public class orderPackage implements PriceCal,fileReader {
+public class orderPackage implements PriceCal, fileAccess {
     private String packageID;
     private double packageWeight;
     private double packagePrice;

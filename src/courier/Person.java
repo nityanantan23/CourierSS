@@ -1,10 +1,10 @@
 package courier;
-
-public abstract class Person implements fileReader{
+public abstract class Person implements fileAccess {
     protected String id;
-   protected String phone;
-   protected String name;
-
+    protected Integer age;
+    protected String phone;
+    protected String name;
+    protected static final String spChr = "-/@#$%^&_+=()" ;
 
     public Person(){}
 
@@ -41,8 +41,7 @@ public abstract class Person implements fileReader{
         return id;
     }
 
-    @Override
-    public void readFile() {}
+
     //public void setName(String name) throws InvalidNameException{
 //
 //        if (name.matches("[" + spChr + "]+")|| name.matches("[0-9]+")){

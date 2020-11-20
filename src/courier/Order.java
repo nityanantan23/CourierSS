@@ -2,7 +2,7 @@ package courier;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public abstract class Order implements fileReader{
+public abstract class Order implements fileAccess {
     private String orderID;
     private String customerID;
     private GregorianCalendar orderDate;

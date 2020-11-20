@@ -1,5 +1,5 @@
 package courier;
 
-public interface fileReader {
+public interface fileAccess {
     public void readFile();
 }
