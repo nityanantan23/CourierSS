@@ -49,9 +49,6 @@ public abstract class Staff extends Person {
         setName(lineV[1]) ;
         setPhone(lineV[2]);
         setPassword(lineV[3]);
-        if (s.hasNext()) {
-            s.nextLine();
-        }
     }
 
     public static void credentialChecker(String  id, String pw){
