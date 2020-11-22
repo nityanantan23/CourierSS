@@ -1,4 +1,6 @@
-package courier;
+package courier.RecycleBin;
+
+import courier.orderPackage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,14 +8,14 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-public class NonPickupOrder extends Order implements PriceCal {
+public class NonPickupOrder{
     public static ArrayList<NonPickupOrder> nonPickupOrdersAl= new ArrayList<>();
     private String line;
     public static String[] lineV;
     public NonPickupOrder(){};
 
 
-    public NonPickupOrder(String orderID, String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice, ArrayList<courier.orderPackage> orderPackage, String street, String city, String state, Integer postcode,String status) {
+    public NonPickupOrder(String orderID, String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice, orderPackage orderPackage, String street, String city, String state, Integer postcode, String status) {
         super(orderID, customerID, orderDate, riderID, expectedDelivery, orderPrice, orderPackage, street, city, state, postcode,status);
     }
 
@@ -21,17 +23,25 @@ public class NonPickupOrder extends Order implements PriceCal {
 
 
 
-    @Override
-    public double priceCal() {
-        return 0;
-    }
+
+    public double priceCal() {return 2;}
+
+//            //set the package price
+//            if (ArrayUtils.contains(getLowPriceState(),location)){
+//                setOrderPrice(Double.parseDouble(df.format(getPackageWeight()*0.3+3)));
+//            }else if (ArrayUtils.contains(mediumPriceState,location)){
+//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.5+4)));
+//            }else {
+//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.8+4)));;
+
+
 
     @Override
     public void readFile() {
         String line;
         ArrayList<orderPackage> orderPackageArrayList=new ArrayList<>();
         try {
-            Scanner scanner = new Scanner(new File("txtFile/noPickupOrder.txt"));
+            Scanner scanner = new Scanner(new File("txtFile/Order.txt"));
             while (scanner.hasNext()){
                 line= scanner.nextLine();
                 lineV=line.split(";");
@@ -55,23 +65,16 @@ public class NonPickupOrder extends Order implements PriceCal {
                 setState(lineV[12]);
                 setPostcode(Integer.parseInt(lineV[13]));
                 setDeliveryStatus(lineV[14]);
-                //do a for loop to get array from 14 onwards
-                for (int i=15;i<lineV.length;i++){
-                    for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
-                        if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[i])){
-                            orderPackageArrayList.add(courier.orderPackage.getOrderPackagesAl().get(i2));
-                            break;
-                        }
+                //retrieve matching
+                for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
+                    if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[15])){
+                        setOrderPackage(courier.orderPackage.getOrderPackagesAl().get(i2));
+                        break;
                     }
                 }
-
-                setOrderPackage(orderPackageArrayList);
                 NonPickupOrder np= new NonPickupOrder(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),getOrderPrice(),getOrderPackage(),getStreet(),getCity(),getState(),getPostcode(),getDeliveryStatus());
                 nonPickupOrdersAl.add(np);
                 orderCounter();
-                if (scanner.hasNext()){
-                    scanner.nextLine();
-                }
             }
 
 
@@ -80,25 +83,22 @@ public class NonPickupOrder extends Order implements PriceCal {
         }
     }
 
-    //class validator
-    public static void main(String[] args){
-        orderPackage op= new orderPackage();
-        op.readFile();
-        NonPickupOrder np= new NonPickupOrder();
-        np.readFile();
-        PickupOrder po= new PickupOrder();
-        po.readFile();
-//        for (int i=0;i<nonPickupOrdersAl.size();i++){
-//            System.out.println(nonPickupOrdersAl.get(i).getOrderID()+" "+nonPickupOrdersAl.get(i).getState()+" ");
-//            orderPackage test= (courier.orderPackage) nonPickupOrdersAl.get(i).getOrderPackage().get(0);
-//            System.out.println(test.getPackagePrice());
-//        }
-//        for (int i =0; i<NonPickupOrder.lineV.length;i++){
-//            System.out.println(i+" "+lineV[i]);
-//        }
-        System.out.println(getOrderCount());
 
-    }
+    //class validator
+//    public static void main(String[] args){
+//        orderPackage op= new orderPackage();
+//        op.readFile();
+//        System.out.println(orderPackage.getOrderPackagesAl().get(0).getPackageID());
+//        System.out.println(orderPackage.getOrderPackagesAl().get(1).getPackageID());
+//        NonPickupOrder np= new NonPickupOrder();
+//        np.readFile();
+//        PickupOrder po= new PickupOrder();
+//        po.readFile();
+//
+//        System.out. println(PickupOrder.pickupOrdersAl.get(0).getOrderPackage().getPackageWeight());
+//        System.out. println(nonPickupOrdersAl.get(0).getOrderPackage().getPackageWeight());
+//
+//    }
 
 
 }

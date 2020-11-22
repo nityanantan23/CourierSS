@@ -37,7 +37,7 @@ public class CustomerRegistration extends GUI {
     }
 
     private void txtRegCPhoneKeyTyped(KeyEvent e) {
-        lengthChecker(e,"Phone",txtRegCPhone,11);
+        lengthChecker(e,"Phone",txtRegCPhone,9);
     }
 
 
@@ -71,14 +71,20 @@ public class CustomerRegistration extends GUI {
     private void btnRegisterActionPerformed(ActionEvent e) {
         int confirm=JOptionPane.showConfirmDialog(null,"Are you sure all inputs are correct?","Confirmation",0);
         if (confirm==0){
-            if(txtRegCPhone.getText().length()<11||txtRegCName.getText().length()==0||txtRegCusIC.getText().length()!=12){
+            if(txtRegCPhone.getText().length()<10||txtRegCName.getText().length()==0||txtRegCusIC.getText().length()!=12){
                 JOptionPane.showMessageDialog(null,"Please revise all inputs. All fields are required. Phone number should have more " +
                         "than 10 digits and less than or equal to 12 digits.IC must have exactly 12 digits. ","Invalid Inputs",2);
             }else {
-                //todo create customer array here
                 //todo create a writer in Person or interface that rewrite the whole file
-
-
+                Customer c= new Customer(Customer.generateID(),txtRegCName.getText(),txtRegCPhone.getText()
+                        ,txtRegCusIC.getText());
+                Customer.getCustomerAL().add(c);
+                Customer.writeLine(c);
+                JOptionPane.showMessageDialog(null,"You have successfully added "+txtRegCName.getText()+".","Successful Registration",1);
+                txtRegCName.setText("");
+                txtRegCusIC.setText("");
+                txtRegCPhone.setText("");
+                jfCustomerRegister.setVisible(false);
             }
         }
     }
@@ -111,13 +117,13 @@ public class CustomerRegistration extends GUI {
             //======== panel2 ========
             {
                 panel2.setBackground(Color.white);
-                panel2.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
-                .border.EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder
-                .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
-                awt.Font.BOLD,12),java.awt.Color.red),panel2. getBorder()))
-                ;panel2. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("\u0062ord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
-                ;
+                panel2.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+                javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax
+                .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+                .awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt
+                .Color.red),panel2. getBorder()));panel2. addPropertyChangeListener(new java.beans.
+                PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".
+                equals(e.getPropertyName()))throw new RuntimeException();}});
                 panel2.setLayout(null);
 
                 //======== pnlTitleReg ========

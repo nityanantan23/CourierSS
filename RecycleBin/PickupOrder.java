@@ -1,4 +1,6 @@
-package courier;
+package courier.RecycleBin;
+
+import courier.orderPackage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +8,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-public class PickupOrder extends Order implements PriceCal {
+public class PickupOrder{
     String OriginStreet,originCity,originState;
     Integer originPostcode;
     boolean pickupStatus;
@@ -17,8 +19,8 @@ public class PickupOrder extends Order implements PriceCal {
     public PickupOrder(){};
 
     public PickupOrder(String orderID, String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery,
-                       double orderPrice, String street, String city, String state, Integer postcode, String originStreet,String originCity,String originState,
-                       Integer originPostcode,boolean pickupStatus, String status,ArrayList<courier.orderPackage> orderPackage) {
+                       double orderPrice, String street, String city, String state, Integer postcode, String originStreet, String originCity, String originState,
+                       Integer originPostcode, boolean pickupStatus, String status, orderPackage orderPackage) {
         super(orderID, customerID, orderDate, riderID, expectedDelivery, orderPrice, orderPackage, street, city, state, postcode,status);
         setOriginStreet(originStreet);
         setOriginCity(originCity);
@@ -59,7 +61,7 @@ public class PickupOrder extends Order implements PriceCal {
     @Override
     public void readFile() {
         String line;
-        ArrayList<orderPackage> orderPackageArrayList=new ArrayList<>();
+
         try {
             Scanner scanner = new Scanner(new File("txtFile/PickupOrder.txt"));
             while (scanner.hasNext()){
@@ -90,31 +92,25 @@ public class PickupOrder extends Order implements PriceCal {
                 setOriginPostcode(Integer.parseInt(lineV[17]));
                 setPickupStatus(Boolean.parseBoolean(lineV[18]));
                 setDeliveryStatus(lineV[19]);
-                for (int i=20;i< lineV.length;i++){
-                    for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
-                        if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[i])){
-                            orderPackageArrayList.add(courier.orderPackage.getOrderPackagesAl().get(i2));
-                            break;
-                        }
+
+                for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
+                    if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[20])){
+                        setOrderPackage(courier.orderPackage.getOrderPackagesAl().get(i2));
+                        break;
                     }
                 }
-
-
-
-                setOrderPackage(orderPackageArrayList);
                 PickupOrder po= new PickupOrder(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),
                         getOrderPrice(),getStreet(),getCity(),getState(),getPostcode(),getOriginStreet(),getOriginCity(),
                         getOriginState(),getOriginPostcode(),getPickupStatus(),getDeliveryStatus(),getOrderPackage());
                 pickupOrdersAl.add(po);
                 orderCounter();
-                if (scanner.hasNext()){
-                    scanner.nextLine();
-                }
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
 
 
     //class checker

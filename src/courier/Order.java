@@ -1,24 +1,37 @@
 package courier;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 
-public abstract class Order implements fileAccess {
+public class Order implements fileReader{
     private String orderID;
     private String customerID;
     private GregorianCalendar orderDate;
     private String riderID;
     private static GregorianCalendar expectedDelivery;
     private double orderPrice;
-    private ArrayList<courier.orderPackage> orderPackage= new ArrayList<>();
+    private orderPackage pkg;
     private String street,city,state;
     private Integer postcode;
     private String deliveryStatus;
     private static Integer orderCount=100;
+    private static final String[] lowPriceState={"KUL","SGR","NSN","MLK","PJY"};
+    private static final String[] mediumPriceState={"JHR","PHG","PRK","PNG"};
+    private static final String[] highPriceState={"TRG","KTN","PLS","KDH"};
+    private static ArrayList<Order> orderAL= new ArrayList<>();
+
+
 
     public Order(){};
 
     public Order(String orderID,String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice,
-                 ArrayList<courier.orderPackage> orderPackage,String street,String city,String state,Integer postcode, String deliveryStatus){
+                 orderPackage orderPackage,String street,String city,String state,Integer postcode, String deliveryStatus){
         //place all setter method here
         setOrderID(orderID);
         setCustomerID(customerID);
@@ -32,7 +45,6 @@ public abstract class Order implements fileAccess {
         setStreet(street);
         setPostcode(postcode);
         setDeliveryStatus(deliveryStatus);
-
     }
 
 //##############################################################
@@ -49,7 +61,7 @@ public abstract class Order implements fileAccess {
     public void setOrderID(String orderID) {this.orderID = orderID;}
     public void setOrderPrice(double orderPrice) {this.orderPrice = orderPrice; }
     public void setRiderID(String riderID) { this.riderID = riderID; }
-    public void setOrderPackage(ArrayList<courier.orderPackage> orderPackage) { this.orderPackage = orderPackage; }
+    public void setOrderPackage(orderPackage orderPackage) {  this.pkg= orderPackage; }
     public void setStreet(String street) {this.street = street;}
     public void setCity(String city) {this.city = city;}
     public void setState(String state) {this.state = state;}
@@ -58,7 +70,7 @@ public abstract class Order implements fileAccess {
 
 
     //getter
-    public ArrayList getOrderPackage() {return orderPackage;}
+    public orderPackage getOrderPackage() {return pkg;}
     public double getOrderPrice() {return orderPrice;}
     public GregorianCalendar getExpectedDelivery() {return expectedDelivery;}
     public GregorianCalendar getOrderDate() {return orderDate;}
@@ -70,20 +82,113 @@ public abstract class Order implements fileAccess {
     public String getCity() {return city;}
     public Integer getPostcode() { return postcode; }
     public String getDeliveryStatus(){return deliveryStatus;}
+    public static ArrayList<Order> getOrderAl(){ return orderAL;}
     public static Integer getOrderCount(){return  orderCount;}
+    public static String[] getLowPriceState(){return lowPriceState;}
+    public static String[] getMediumPriceState(){return mediumPriceState;}
+    public static String[] getHighPriceState(){return highPriceState;}
 
     public static void orderCounter(){
         orderCount=orderCount+1;
     }
 
-
+    @Override
+    public void readFile() {
+        String[] lineV;
+        String line;
+        try {
+            Scanner scanner = new Scanner(new File("txtFile/Order.txt"));
+            while (scanner.hasNext()){
+                line= scanner.nextLine();
+                lineV=line.split(";");
+                setOrderID(lineV[0]);
+                setCustomerID(lineV[1]);
+                int day= Integer.parseInt(lineV[2]);
+                int month= Integer.parseInt(lineV[3]);
+                int year= Integer.parseInt(lineV[4]);
+                GregorianCalendar Date= new GregorianCalendar();
+                Date.set(year,month,day);
+                setOrderDate(Date);
+                setRiderID(lineV[5]);
+                day= Integer.parseInt(lineV[6]);
+                month=Integer.parseInt(lineV[7]);
+                year=Integer.parseInt(lineV[8]);
+                Date.set(year,month,day);
+                setExpectedDelivery(Date);
+                setOrderPrice( Double.parseDouble(lineV[9]));
+                setStreet(lineV[10]);
+                setCity(lineV[11]);
+                setState(lineV[12]);
+                setPostcode(Integer.parseInt(lineV[13]));
+                setDeliveryStatus(lineV[14]);
+                //retrieve matching
+                for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
+                    if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[15])){
+                        setOrderPackage(courier.orderPackage.getOrderPackagesAl().get(i2));
+                        break;
+                    }
+                }
+                Order o= new Order(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),getOrderPrice(),getOrderPackage(),getStreet(),getCity(),getState(),getPostcode(),getDeliveryStatus());
+                orderAL.add(o);
+                orderCounter();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 //##############################################################
     //Getter and Setters
 //##############################################################
+
+
+
 
     //    public static void main(String[] args){
 //        expectedDelivery = new GregorianCalendar();
 //        System.out.println(expectedDelivery.getTime());
 //    }
+
+
+
+//    //calculation of price
+//    @Override
+//    public double priceCal() throws InvalidLocationException {
+//        boolean pass=false;
+//        String location =null;
+//        for (int i=0; i<NonPickupOrder.nonPickupOrdersAl.size();i++){
+//            if (NonPickupOrder.nonPickupOrdersAl.get(i).getOrderID().equals(getOrderID())){
+//                location=NonPickupOrder.nonPickupOrdersAl.get(i).getState();
+//                pass=true;
+//            }
+//        }
+//        if (pass==false){
+//            for (int i=0; i<PickupOrder.pickupOrdersAl.size();i++){
+//                if (PickupOrder.pickupOrdersAl.get(i).getOrderID().equals(getOrderID())){
+//                    location=PickupOrder.pickupOrdersAl.get(i).getState();
+//                    pass=true;
+//                }
+//            }
+//        }
+//        //#check if location is valid
+//        if (location==null){
+//            throw new InvalidLocationException();
+//        }else {
+//            //set the package price
+//            if (ArrayUtils.contains(lowPriceState,location)){
+//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.3+3)));
+//            }else if (ArrayUtils.contains(mediumPriceState,location)){
+//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.5+4)));
+//            }else {
+//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.8+4)));;
+//            }
+//        }
+//        return 0;
+//    }
+    public static void main(String[] args){
+        Order o= new Order();
+        o.readFile();
+        System.out.println(Order.getOrderAl().get(0).getStreet());
+    }
+
 
 }

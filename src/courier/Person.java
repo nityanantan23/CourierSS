@@ -11,7 +11,6 @@ public abstract class Person implements fileAccess {
 
     public Person(String id,String name, String phone) {
         setId(id);
-
         setName(name);
         setPhone(phone);
     }
@@ -26,20 +25,17 @@ public abstract class Person implements fileAccess {
     public void setPhone(String phone){
         this.phone = phone;
     }
-
-
     public String getName() {
         return name;
     }
-
-
     public String getPhone() {
         return phone;
     }
-
     public String getId(){
         return id;
     }
+
+
 
 
     //public void setName(String name) throws InvalidNameException{

@@ -73,17 +73,19 @@ public class ManagerHome extends courier.GUI{
             }else{
                 for(int i=0;i<Customer.getCustomerAL().size();i++){
                     if(Customer.getCustomerAL().get(i).getIc().equals(txtIC.getText())){
-                        System.out.println("you're gucci.");
-
+                        JOptionPane.showMessageDialog(null,"The invoice will be generated.","Successfully Added order",1);
+                        pass=true;
+                        break;
                         //todo proceed to the package page
                         //try to do it in a page if wont work create a new window
-                    }else{
-                        //todo proceed to the new customer page
-                        int confirmation= JOptionPane.showConfirmDialog(null,"It seems like this customer does not exist withint the database. Would you like to register this customer?","New Customer",0);
-                        if (confirmation==0){
-                            Main.CustomerRegister.getJfCustomerRegister().setVisible(true);
-                            Main.CustomerRegister.getTxtRegCusIC().setText(txtIC.getText());
                         }
+                    }
+                if(pass==false){
+                    //todo proceed to the new customer page
+                    int confirmation= JOptionPane.showConfirmDialog(null,"It seems like this customer does not exist withint the database. Would you like to register this customer?","New Customer",0);
+                    if (confirmation==0){
+                        Main.CustomerRegister.getJfCustomerRegister().setVisible(true);
+                        Main.CustomerRegister.getTxtRegCusIC().setText(txtIC.getText());
                     }
                 }
             }
@@ -413,7 +415,13 @@ public class ManagerHome extends courier.GUI{
                 btnOrderProceed1.setFont(new Font("Trebuchet MS", Font.BOLD, 23));
                 btnOrderProceed1.setBackground(Color.black);
                 btnOrderProceed1.setForeground(Color.white);
-                btnOrderProceed1.addActionListener(e -> btnOrderProceed1ActionPerformed(e));
+                btnOrderProceed1.addActionListener(e -> {
+                    try {
+                        btnOrderProceed1ActionPerformed(e);
+                    } catch (InvalidValueException invalidValueException) {
+                        invalidValueException.printStackTrace();
+                    }
+                });
                 panel1.add(btnOrderProceed1);
                 btnOrderProceed1.setBounds(605, 665, 170, 65);
 

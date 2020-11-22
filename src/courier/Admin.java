@@ -32,4 +32,5 @@ public class Admin extends Staff{
         System.out.println(Rider.riderAl.get(0).getName()+" Your pass word is "+Rider.riderAl.get(0).getPassword());
     }
 
+
 }

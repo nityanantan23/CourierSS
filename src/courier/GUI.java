@@ -8,6 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 abstract public class GUI {
     protected static final Character[] splChr = {'!','-','?','@','#','$','%','^','&','_','+','=','(',')','|','{','}','~','[',']','|',';',':','<','>'};
 
+
     public GUI(){}
 
     public void spCharCheck(KeyEvent e,JTextField inputItem){

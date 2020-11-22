@@ -1,6 +1,6 @@
 package courier;
 
-import courier.manager.ManagerHome;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,14 +19,12 @@ public class Main {
         Manager m= new Manager();
         Customer c= new Customer();
         Rider r= new Rider();
-        NonPickupOrder npo= new NonPickupOrder();
-        PickupOrder po= new PickupOrder();
+
         r.loadStaff();
         m.loadStaff();
         a.loadStaff();
         c.readFile();
-        npo.readFile();
-        po.readFile();
+
         ManagerPage=new ManagerHome();
         CustomerRegister= new CustomerRegistration();
     }

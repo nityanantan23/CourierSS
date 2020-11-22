@@ -1,1 +1,0 @@
-O002;C001;13;11;2020;R001;15;11;2020;50;No 2, Jalan Teknologi 5, Taman Teknologi Malaysia;Kuala Lumpur;KUL;57000;No 2, Jalan University 5, University Park;Kuala Lumpur;KUL;53000;true;Delivered;P003

@@ -1,7 +1,5 @@
 package courier;
 
-import courier.manager.ManagerHome;
-
 import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
@@ -50,6 +48,8 @@ public abstract class Staff extends Person {
         setPhone(lineV[2]);
         setPassword(lineV[3]);
     }
+
+
 
     public static void credentialChecker(String  id, String pw){
         boolean pass1 = false,pass2= false;
