@@ -1,7 +1,6 @@
 package courier;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -65,6 +64,31 @@ public class orderPackage implements fileReader,IDGenerator {
         }
     }
 
+    @Override
+    public void writeLine() {
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            fw = new FileWriter("txtFile/Packages.txt", true);
+            bw = new BufferedWriter(fw);
+            pw = new PrintWriter(bw);
+
+            pw.println(getPackageID()+";"+getOrderID()+";"+getPackageWeight()+";"+getPackageSize());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                pw.close();
+                bw.close();
+                fw.close();
+
+            } catch (IOException e) { //instances where the i/o cannot be close
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public static void addPkgCount(){

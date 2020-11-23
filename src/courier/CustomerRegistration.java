@@ -79,7 +79,7 @@ public class CustomerRegistration extends GUI {
                 Customer c= new Customer(Customer.generateID(),txtRegCName.getText(),txtRegCPhone.getText()
                         ,txtRegCusIC.getText());
                 Customer.getCustomerAL().add(c);
-                Customer.writeLine(c);
+                c.writeLine();
                 JOptionPane.showMessageDialog(null,"You have successfully added "+txtRegCName.getText()+".","Successful Registration",1);
                 txtRegCName.setText("");
                 txtRegCusIC.setText("");

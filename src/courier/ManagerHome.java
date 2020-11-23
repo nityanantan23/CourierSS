@@ -76,8 +76,12 @@ public class ManagerHome extends courier.GUI{
                         JOptionPane.showMessageDialog(null,"The invoice will be generated.","Successfully Added order",1);
                         pass=true;
                         break;
-                        //todo proceed to the package page
-                        //try to do it in a page if wont work create a new window
+                        //todo add a new package here
+
+
+
+
+
                         }
                     }
                 if(pass==false){

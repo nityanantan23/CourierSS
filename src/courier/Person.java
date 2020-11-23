@@ -38,6 +38,19 @@ public abstract class Person implements fileAccess {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     //public void setName(String name) throws InvalidNameException{
 //
 //        if (name.matches("[" + spChr + "]+")|| name.matches("[0-9]+")){

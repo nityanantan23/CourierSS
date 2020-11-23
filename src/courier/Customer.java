@@ -50,11 +50,66 @@ public class Customer extends Person implements fileReader {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
     }
 
-    public static void writeLine(Customer c){
-        ////func created a credential setter for all staff class
+//    @Override
+//    public void writeLine() {
+//        FileWriter fw=null;
+//        BufferedWriter bw=null;
+//        PrintWriter pw=null;
+//        try{
+//            fw = new FileWriter("txtFile/Customer.txt", true);
+//            bw = new BufferedWriter(fw);
+//            pw = new PrintWriter(bw);
+//
+//            pw.println(o.id +","+c.name+","+c.phone+","+c.ic);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }finally {
+//            try {
+//                pw.close();
+//                bw.close();
+//                fw.close();
+//
+//            } catch (IOException e) { //instances where the i/o cannot be close
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
+//    public static void writeLine(Customer c){
+//        ////func created a credential setter for all staff class
+//
+//        FileWriter fw=null;
+//        BufferedWriter bw=null;
+//        PrintWriter pw=null;
+//        try{
+//            fw = new FileWriter("txtFile/Customer.txt", true);
+//            bw = new BufferedWriter(fw);
+//            pw = new PrintWriter(bw);
+//
+//            pw.println(c.id+","+c.name+","+c.phone+","+c.ic);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }finally {
+//            try {
+//                pw.close();
+//                bw.close();
+//                fw.close();
+//
+//            } catch (IOException e) { //instances where the i/o cannot be close
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
+
+    @Override
+    public void writeLine() {
         FileWriter fw=null;
         BufferedWriter bw=null;
         PrintWriter pw=null;
@@ -63,7 +118,7 @@ public class Customer extends Person implements fileReader {
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(c.id+","+c.name+","+c.phone+","+c.ic);
+            pw.println(getId()+","+getName()+","+getPhone()+","+getIc());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,9 +132,7 @@ public class Customer extends Person implements fileReader {
                 e.printStackTrace();
             }
         }
-
     }
-
 
     public static void cusCounter(){
         cusCount=cusCount+1;
