@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Thu Nov 12 03:30:04 SGT 2020
  */
 
-package courier.manager;
+package courier;
 
 import courier.*;
 import org.apache.commons.lang3.ArrayUtils;
@@ -20,7 +20,6 @@ public class ManagerHome extends courier.GUI{
     public ManagerHome() {
         super();
         initComponents();
-        lblActID.setText("O"+ Order.getOrderCount());
 
     }
 
@@ -61,7 +60,8 @@ public class ManagerHome extends courier.GUI{
         spCharCheck(e,txtStreet);
     }
 
-    private void btnOrderProceed1ActionPerformed(ActionEvent e) {
+    private void btnOrderProceed1ActionPerformed(ActionEvent e) throws InvalidValueException{
+        boolean pass=false;
         int confirm=JOptionPane.showConfirmDialog(null,"Are you sure all inputs are correct?","Confirmation",0);
         if (confirm==0){
             if(txtIC.getText().length()!=12||txtStreet.getText().length()==0||txtCity.getText().length()==0||txtPost.getText().length()!=5){
@@ -70,7 +70,12 @@ public class ManagerHome extends courier.GUI{
                 txtPost.setText("");
                 txtCity.setText("");
                 txtStreet.setText("");
-            }else{
+                txtPkgWeight.setText("");
+            }else if (Double.parseDouble(txtPkgWeight.getText())>51){
+                txtPkgWeight.setText("");
+                throw new InvalidValueException(50,"Weight");
+            }
+            else{
                 for(int i=0;i<Customer.getCustomerAL().size();i++){
                     if(Customer.getCustomerAL().get(i).getIc().equals(txtIC.getText())){
                         //todo add a new package here
@@ -129,6 +134,27 @@ public class ManagerHome extends courier.GUI{
         return btnOrderProceed1;
     }
 
+    public JComboBox<String> getCmbPkgSize() {
+        return cmbPkgSize;
+    }
+
+    private void txtPkgWeightKeyPressed(KeyEvent e) {
+        super.numCheck(e,"Weight",txtPkgWeight);
+    }
+
+    public JTextField getTxtPkgWeight() {
+        return txtPkgWeight;
+    }
+
+    private void txtPkgWeightKeyTyped(KeyEvent e) {
+        lengthChecker(e,"Weight",txtPkgWeight,1);
+    }
+
+    private void btnAssignOrderActionPerformed(ActionEvent e) {
+        ManagerHome.getJfManager().setVisible(false);
+        Main.assignOrderPage.getJfAssignOrder().setVisible(true);
+
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -143,12 +169,9 @@ public class ManagerHome extends courier.GUI{
         btnReport = new JButton();
         btnFeedback = new JButton();
         btnLogout = new JButton();
+        btnAssignOrder = new JButton();
         panel1 = new JPanel();
-        lblID = new JLabel();
-        lblType = new JLabel();
         lblIC = new JLabel();
-        lblActID = new JLabel();
-        cmbType = new JComboBox<>();
         txtIC = new JTextField();
         lblIC2 = new JLabel();
         lblIC3 = new JLabel();
@@ -158,10 +181,15 @@ public class ManagerHome extends courier.GUI{
         txtStreet = new JTextArea();
         txtCity = new JTextField();
         cmbState = new JComboBox<>();
-        txtPost = new JTextField();
         btnOrderProceed1 = new JButton();
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
+        lblPkgWeight = new JLabel();
+        txtPkgWeight = new JTextField();
+        lblIC7 = new JLabel();
+        lblPkgSize = new JLabel();
+        cmbPkgSize = new JComboBox<>();
+        txtPost = new JTextField();
 
         //======== jfManager ========
         {
@@ -176,13 +204,13 @@ public class ManagerHome extends courier.GUI{
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
-                . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder
-                . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .
-                awt .Font .BOLD ,12 ), java. awt. Color. red) ,sPnlManager. getBorder( )) )
-                ; sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-                ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
-                ;
+                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+                javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax
+                .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+                .awt.Font("D\u0069alog",java.awt.Font.BOLD,12),java.awt
+                .Color.red),sPnlManager. getBorder()));sPnlManager. addPropertyChangeListener(new java.beans.
+                PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".
+                equals(e.getPropertyName()))throw new RuntimeException();}});
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -198,7 +226,7 @@ public class ManagerHome extends courier.GUI{
                 lblManagerName.setForeground(Color.white);
                 lblManagerName.setHorizontalAlignment(SwingConstants.CENTER);
                 sPnlManager.add(lblManagerName);
-                lblManagerName.setBounds(25, 75, 200, 60);
+                lblManagerName.setBounds(25, 70, 200, 60);
 
                 //---- btnOverview ----
                 btnOverview.setText("Overview");
@@ -207,7 +235,7 @@ public class ManagerHome extends courier.GUI{
                 btnOverview.setBounds(45, 160, 145, 45);
 
                 //---- btnOrder ----
-                btnOrder.setText("Order");
+                btnOrder.setText("New Order");
                 btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnOrder);
                 btnOrder.setBounds(45, 235, 145, 45);
@@ -216,25 +244,32 @@ public class ManagerHome extends courier.GUI{
                 btnRider.setText("Rider");
                 btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 300, 145, 45);
+                btnRider.setBounds(45, 365, 145, 45);
 
                 //---- btnReport ----
                 btnReport.setText("Report");
                 btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 370, 145, 45);
+                btnReport.setBounds(45, 425, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 435, 145, 45);
+                btnFeedback.setBounds(45, 490, 145, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 500, 145, 45);
+                btnLogout.setBounds(45, 555, 145, 45);
+
+                //---- btnAssignOrder ----
+                btnAssignOrder.setText("Assign Order");
+                btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
+                sPnlManager.add(btnAssignOrder);
+                btnAssignOrder.setBounds(45, 300, 145, 45);
 
                 {
                     // compute preferred size
@@ -259,47 +294,12 @@ public class ManagerHome extends courier.GUI{
                 panel1.setBackground(Color.white);
                 panel1.setLayout(null);
 
-                //---- lblID ----
-                lblID.setText("Order ID");
-                lblID.setFont(new Font("Nirmala UI", Font.BOLD, 24));
-                lblID.setForeground(Color.black);
-                panel1.add(lblID);
-                lblID.setBounds(new Rectangle(new Point(20, 115), lblID.getPreferredSize()));
-
-                //---- lblType ----
-                lblType.setText("Order Type");
-                lblType.setFont(new Font("Nirmala UI", Font.BOLD, 24));
-                lblType.setForeground(Color.black);
-                panel1.add(lblType);
-                lblType.setBounds(20, 215, 135, 32);
-
                 //---- lblIC ----
                 lblIC.setText("Customer IC");
                 lblIC.setFont(new Font("Nirmala UI", Font.BOLD, 24));
                 lblIC.setForeground(Color.black);
                 panel1.add(lblIC);
-                lblIC.setBounds(20, 275, 180, 45);
-
-                //---- lblActID ----
-                lblActID.setText("Order ID");
-                lblActID.setFont(new Font("Nirmala UI", Font.BOLD, 20));
-                lblActID.setForeground(new Color(208, 32, 69));
-                lblActID.setBorder(new LineBorder(Color.black, 2, true));
-                lblActID.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(lblActID);
-                lblActID.setBounds(180, 115, 95, 35);
-
-                //---- cmbType ----
-                cmbType.setFont(cmbType.getFont().deriveFont(cmbType.getFont().getSize() + 9f));
-                cmbType.setBackground(Color.white);
-                cmbType.setMaximumRowCount(2);
-                cmbType.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "Non Pickup",
-                    "Pickup"
-                }));
-                cmbType.setForeground(new Color(86, 83, 83));
-                panel1.add(cmbType);
-                cmbType.setBounds(255, 215, 210, 40);
+                lblIC.setBounds(30, 125, 180, 45);
 
                 //---- txtIC ----
                 txtIC.setBackground(Color.white);
@@ -318,35 +318,35 @@ public class ManagerHome extends courier.GUI{
                     }
                 });
                 panel1.add(txtIC);
-                txtIC.setBounds(255, 280, 255, 40);
+                txtIC.setBounds(270, 125, 255, 40);
 
                 //---- lblIC2 ----
-                lblIC2.setText("Street");
+                lblIC2.setText("Destination Street");
                 lblIC2.setFont(new Font("Nirmala UI", Font.BOLD, 24));
                 lblIC2.setForeground(Color.black);
                 panel1.add(lblIC2);
-                lblIC2.setBounds(20, 350, 180, 45);
+                lblIC2.setBounds(30, 350, 215, 75);
 
                 //---- lblIC3 ----
-                lblIC3.setText("City");
+                lblIC3.setText("Destination City");
                 lblIC3.setFont(new Font("Nirmala UI", Font.BOLD, 24));
                 lblIC3.setForeground(Color.black);
                 panel1.add(lblIC3);
-                lblIC3.setBounds(25, 470, 180, 45);
+                lblIC3.setBounds(35, 455, 195, 45);
 
                 //---- lblIC4 ----
                 lblIC4.setText("State");
                 lblIC4.setFont(new Font("Nirmala UI", Font.BOLD, 24));
                 lblIC4.setForeground(Color.black);
                 panel1.add(lblIC4);
-                lblIC4.setBounds(25, 550, 180, 45);
+                lblIC4.setBounds(35, 525, 180, 45);
 
                 //---- lblIC5 ----
                 lblIC5.setText("Postcode");
                 lblIC5.setFont(new Font("Nirmala UI", Font.BOLD, 24));
                 lblIC5.setForeground(Color.black);
                 panel1.add(lblIC5);
-                lblIC5.setBounds(25, 625, 180, 45);
+                lblIC5.setBounds(35, 595, 180, 45);
 
                 //======== scrollPane1 ========
                 {
@@ -366,7 +366,7 @@ public class ManagerHome extends courier.GUI{
                     scrollPane1.setViewportView(txtStreet);
                 }
                 panel1.add(scrollPane1);
-                scrollPane1.setBounds(255, 350, 505, 70);
+                scrollPane1.setBounds(270, 360, 505, 70);
 
                 //---- txtCity ----
                 txtCity.setBackground(Color.white);
@@ -385,7 +385,7 @@ public class ManagerHome extends courier.GUI{
                     }
                 });
                 panel1.add(txtCity);
-                txtCity.setBounds(255, 470, 405, 40);
+                txtCity.setBounds(270, 460, 405, 40);
 
                 //---- cmbState ----
                 cmbState.setFont(cmbState.getFont().deriveFont(cmbState.getFont().getSize() + 9f));
@@ -408,26 +408,7 @@ public class ManagerHome extends courier.GUI{
                 }));
                 cmbState.setForeground(new Color(86, 83, 83));
                 panel1.add(cmbState);
-                cmbState.setBounds(255, 545, 210, 40);
-
-                //---- txtPost ----
-                txtPost.setBackground(Color.white);
-                txtPost.setCaretColor(Color.black);
-                txtPost.setForeground(Color.black);
-                txtPost.setFont(txtPost.getFont().deriveFont(txtPost.getFont().getSize() + 8f));
-                txtPost.setDisabledTextColor(Color.black);
-                txtPost.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        txtPostKeyPressed(e);
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        txtPostKeyTyped(e);
-                    }
-                });
-                panel1.add(txtPost);
-                txtPost.setBounds(260, 625, 175, 40);
+                cmbState.setBounds(270, 530, 210, 40);
 
                 //---- btnOrderProceed1 ----
                 btnOrderProceed1.setText("Proceed");
@@ -438,11 +419,12 @@ public class ManagerHome extends courier.GUI{
                     try {
                         btnOrderProceed1ActionPerformed(e);
                     } catch (InvalidValueException invalidValueException) {
-                        invalidValueException.printStackTrace();
+
+
                     }
                 });
                 panel1.add(btnOrderProceed1);
-                btnOrderProceed1.setBounds(605, 665, 170, 65);
+                btnOrderProceed1.setBounds(620, 665, 170, 65);
 
                 //======== pnlTitle ========
                 {
@@ -477,6 +459,78 @@ public class ManagerHome extends courier.GUI{
                 }
                 panel1.add(pnlTitle);
                 pnlTitle.setBounds(0, 0, 850, 80);
+
+                //---- lblPkgWeight ----
+                lblPkgWeight.setText("Package Weight");
+                lblPkgWeight.setFont(new Font("Nirmala UI", Font.BOLD, 24));
+                lblPkgWeight.setForeground(Color.black);
+                panel1.add(lblPkgWeight);
+                lblPkgWeight.setBounds(30, 190, 195, 45);
+
+                //---- txtPkgWeight ----
+                txtPkgWeight.setBackground(Color.white);
+                txtPkgWeight.setCaretColor(Color.black);
+                txtPkgWeight.setForeground(Color.black);
+                txtPkgWeight.setFont(txtPkgWeight.getFont().deriveFont(txtPkgWeight.getFont().getSize() + 8f));
+                txtPkgWeight.setDisabledTextColor(Color.black);
+                txtPkgWeight.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        txtPkgWeightKeyPressed(e);
+                    }
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        txtPkgWeightKeyTyped(e);
+                    }
+                });
+                panel1.add(txtPkgWeight);
+                txtPkgWeight.setBounds(270, 205, 60, 40);
+
+                //---- lblIC7 ----
+                lblIC7.setText("in KG");
+                lblIC7.setFont(new Font("Nirmala UI", Font.BOLD, 24));
+                lblIC7.setForeground(Color.black);
+                panel1.add(lblIC7);
+                lblIC7.setBounds(30, 225, 150, 45);
+
+                //---- lblPkgSize ----
+                lblPkgSize.setText("Package Size");
+                lblPkgSize.setFont(new Font("Nirmala UI", Font.BOLD, 24));
+                lblPkgSize.setForeground(Color.black);
+                panel1.add(lblPkgSize);
+                lblPkgSize.setBounds(30, 285, 195, 45);
+
+                //---- cmbPkgSize ----
+                cmbPkgSize.setFont(cmbPkgSize.getFont().deriveFont(cmbPkgSize.getFont().getSize() + 9f));
+                cmbPkgSize.setBackground(Color.white);
+                cmbPkgSize.setMaximumRowCount(3);
+                cmbPkgSize.setModel(new DefaultComboBoxModel<>(new String[] {
+                    "Small",
+                    "Medium",
+                    "Large"
+                }));
+                cmbPkgSize.setForeground(new Color(86, 83, 83));
+                panel1.add(cmbPkgSize);
+                cmbPkgSize.setBounds(270, 285, 210, 40);
+
+                //---- txtPost ----
+                txtPost.setBackground(Color.white);
+                txtPost.setCaretColor(Color.black);
+                txtPost.setForeground(Color.black);
+                txtPost.setFont(txtPost.getFont().deriveFont(txtPost.getFont().getSize() + 8f));
+                txtPost.setDisabledTextColor(Color.black);
+                txtPost.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        txtPostKeyPressed(e);
+                    }
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        txtPostKeyTyped(e);
+                    }
+                });
+                panel1.add(txtPost);
+                txtPost.setBounds(270, 595, 175, 40);
 
                 {
                     // compute preferred size
@@ -528,13 +582,10 @@ public class ManagerHome extends courier.GUI{
     private static JButton btnReport;
     private static JButton btnFeedback;
     private static JButton btnLogout;
+    private static JButton btnAssignOrder;
     private JPanel panel1;
-    private JLabel lblID;
-    private JLabel lblType;
     private JLabel lblIC;
-    private JLabel lblActID;
-    private static JComboBox<String> cmbType;
-    private JTextField txtIC;
+    private static JTextField txtIC;
     private JLabel lblIC2;
     private JLabel lblIC3;
     private JLabel lblIC4;
@@ -543,10 +594,15 @@ public class ManagerHome extends courier.GUI{
     private static JTextArea txtStreet;
     private static JTextField txtCity;
     private static JComboBox<String> cmbState;
-    private static JTextField txtPost;
     private static JButton btnOrderProceed1;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;
+    private JLabel lblPkgWeight;
+    private static JTextField txtPkgWeight;
+    private JLabel lblIC7;
+    private JLabel lblPkgSize;
+    private static JComboBox<String> cmbPkgSize;
+    private static JTextField txtPost;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     
 }

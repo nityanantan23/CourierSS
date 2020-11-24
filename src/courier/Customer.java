@@ -139,9 +139,10 @@ public class Customer extends Person implements fileReader {
     }
 
 
-    @Override
-    public String generateID() {
-        return null;
-        //todo fix here
+    public static String generateID() {
+        cusCounter();
+        return ("C"+cusCount);
     }
+
+
 }

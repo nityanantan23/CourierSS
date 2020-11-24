@@ -1,10 +1,9 @@
 package courier;
-public abstract class Person implements fileAccess {
+
+public abstract class Person implements fileReader{
     protected String id;
-    protected Integer age;
     protected String phone;
     protected String name;
-    protected static final String spChr = "-/@#$%^&_+=()" ;
 
     public Person(){}
 
@@ -83,3 +82,5 @@ public abstract class Person implements fileAccess {
 
 
 }
+
+

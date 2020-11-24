@@ -158,9 +158,9 @@ public class Order implements fileReader{
             pw = new PrintWriter(bw);
 
             pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().get(GregorianCalendar.DATE)+";"
-                    +getOrderDate().get(GregorianCalendar.MONTH)+1+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
+                    +(getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
                     +getRiderID()+";"+getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                    getExpectedDelivery().get(GregorianCalendar.MONTH)+1+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                    (getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
                     ";"+getOrderPrice()+";"+getStreet()+";"+getCity()+";"+getState()+";"
                             +getPostcode()+";"+getDeliveryStatus()+";"+getOrderPackage().getPackageID());
 

@@ -8,9 +8,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Main {
+public class Main extends   Application {
     public static StaffLogin LoginPage;
     public static ManagerHome ManagerPage;
+    public static CustomerRegistration CustomerRegister;
+    public static AssignOrder assignOrderPage;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        primaryStage.setTitle("CourierSS");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.show();
+    }
 
     public static void main(String[] args) {
 //        launch(args);
@@ -27,7 +39,9 @@ public class Main {
         m.loadStaff();
         a.loadStaff();
         c.readFile();
+        assignOrderPage= new AssignOrder();
         ManagerPage=new ManagerHome();
         CustomerRegister= new CustomerRegistration();
+
     }
 }

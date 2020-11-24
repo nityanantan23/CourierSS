@@ -1,5 +1,6 @@
 package courier;
 
 public interface IDGenerator {
-    String generateID();
+    String generateID(int itemCounter);
+
 }
