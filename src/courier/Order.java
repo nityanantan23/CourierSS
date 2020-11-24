@@ -159,9 +159,9 @@ public class Order implements fileReader{
             for (int i=0;i<orderAL.size();i++){
                 Order o= orderAL.get(i);
                 pw.println(o.getOrderID()+";"+o.getCustomerID()+";"+o.getOrderDate().get(GregorianCalendar.DATE)+";"
-                        +(o.getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
+                        +(o.getOrderDate().get(GregorianCalendar.MONTH))+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
                         +o.getRiderID()+";"+o.getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH))+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
                         ";"+o.getOrderPrice()+";"+o.getStreet()+";"+o.getCity()+";"+o.getState()+";"
                         +o.getPostcode()+";"+o.getDeliveryStatus()+";"+o.getOrderPackage().getPackageID());
             }
@@ -190,9 +190,9 @@ public class Order implements fileReader{
             pw = new PrintWriter(bw);
 
             pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().get(GregorianCalendar.DATE)+";"
-                    +(getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
+                    +(getOrderDate().get(GregorianCalendar.MONTH))+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
                     +getRiderID()+";"+getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                    (getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                    (getExpectedDelivery().get(GregorianCalendar.MONTH))+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
                     ";"+getOrderPrice()+";"+getStreet()+";"+getCity()+";"+getState()+";"
                             +getPostcode()+";"+getDeliveryStatus()+";"+getOrderPackage().getPackageID());
 

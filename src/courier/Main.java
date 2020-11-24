@@ -13,6 +13,7 @@ public class Main extends   Application {
     public static ManagerHome ManagerPage;
     public static CustomerRegistration CustomerRegister;
     public static AssignOrder assignOrderPage;
+    public static RiderHome riderHome;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -42,6 +43,7 @@ public class Main extends   Application {
         assignOrderPage= new AssignOrder();
         ManagerPage=new ManagerHome();
         CustomerRegister= new CustomerRegistration();
+        riderHome= new RiderHome("R002");
 
     }
 }
