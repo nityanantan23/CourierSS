@@ -1,2 +1,6 @@
 P001;O001;small;20
-P002;O002;large;30
+P102;O103;large;12.0
+P103;O103;large;12.0
+P105;O105;large;12.0
+P105;O105;small;12.0
+P106;O106;small;50.0

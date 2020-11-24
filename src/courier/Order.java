@@ -24,7 +24,7 @@ public class Order implements fileReader{
     private static final String[] mediumPriceState={"JHR","PHG","PRK","PNG"};
     private static final String[] highPriceState={"TRG","KTN","PLS","KDH"};
     private static ArrayList<Order> orderAL= new ArrayList<>();
-
+    public static final NumberFormat df = new DecimalFormat("#0.00");
 
 
     public Order(){};
@@ -44,6 +44,7 @@ public class Order implements fileReader{
         setStreet(street);
         setPostcode(postcode);
         setDeliveryStatus(deliveryStatus);
+        generateID();
     }
 
 //##############################################################
@@ -90,6 +91,16 @@ public class Order implements fileReader{
     public static void orderCounter(){
         orderCount=orderCount+1;
     }
+    public static GregorianCalendar expectedDateCal(GregorianCalendar g,String state){
+        if (ArrayUtils.contains(getLowPriceState(),state)){
+            g.add((GregorianCalendar.DATE),3);
+        }else if(ArrayUtils.contains(getMediumPriceState(),state)){
+            g.add((GregorianCalendar.DATE),5);
+        }else {
+            g.add((GregorianCalendar.DATE),7);
+        }
+        return g;
+    }
 
     @Override
     public void readFile() {
@@ -129,7 +140,7 @@ public class Order implements fileReader{
                 }
                 Order o= new Order(getOrderID(),getCustomerID(),getOrderDate(),getRiderID(),getExpectedDelivery(),getOrderPrice(),getOrderPackage(),getStreet(),getCity(),getState(),getPostcode(),getDeliveryStatus());
                 orderAL.add(o);
-                orderCounter();
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -142,13 +153,16 @@ public class Order implements fileReader{
         BufferedWriter bw=null;
         PrintWriter pw=null;
         try{
-            fw = new FileWriter("txtFile/Packages.txt", true);
+            fw = new FileWriter("txtFile/Order.txt", true);
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate()+";"+getRiderID()+";"+getExpectedDelivery()+";"+
-                    getOrderPrice()+";"+getCity()+";"+getOrderPackage().getPackageID()+";"+getState()+";"+getStreet()+";"+getPostcode()+";"+
-                    getDeliveryStatus());
+            pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().get(GregorianCalendar.DATE)+";"
+                    +getOrderDate().get(GregorianCalendar.MONTH)+1+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
+                    +getRiderID()+";"+getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
+                    getExpectedDelivery().get(GregorianCalendar.MONTH)+1+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                    ";"+getOrderPrice()+";"+getStreet()+";"+getCity()+";"+getState()+";"
+                            +getPostcode()+";"+getDeliveryStatus()+";"+getOrderPackage().getPackageID());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,55 +181,50 @@ public class Order implements fileReader{
     //Getter and Setters
 //##############################################################
 
-
-
-
-    //    public static void main(String[] args){
-//        expectedDelivery = new GregorianCalendar();
-//        System.out.println(expectedDelivery.getTime());
-//    }
-
-
-
 //    //calculation of price
 //    @Override
-//    public double priceCal() throws InvalidLocationException {
-//        boolean pass=false;
-//        String location =null;
-//        for (int i=0; i<NonPickupOrder.nonPickupOrdersAl.size();i++){
-//            if (NonPickupOrder.nonPickupOrdersAl.get(i).getOrderID().equals(getOrderID())){
-//                location=NonPickupOrder.nonPickupOrdersAl.get(i).getState();
-//                pass=true;
-//            }
-//        }
-//        if (pass==false){
-//            for (int i=0; i<PickupOrder.pickupOrdersAl.size();i++){
-//                if (PickupOrder.pickupOrdersAl.get(i).getOrderID().equals(getOrderID())){
-//                    location=PickupOrder.pickupOrdersAl.get(i).getState();
-//                    pass=true;
-//                }
-//            }
-//        }
-//        //#check if location is valid
-//        if (location==null){
-//            throw new InvalidLocationException();
-//        }else {
-//            //set the package price
-//            if (ArrayUtils.contains(lowPriceState,location)){
-//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.3+3)));
-//            }else if (ArrayUtils.contains(mediumPriceState,location)){
-//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.5+4)));
-//            }else {
-//                setPackagePrice(Double.parseDouble(df.format(getPackageWeight()*0.8+4)));;
-//            }
-//        }
-//        return 0;
-//    }
+    public static double priceCal(String state,String size, Double weight){
+        boolean pass=false;
+        double price=0;
+
+        if (size.toLowerCase().equals("small")){
+                price= (Double.parseDouble(df.format(weight*0.1+3)));
+                pass=true;
+            }else if (size.toLowerCase().equals("medium")){
+                price= (Double.parseDouble(df.format(weight*0.3+4)));
+                pass=true;
+            }else {
+                price= (Double.parseDouble(df.format(weight*0.5+4)));;
+                pass=true;
+            }
+            if (pass==true){
+                if (ArrayUtils.contains(Order.getLowPriceState(),state)){
+                    price=price+0;
+                }else if (ArrayUtils.contains(Order.getMediumPriceState(),state)){
+                    price=price+3;
+                }else {
+                    price=price+5;
+                }
+            }
+        return Double.parseDouble(df.format(price));
+    }
+
+
+
+
+
     public static void main(String[] args){
         Order o= new Order();
         o.readFile();
         System.out.println(Order.getOrderAl().get(0).getStreet());
+        GregorianCalendar g= new GregorianCalendar();
+        System.out.println(g.get(GregorianCalendar.MONTH)+1);
+
     }
 
 
+    public static String generateID() {
+        orderCounter();
+        return ("O"+orderCount);
+    }
 }

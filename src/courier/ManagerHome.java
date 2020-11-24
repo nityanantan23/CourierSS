@@ -5,9 +5,11 @@
 package courier.manager;
 
 import courier.*;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -57,8 +59,6 @@ public class ManagerHome extends courier.GUI{
 
     private void txtStreetKeyPressed(KeyEvent e) {
         spCharCheck(e,txtStreet);
-
-
     }
 
     private void btnOrderProceed1ActionPerformed(ActionEvent e) {
@@ -73,17 +73,26 @@ public class ManagerHome extends courier.GUI{
             }else{
                 for(int i=0;i<Customer.getCustomerAL().size();i++){
                     if(Customer.getCustomerAL().get(i).getIc().equals(txtIC.getText())){
-                        JOptionPane.showMessageDialog(null,"The invoice will be generated.","Successfully Added order",1);
+                        //todo add a new package here
+                        //todo create new package and order
+                        String id=Order.generateID();
+                        GregorianCalendar g= new GregorianCalendar();
+                        orderPackage op= new orderPackage(orderPackage.generateID(),id,Double.parseDouble(txtPkgWeight.getText()),cmbPkgSize.getSelectedItem().toString().toLowerCase());
+                        orderPackage.getOrderPackagesAl().add(op);
+                        op.writeLine();
+
+                        Order o = new Order(id,Customer.getCustomerAL().get(i).getId(),g,null,Order.expectedDateCal(g,cmbState.getSelectedItem().toString()),
+                                Order.priceCal(cmbState.getSelectedItem().toString(),op.getPackageSize(),op.getPackageWeight()),
+                                op,txtStreet.getText(),txtCity.getText(),cmbState.getSelectedItem().toString(),Integer.parseInt(txtPost.getText()),"Order Placed");
+                        Order.getOrderAl().add(o);
+                        o.writeLine();
+                        JOptionPane.showMessageDialog(null,"Successfully Generated an Order. The price is RM"+o.getOrderPrice()+" and the expected delivery date is "+
+                                        o.getExpectedDelivery().get(GregorianCalendar.DATE)+"-"+(o.getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+"-"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+".","Successfully Added order",1);
+                        clearPage();
                         pass=true;
                         break;
-                        //todo add a new package here
-
-
-
-
-
-                        }
                     }
+                }
                 if(pass==false){
                     //todo proceed to the new customer page
                     int confirmation= JOptionPane.showConfirmDialog(null,"It seems like this customer does not exist withint the database. Would you like to register this customer?","New Customer",0);
@@ -96,14 +105,20 @@ public class ManagerHome extends courier.GUI{
         }
     }
 
+    private static void clearPage(){
+        txtPkgWeight.setText("");
+        txtCity.setText("");
+        txtIC.setText("");
+        txtPost.setText("");;
+        txtStreet.setText("");
+        cmbPkgSize.setSelectedIndex(0);
+        cmbState.setSelectedIndex(0);
+    }
+
 
 
     private void txtRegCPhoneKeyTyped(KeyEvent e) {
         lengthChecker(e,"Postcode",txtPost,11);
-    }
-
-    public JComboBox<String> getCmbType() {
-        return cmbType;
     }
 
     public JComboBox<String> getCmbState() {
@@ -525,10 +540,10 @@ public class ManagerHome extends courier.GUI{
     private JLabel lblIC4;
     private JLabel lblIC5;
     private JScrollPane scrollPane1;
-    private JTextArea txtStreet;
-    private JTextField txtCity;
+    private static JTextArea txtStreet;
+    private static JTextField txtCity;
     private static JComboBox<String> cmbState;
-    private JTextField txtPost;
+    private static JTextField txtPost;
     private static JButton btnOrderProceed1;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;

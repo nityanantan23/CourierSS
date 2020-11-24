@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.apache.commons.lang3.ArrayUtils;
 
 
-public class orderPackage implements fileReader,IDGenerator {
+public class orderPackage implements fileReader {
     private String packageID;
     private String orderID;
     private double packageWeight;
@@ -26,6 +26,7 @@ public class orderPackage implements fileReader,IDGenerator {
         setOrderID(orderID);
         setPackageWeight(packageWeight);
         setPackageSize(packageSize);
+        generateID();
     }
 
     //##############
@@ -74,7 +75,7 @@ public class orderPackage implements fileReader,IDGenerator {
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(getPackageID()+";"+getOrderID()+";"+getPackageWeight()+";"+getPackageSize());
+            pw.println(getPackageID()+";"+getOrderID()+";"+getPackageSize()+";"+getPackageWeight());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,45 +96,45 @@ public class orderPackage implements fileReader,IDGenerator {
         packageCount=packageCount+1;
     }
 
-    @Override
-    public String generateID(int itemCounter) {
+
+    public static String generateID() {
         addPkgCount();
         return ("P"+packageCount);
     }
 
     //todo revise the function
-    public double priceCal(Order o) throws InvalidLocationException{
-        boolean pass=false;
-        String location =null;
-        //#check if location is valid
-        if (o.getCity()==null){
-            throw new InvalidLocationException();
-        }else {
-            //set the package price
-            if (ArrayUtils.contains(packageSizeSel,o.getOrderPackage().getPackageSize())){
-                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.3+3)));
-                pass=true;
-            }else if (ArrayUtils.contains(packageSizeSel,o.getOrderPackage().getPackageSize())){
-                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.5+4)));
-                pass=true;
-            }else {
-                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.8+4)));;
-                pass=true;
-            }
-            if (pass==true){
-                if (ArrayUtils.contains(Order.getLowPriceState(),o.getState())){
-                    o.setOrderPrice(o.getOrderPrice()+0);
-                }else if (ArrayUtils.contains(Order.getMediumPriceState(),o.getState())){
-                    o.setOrderPrice(o.getOrderPrice()+3);
-                }else {
-                    o.setOrderPrice(o.getOrderPrice()+5);
-                }
-            }
-
-
-        }
-        return 0;
-    };
+//    public double priceCal(Order o) throws InvalidLocationException{
+//        boolean pass=false;
+//        String location =null;
+//        //#check if location is valid
+//        if (o.getCity()==null){
+//            throw new InvalidLocationException();
+//        }else {
+//            //set the package price
+//            if (ArrayUtils.contains(packageSizeSel,o.getOrderPackage().getPackageSize())){
+//                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.3+3)));
+//                pass=true;
+//            }else if (ArrayUtils.contains(packageSizeSel,o.getOrderPackage().getPackageSize())){
+//                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.5+4)));
+//                pass=true;
+//            }else {
+//                o.setOrderPrice(Double.parseDouble(df.format(o.getOrderPackage().getPackageWeight()*0.8+4)));;
+//                pass=true;
+//            }
+//            if (pass==true){
+//                if (ArrayUtils.contains(Order.getLowPriceState(),o.getState())){
+//                    o.setOrderPrice(o.getOrderPrice()+0);
+//                }else if (ArrayUtils.contains(Order.getMediumPriceState(),o.getState())){
+//                    o.setOrderPrice(o.getOrderPrice()+3);
+//                }else {
+//                    o.setOrderPrice(o.getOrderPrice()+5);
+//                }
+//            }
+//
+//
+//        }
+//        return 0;
+//    };
 
 
 
