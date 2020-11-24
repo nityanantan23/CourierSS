@@ -196,12 +196,82 @@ new FormModel {
 							"JavaCodeGenerator.customCreateCode": "new JTable(tblM);"
 							"JavaCodeGenerator.customCreate": true
 						}
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "tblOrderMouseClicked", true ) )
 					} )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"x": 40
 					"y": 125
 					"width": 765
-					"height": 400
+					"height": 330
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblRiderID"
+					"text": "Rider ID :"
+					"font": &Font1 new java.awt.Font( "Nirmala UI", 1, 30 )
+					"foreground": &Color0 new java.awt.Color( 0, 0, 0, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 140
+					"height": 45
+					"x": 65
+					"y": 580
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "cmbRiderID"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 9, false )
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					"maximumRowCount": 3
+					"foreground": new java.awt.Color( 86, 83, 83, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableGetter": true
+						"JavaCodeGenerator.variableModifiers": 10
+						"JavaCodeGenerator.customCreate": true
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 210
+					"height": 45
+					"x": 255
+					"y": 585
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblOrderID"
+					"text": "Order ID :"
+					"font": #Font1
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 140
+					"height": 45
+					"x": 60
+					"y": 495
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblSelOrderId"
+					"font": new java.awt.Font( "Nirmala UI", 0, 25 )
+					"foreground": #Color0
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 140
+					"height": 45
+					"x": 255
+					"y": 500
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnAssignRider"
+					"text": "Assign"
+					"font": new java.awt.Font( "Trebuchet MS", 1, 23 )
+					"background": new java.awt.Color( 0, 0, 0, 255 )
+					"foreground": new java.awt.Color( 255, 255, 255, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+						"JavaCodeGenerator.variableGetter": true
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnAssignRiderActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 170
+					"height": 65
+					"x": 625
+					"y": 650
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"height": 760

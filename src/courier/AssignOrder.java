@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.GregorianCalendar;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 /**
@@ -17,9 +19,13 @@ public class AssignOrder extends JFrame {
     public AssignOrder() {
         loadTable();
         tblOrder=new JTable(tblM);
+        cmbRiderID= new JComboBox<>();
+        for (int i=0;i<Rider.riderAl.size();i++){
+            cmbRiderID.addItem(Rider.riderAl.get(i).id);
+        }
         initComponents();
-
     }
+
     public Object[][] obj;
     private static String[] col={"OrderID","PackageID","CustomerID","OrderDate","ExpectedDelivery","RiderID"};
     private static DefaultTableModel tblM= new DefaultTableModel(col,0){
@@ -27,7 +33,6 @@ public class AssignOrder extends JFrame {
         {
             return false;//This causes all cells to be not editable
         }
-
     };
 
 
@@ -66,6 +71,46 @@ public class AssignOrder extends JFrame {
         // TODO: add custom component creation code here
     }
 
+    private void tblOrderMouseClicked(MouseEvent e) {
+        lblSelOrderId.setText(tblOrder.getValueAt(tblOrder.getSelectedRow(),0).toString());
+
+    }
+
+    public JComboBox<String> getCmbRiderID() {
+        return cmbRiderID;
+    }
+
+
+    public JButton getBtnAssignRider() {
+        return btnAssignRider;
+    }
+
+    private void btnAssignRiderActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        if (tblOrder.getSelectedRow()==-1){
+            JOptionPane.showMessageDialog(null,"Please select which order to assign!","Invalid Order",3);
+        }else {
+            int confirm= JOptionPane.showConfirmDialog(null,"Are you sure you want to assign "+cmbRiderID.getSelectedItem().toString()+" to order "+
+                    tblOrder.getValueAt(tblOrder.getSelectedRow(),0).toString()+"?","Assign Confirmation",0);
+            if (confirm==0){
+                for(int i=0; i<Order.getOrderAl().size();i++){
+                    if(Order.getOrderAl().get(i).getOrderID().equals(tblOrder.getValueAt(tblOrder.getSelectedRow(),0).toString())){
+                        Order.getOrderAl().get(i).setRiderID(cmbRiderID.getSelectedItem().toString());
+                        JOptionPane.showMessageDialog(null,"Successfully assigned "
+                                +cmbRiderID.getSelectedItem().toString()+" to order "+Order.getOrderAl().get(i).getOrderID());
+                        tblM.setRowCount(0);
+                        loadTable();
+                        cmbRiderID.setSelectedIndex(0);
+                        Order o= new Order();
+                        o.writeFile();
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
 
 
     private void initComponents() {
@@ -88,6 +133,10 @@ public class AssignOrder extends JFrame {
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
         scrollPane2 = new JScrollPane();
+        lblRiderID = new JLabel();
+        lblOrderID = new JLabel();
+        lblSelOrderId = new JLabel();
+        btnAssignRider = new JButton();
 
         //======== jfAssignOrder ========
         {
@@ -102,14 +151,13 @@ public class AssignOrder extends JFrame {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
-                new javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
-                ,javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
-                ,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,12)
-                ,java.awt.Color.red),sPnlManager. getBorder()));sPnlManager. addPropertyChangeListener(
-                new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException()
-                ;}});
+                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
+                . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border . TitledBorder
+                . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "D\u0069alog", java .
+                awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,sPnlManager. getBorder () ) )
+                ; sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+                ) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
+                ;
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -239,10 +287,53 @@ public class AssignOrder extends JFrame {
                     tblOrder.setRowMargin(3);
                     tblOrder.setRowHeight(35);
                     tblOrder.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+                    tblOrder.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            tblOrderMouseClicked(e);
+                        }
+                    });
                     scrollPane2.setViewportView(tblOrder);
                 }
                 panel1.add(scrollPane2);
-                scrollPane2.setBounds(40, 125, 765, 400);
+                scrollPane2.setBounds(40, 125, 765, 330);
+
+                //---- lblRiderID ----
+                lblRiderID.setText("Rider ID :");
+                lblRiderID.setFont(new Font("Nirmala UI", Font.BOLD, 30));
+                lblRiderID.setForeground(Color.black);
+                panel1.add(lblRiderID);
+                lblRiderID.setBounds(65, 580, 140, 45);
+
+                //---- cmbRiderID ----
+                cmbRiderID.setFont(cmbRiderID.getFont().deriveFont(cmbRiderID.getFont().getSize() + 9f));
+                cmbRiderID.setBackground(Color.white);
+                cmbRiderID.setMaximumRowCount(3);
+                cmbRiderID.setForeground(new Color(86, 83, 83));
+                panel1.add(cmbRiderID);
+                cmbRiderID.setBounds(255, 585, 210, 45);
+
+                //---- lblOrderID ----
+                lblOrderID.setText("Order ID :");
+                lblOrderID.setFont(new Font("Nirmala UI", Font.BOLD, 30));
+                lblOrderID.setForeground(Color.black);
+                panel1.add(lblOrderID);
+                lblOrderID.setBounds(60, 495, 140, 45);
+
+                //---- lblSelOrderId ----
+                lblSelOrderId.setFont(new Font("Nirmala UI", Font.PLAIN, 25));
+                lblSelOrderId.setForeground(Color.black);
+                panel1.add(lblSelOrderId);
+                lblSelOrderId.setBounds(255, 500, 140, 45);
+
+                //---- btnAssignRider ----
+                btnAssignRider.setText("Assign");
+                btnAssignRider.setFont(new Font("Trebuchet MS", Font.BOLD, 23));
+                btnAssignRider.setBackground(Color.black);
+                btnAssignRider.setForeground(Color.white);
+                btnAssignRider.addActionListener(e -> btnAssignRiderActionPerformed(e));
+                panel1.add(btnAssignRider);
+                btnAssignRider.setBounds(625, 650, 170, 65);
 
                 {
                     // compute preferred size
@@ -300,5 +391,10 @@ public class AssignOrder extends JFrame {
     protected static JLabel lblTitle;
     private JScrollPane scrollPane2;
     private static JTable tblOrder;
+    private JLabel lblRiderID;
+    private static JComboBox cmbRiderID;
+    private JLabel lblOrderID;
+    private static JLabel lblSelOrderId;
+    private static JButton btnAssignRider;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

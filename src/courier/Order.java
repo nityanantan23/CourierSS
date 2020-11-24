@@ -102,6 +102,7 @@ public class Order implements fileReader{
         return g;
     }
 
+
     @Override
     public void readFile() {
         String[] lineV;
@@ -147,6 +148,37 @@ public class Order implements fileReader{
         }
     }
 
+
+    //todo should be added to file access
+    public static void writeFile(){
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            pw = new PrintWriter(new File("txtFile/Order.txt"));
+            for (int i=0;i<orderAL.size();i++){
+                Order o= orderAL.get(i);
+                pw.println(o.getOrderID()+";"+o.getCustomerID()+";"+o.getOrderDate().get(GregorianCalendar.DATE)+";"
+                        +(o.getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
+                        +o.getRiderID()+";"+o.getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
+                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                        ";"+o.getOrderPrice()+";"+o.getStreet()+";"+o.getCity()+";"+o.getState()+";"
+                        +o.getPostcode()+";"+o.getDeliveryStatus()+";"+o.getOrderPackage().getPackageID());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+
+        }
+
+    }
+
+
+
+
+
     @Override
     public void writeLine() {
         FileWriter fw=null;
@@ -181,8 +213,7 @@ public class Order implements fileReader{
     //Getter and Setters
 //##############################################################
 
-//    //calculation of price
-//    @Override
+
     public static double priceCal(String state,String size, Double weight){
         boolean pass=false;
         double price=0;
