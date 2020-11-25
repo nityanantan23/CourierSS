@@ -28,10 +28,10 @@ public class Main {
         c.readFile();
 //        assignOrderPage= new AssignOrder();
 //        ManagerPage=new ManagerHome();
-        CustomerRegister= new CustomerRegistration();
+//        CustomerRegister= new CustomerRegistration();
         adminUserMatrix = new Admin_UserMatrix();
         //TODO only assign the rider id when the user login this is for testing purpose
-        riderHome= new RiderHome("R002");
+//        riderHome= new RiderHome("R002");
 
     }
 }

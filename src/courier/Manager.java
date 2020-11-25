@@ -1,12 +1,11 @@
 package courier;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Manager extends Staff{
     public static ArrayList<Manager> managerAl=new ArrayList();
+    private static Integer ManagerID=100;
+
 
     public Manager(){};
     public Manager( String id,String name, String phone, String password){
@@ -52,10 +51,34 @@ public class Manager extends Staff{
 
     @Override
     public void writeFile() {
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            pw = new PrintWriter(new File("txtFile/Manager_account.txt"));
+            for (int i=0;i<managerAl.size()-(managerAl.size())/2;i++){
+                Manager o= managerAl.get(i);
+                pw.println(o.generateID()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+
+        }
+    }
+
+    public static void addAdminID(){
+
+        ManagerID=ManagerID+1;
     }
 
 
+    public static String generateID() {
+        addAdminID();
+        return ("M"+ ManagerID);
+    }
     //manager class creation
 
 }

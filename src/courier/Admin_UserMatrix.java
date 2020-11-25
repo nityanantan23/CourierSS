@@ -24,12 +24,6 @@ import static courier.StaffLogin.resetField;
  */
 public class Admin_UserMatrix extends GUI {
     public Admin_UserMatrix() {
-        Admin a = new Admin();
-        Manager m = new Manager();
-        Rider r = new Rider();
-        a.loadStaff();
-        m.loadStaff();
-        r.loadStaff();
 
         loadTable();
         tblUser = new JTable(tblM);
@@ -52,7 +46,15 @@ public class Admin_UserMatrix extends GUI {
     };
 
     public void loadTable() {
-        for (int i = 0; i < Admin.adminAl.size() - (Admin.adminAl.size()) / 2; i++) {
+//        Admin a = new Admin();
+//        Manager m = new Manager();
+//        Rider r = new Rider();
+//        a.loadStaff();
+//        m.loadStaff();
+//        r.loadStaff();
+
+
+        for (int i = 0; i < Admin.adminAl.size(); i++) {
             if (Admin.adminAl.get(i).getId() != null) {
                 String staffID = Admin.adminAl.get(i).getId();
                 String Name = Admin.adminAl.get(i).getName();
@@ -61,7 +63,7 @@ public class Admin_UserMatrix extends GUI {
                 tblM.addRow(data);
             }
         }
-        for (int i = 0; i < Manager.managerAl.size() - (Manager.managerAl.size()) / 2; i++) {
+        for (int i = 0; i < Manager.managerAl.size(); i++) {
             if (Manager.managerAl.get(i).getId() != null) {
                 String staffID = Manager.managerAl.get(i).getId();
                 String Name = Manager.managerAl.get(i).getName();
@@ -70,10 +72,10 @@ public class Admin_UserMatrix extends GUI {
                 tblM.addRow(data);
             }
         }
-        for (int i = 0; i < Rider.riderAl.size() - (Rider.riderAl.size()) / 2; i++) {
-            if (Rider.riderAl.get(i).getId() != null) {
-                String staffID = Rider.riderAl.get(i).getId();
-                String Name = Rider.riderAl.get(i).getName();
+        for (int i = 0; i < Rider.getRiderAL().size(); i++) {
+            if (Rider.getRiderAL().get(i).getId() != null) {
+                String staffID = Rider.getRiderAL().get(i).getId();
+                String Name = Rider.getRiderAL().get(i).getName();
                 String Role = "Rider";
                 Object[] data = {staffID, Name, Role};
                 tblM.addRow(data);
@@ -87,55 +89,142 @@ public class Admin_UserMatrix extends GUI {
         if (txtName.getText().isBlank() || txtPw.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "fields are empty!", "Invalid ", 3);
         } else if (cmbRole.getSelectedItem().toString().equals("Admin")) {
-            Admin a = new Admin();
-            a.setName(txtName.getText());
-            a.setPassword(txtPw.getText().toString());
-            a.setPhone(txtPh.getText().toString());
+            Admin a= new Admin(Admin.generateID(),txtName.getText(),txtPh.getText()
+                    ,txtPw.getText());
+            Admin.adminAl.add(a);
             a.writeLine();
             JOptionPane.showMessageDialog(null, "Successfully added "
                     + cmbRole.getSelectedItem().toString() + " " + a.getName());
-            tblM.fireTableDataChanged();
+//            tblM.fireTableDataChanged();
             tblM.setRowCount(0);
             resetField();
-            tblM.fireTableDataChanged();
+            loadTable();
 
 
         } else if (cmbRole.getSelectedItem().toString().equals("Manager")) {
-            Manager b = new Manager();
-            b.setName(txtName.getText());
-            b.setPassword(txtPw.getText().toString());
-            b.setPhone(txtPh.getText().toString());
-            b.writeLine();
+            Manager a= new Manager(Manager.generateID(),txtName.getText(),txtPh.getText()
+                    ,txtPw.getText());
+            Manager.managerAl.add(a);
+            a.writeLine();
             JOptionPane.showMessageDialog(null, "Successfully added "
-                    + cmbRole.getSelectedItem().toString() + " " + b.getName());
+                    + cmbRole.getSelectedItem().toString() + " " + a.getName());
             resetField();
             tblM.setRowCount(0);
-            loadTable();
-            tblM.fireTableDataChanged();
             loadTable();
         } else if (cmbRole.getSelectedItem().toString().equals("Rider")) {
-            Rider c = new Rider();
-            c.setName(txtName.getText());
-            c.setPassword(txtPw.getText().toString());
-            c.setPhone(txtPh.getText().toString());
-            c.writeLine();
+            Rider a= new Rider(Rider.generateID(),txtName.getText(),txtPh.getText()
+                    ,txtPw.getText());
+            Rider.getRiderAL().add(a);
+            a.writeLine();
             JOptionPane.showMessageDialog(null, "Successfully added "
-                    + cmbRole.getSelectedItem().toString() + " " + c.getName());
+                    + cmbRole.getSelectedItem().toString() + " " + a.getName());
             resetField();
             tblM.setRowCount(0);
-            loadTable();
-            tblM.fireTableDataChanged();
             loadTable();
         }
     }
 
 
     private void btnEditActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
+        if (tblUser.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Please select which user to edit!", "Invalid ", 3);
+        } else if (tblUser.getValueAt(tblUser.getSelectedRow(), 2).equals("Admin")) {
+
+
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit " +
+                        tblUser.getValueAt(tblUser.getSelectedRow(), 1).toString() + "?", " Confirmation", 0);
+                if (confirm == 0) {
+                    for (int i = 0; i < Admin.adminAl.size(); i++) {
+                        if (Admin.adminAl.get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                            Admin.adminAl.get(i).setName(txtName.getText().toString());
+                            Admin.adminAl.get(i).setPhone(txtPh.getText().toString());
+                            Admin.adminAl.get(i).setPassword(txtPw.getText().toString());
+                            JOptionPane.showMessageDialog(null, "Successfully edited"
+                                    + cmbRole.getSelectedItem().toString() + " " + Admin.adminAl.get(i).getName());
+                            tblM.setRowCount(0);
+                            loadTable();
+                            cmbRole.setSelectedIndex(0);
+                            Admin o = new Admin();
+                            o.writeFile();
+                            break;
+                        }
+                    }
+                }
+            } else if (tblUser.getValueAt(tblUser.getSelectedRow(), 2).equals("Manager")) {
+
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit " +
+                        tblUser.getValueAt(tblUser.getSelectedRow(), 1).toString() + "?", " Confirmation", 0);
+                if (confirm == 0) {
+                    for (int i = 0; i < Manager.managerAl.size(); i++) {
+                        if (Manager.managerAl.get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                            Manager.managerAl.get(i).setName(txtName.getText().toString());
+                            Manager.managerAl.get(i).setPhone(txtPh.getText().toString());
+                            Manager.managerAl.get(i).setPassword(txtPw.getText().toString());
+                            JOptionPane.showMessageDialog(null, "Successfully edited"
+                                    + cmbRole.getSelectedItem().toString() + " " + Manager.managerAl.get(i).getName());
+                            tblM.setRowCount(0);
+                            loadTable();
+                            cmbRole.setSelectedIndex(0);
+                            Manager o = new Manager();
+                            o.writeFile();
+                            break;
+                        }
+                    }
+                }
+            } else if (tblUser.getValueAt(tblUser.getSelectedRow(), 2).equals("Rider")) {
+
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit "+
+                        tblUser.getValueAt(tblUser.getSelectedRow(), 1).toString() + "?", " Confirmation", 0);
+                if (confirm == 0) {
+                    for (int i = 0; i < Rider.getRiderAL().size(); i++) {
+                        if (Rider.getRiderAL().get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                            Rider.getRiderAL().get(i).setName(txtName.getText().toString());
+                            Rider.getRiderAL().get(i).setPhone(txtPh.getText().toString());
+                            Rider.getRiderAL().get(i).setPassword(txtPw.getText().toString());
+                            JOptionPane.showMessageDialog(null, "Successfully edited"
+                                    + cmbRole.getSelectedItem().toString() + " " + Rider.getRiderAL().get(i).getName());
+                            tblM.setRowCount(0);
+                            loadTable();
+                            cmbRole.setSelectedIndex(0);
+                            Rider o = new Rider();
+                            o.writeFile();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
 
     private void tblUserMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        for (int i = 0; i < Admin.adminAl.size(); i++) {
+            if (Admin.adminAl.get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                txtName.setText(Admin.adminAl.get(i).getName());
+                txtPh.setText(Admin.adminAl.get(i).getPhone());
+                txtPw.setText(Admin.adminAl.get(i).getPassword());
+                cmbRole.setSelectedIndex(0);
+
+
+            }
+        }
+        for (int i = 0; i < Manager.managerAl.size(); i++) {
+            if (Manager.managerAl.get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                txtName.setText(Manager.managerAl.get(i).getName());
+                txtPh.setText(Manager.managerAl.get(i).getPhone());
+                txtPw.setText(Manager.managerAl.get(i).getPassword());
+                cmbRole.setSelectedIndex(1);
+
+            }
+        }
+        for (int i = 0; i < Rider.getRiderAL().size(); i++) {
+            if (Rider.getRiderAL().get(i).getId().equals(tblUser.getValueAt(tblUser.getSelectedRow(), 0).toString())) {
+                txtName.setText(Rider.getRiderAL().get(i).getName());
+                txtPh.setText(Rider.getRiderAL().get(i).getPhone());
+                txtPw.setText(Rider.getRiderAL().get(i).getPassword());
+                cmbRole.setSelectedIndex(2);
+
+            }
+        }
     }
 
     public JLabel getLblManagerName() {
@@ -190,6 +279,8 @@ public class Admin_UserMatrix extends GUI {
                         writer.close();
                         boolean delete = orifile.delete();
                         boolean renameTo = tempFile.renameTo(orifile);
+                        tblM.setRowCount(0);
+                        loadTable();
                     }
                 }
 
@@ -220,6 +311,8 @@ public class Admin_UserMatrix extends GUI {
                         writer.close();
                         boolean delete = orifile.delete();
                         boolean renameTo = tempFile.renameTo(orifile);
+                        tblM.setRowCount(0);
+                        loadTable();
                     }
                 }
 
@@ -251,6 +344,8 @@ public class Admin_UserMatrix extends GUI {
                         writer.close();
                         boolean delete = orifile.delete();
                         boolean renameTo = tempFile.renameTo(orifile);
+                        tblM.setRowCount(0);
+                        loadTable();
                     }
                 }
 
@@ -572,11 +667,7 @@ public class Admin_UserMatrix extends GUI {
                 btnEdit.setText("Edit");
                 btnEdit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 btnEdit.addActionListener(e -> {
-                    try {
-                        btnRemoveActionPerformed(e);
-                    } catch (IOException fileNotFoundException) {
-                        fileNotFoundException.printStackTrace();
-                    }
+                    btnEditActionPerformed(e);
                 });
                 panel1.add(btnEdit);
                 btnEdit.setBounds(40, 90, 145, 45);

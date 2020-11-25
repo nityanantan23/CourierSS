@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Admin extends Staff{
     public static ArrayList<Admin> adminAl=new ArrayList();
-    private static int AdminID=0;
+    private static Integer AdminID=100;
 
 
     public Admin(){}
@@ -24,32 +24,17 @@ public class Admin extends Staff{
             readFile();
             Admin a= new Admin(getId(),getName(),getPhone(),getPassword());
             adminAl.add(a);
+
         }
     }
 
-    public static void writeFile(){
-        FileWriter fw=null;
-        BufferedWriter bw=null;
-        PrintWriter pw=null;
-        try{
-            pw = new PrintWriter(new File("txtFile/temp.txt"));
-            for (int i=0;i<adminAl.size()-(adminAl.size()/2);i++){
-                Admin o= adminAl.get(i);
-                pw.println(o.getId()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            pw.close();
 
-        }
 
-    }
+
 
 
     @Override
     public void writeLine() {
-        generateID();
         FileWriter fw=null;
         BufferedWriter bw=null;
         PrintWriter pw=null;
@@ -58,7 +43,7 @@ public class Admin extends Staff{
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(generateID()+","+getName()+","+getPhone()+","+getPassword());
+            pw.println(getId()+","+getName()+","+getPhone()+","+getPassword());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,11 +61,24 @@ public class Admin extends Staff{
 
     @Override
     public void writeFile() {
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            pw = new PrintWriter(new File("txtFile/Admin_account.txt"));
+            for (int i=0;i<adminAl.size()-(adminAl.size())/2;i++){
+                Admin o= adminAl.get(i);
+                pw.println(o.generateID()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+
+        }
 
     }
-
-
-
 
 
     public static void addAdminID(){
@@ -91,7 +89,7 @@ public class Admin extends Staff{
 
     public static String generateID() {
         addAdminID();
-        return ("A"+ String.format("%04d", AdminID));
+        return ("A"+ AdminID);
     }
 
 

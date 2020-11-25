@@ -1,13 +1,12 @@
 package courier;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Rider extends Staff{
     private static ArrayList<Rider> riderAl=new ArrayList();
+    private static Integer RiderID=100;
+
     public Rider(){}
     public Rider(String id , String name, String phone,  String password  ) {
         super(id, name, phone,  password);
@@ -57,6 +56,32 @@ public class Rider extends Staff{
 
     @Override
     public void writeFile() {
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            pw = new PrintWriter(new File("txtFile/Rider_account.txt"));
+            for (int i=0;i<getRiderAL().size()-(getRiderAL().size())/2;i++){
+                Rider o= getRiderAL().get(i);
+                pw.println(o.generateID()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+
+        }
+    }
+
+    public static void addRiderID(){
+
+        RiderID=RiderID+1;
+    }
+
+
+    public static String generateID() {
+        addRiderID();
+        return ("R"+ RiderID);
     }
 }
