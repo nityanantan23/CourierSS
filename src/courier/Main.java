@@ -43,6 +43,7 @@ public class Main extends   Application {
         assignOrderPage= new AssignOrder();
         ManagerPage=new ManagerHome();
         CustomerRegister= new CustomerRegistration();
+        //TODO only assign the rider id when the user login this is for testing purpose
         riderHome= new RiderHome("R002");
 
     }

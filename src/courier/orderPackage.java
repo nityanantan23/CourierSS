@@ -1,11 +1,8 @@
 package courier;
 
 import java.io.*;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.apache.commons.lang3.ArrayUtils;
 
 
 public class orderPackage implements fileReader {
@@ -13,12 +10,9 @@ public class orderPackage implements fileReader {
     private String orderID;
     private double packageWeight;
     private String packageSize;
-    private static final String[] packageSizeSel={"small","medium","large"};
+    private static final String[] PACKAGE_SIZE_SEL ={"small","medium","large"};
     private static ArrayList<orderPackage> orderPackagesAl= new ArrayList<>();
-    private String line;
-    private String[] lineV;
     private static int packageCount=100;
-    private static final NumberFormat df = new DecimalFormat("#0.00");
 
     public orderPackage(){}
     public orderPackage(String packageID,String orderID,double packageWeight,String packageSize){
@@ -35,7 +29,7 @@ public class orderPackage implements fileReader {
     public void setOrderID(String orderID) { this.orderID = orderID; }
     public void setPackageWeight(double packageWeight) { this.packageWeight = packageWeight;}
     public void setPackageSize(String packageSize) { this.packageSize = packageSize;}
-    public static String[] getPackageSizeSel(){return packageSizeSel;}
+    public static String[] getPackageSizeSel(){return PACKAGE_SIZE_SEL;}
     public String getPackageID() {return packageID; }
     public double getPackageWeight() {return packageWeight;}
     public String getOrderID() {return orderID;}
@@ -48,6 +42,8 @@ public class orderPackage implements fileReader {
     @Override
     public void readFile() {
         Scanner sc= null;
+        String line;
+        String[] lineV;
         try {
             sc = new Scanner(new File("txtFile/Packages.txt"));
             while(sc.hasNext()){
@@ -91,14 +87,13 @@ public class orderPackage implements fileReader {
         }
     }
 
-
-    public static void addPkgCount(){
-        packageCount=packageCount+1;
+    @Override
+    public void writeFile() {
     }
 
 
     public static String generateID() {
-        addPkgCount();
+        packageCount=packageCount+1;
         return ("P"+packageCount);
     }
 

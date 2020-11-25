@@ -50,6 +50,11 @@ public class Admin extends Staff{
         }
     }
 
+    @Override
+    public void writeFile() {
+
+    }
+
 
 //    public static void main(String[] args){
 //        Admin c= new Admin();

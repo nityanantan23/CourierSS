@@ -14,10 +14,7 @@ public abstract class Person implements fileReader{
         setPhone(phone);
     }
 
-    public void setId(String id){
-        this.id=id;
-    }
-
+    public void setId(String id){this.id=id;}
     public void setName(String name) {
         this.name = name;
     }
@@ -33,21 +30,6 @@ public abstract class Person implements fileReader{
     public String getId(){
         return id;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //public void setName(String name) throws InvalidNameException{

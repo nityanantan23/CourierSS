@@ -20,8 +20,8 @@ public class AssignOrder extends JFrame {
         loadTable();
         tblOrder=new JTable(tblM);
         cmbRiderID= new JComboBox<>();
-        for (int i=0;i<Rider.riderAl.size();i++){
-            cmbRiderID.addItem(Rider.riderAl.get(i).id);
+        for (int i=0;i<Rider.getRiderAL().size();i++){
+            cmbRiderID.addItem(Rider.getRiderAL().get(i).id);
         }
         initComponents();
     }
