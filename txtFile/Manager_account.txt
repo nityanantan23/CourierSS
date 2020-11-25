@@ -1,1 +1,2 @@
 M001,weng keat,0161234416,manager
+M002,leson gey, 0169696969,manager

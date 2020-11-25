@@ -1,0 +1,175 @@
+JFDML JFormDesigner: "7.0.2.6.321" Java: "11.0.8" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "jfCustomerRegister"
+			"background": new java.awt.Color( 204, 204, 204, 255 )
+			"title": "Manager Portal"
+			"defaultCloseOperation": 2
+			"$locationPolicy": 1
+			"resizable": false
+			auxiliary() {
+				"JavaCodeGenerator.variableModifiers": 10
+				"JavaCodeGenerator.variableGetter": true
+			}
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "panel2"
+				"background": new java.awt.Color( 255, 255, 255, 255 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+					name: "pnlTitleReg"
+					"background": new java.awt.Color( 186, 201, 245, 255 )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "lblTitle3"
+						"text": "Customer Registration"
+						"font": new java.awt.Font( "Myanmar Text", 1, 46 )
+						"foreground": sfield java.awt.Color black
+						"alignmentY": 0.0f
+						"horizontalAlignment": 0
+						"iconTextGap": 3
+						"background": new java.awt.Color( 51, 204, 255, 255 )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 12
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 510
+						"height": 65
+						"x": 0
+						"y": 15
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 885
+					"height": 80
+					"x": 0
+					"y": 0
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtRegCusIC"
+					"background": &Color0 new java.awt.Color( 255, 255, 255, 255 )
+					"caretColor": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+					"foreground": &Color2 new java.awt.Color( 0, 0, 0, 255 )
+					"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 8, false )
+					"disabledTextColor": &Color3 new java.awt.Color( 0, 0, 0, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableGetter": true
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtRegCusICKeyPressed", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtRegCusICKeyTyped", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 195
+					"height": 40
+					"x": 310
+					"y": 130
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblCIC"
+					"text": "Customer IC"
+					"font": &Font0 new java.awt.Font( "Nirmala UI", 1, 24 )
+					"foreground": &Color4 new java.awt.Color( 0, 0, 0, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 180
+					"height": 45
+					"x": 90
+					"y": 125
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblCName"
+					"text": "Name"
+					"font": #Font0
+					"foreground": #Color4
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 180
+					"height": 45
+					"x": 90
+					"y": 220
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "lblICPhone"
+					"text": "Phone"
+					"font": #Font0
+					"foreground": #Color4
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 180
+					"height": 45
+					"x": 90
+					"y": 315
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtRegCName"
+					"background": new java.awt.Color( 255, 255, 255, 255 )
+					"caretColor": #Color1
+					"foreground": #Color2
+					"font": #SwingDerivedFont0
+					"disabledTextColor": #Color3
+					"nextFocusableComponent": new FormReference( "lblICPhone" )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtRegCNameKeyPressed", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtRegCNameKeyTyped", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 405
+					"height": 40
+					"x": 310
+					"y": 225
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "txtRegCPhone"
+					"background": #Color0
+					"caretColor": #Color1
+					"foreground": #Color2
+					"font": #SwingDerivedFont0
+					"disabledTextColor": #Color3
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtRegCPhoneKeyPressed", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtRegCPhoneKeyTyped", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 255
+					"height": 40
+					"x": 310
+					"y": 310
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnRegister"
+					"text": "Register"
+					"font": &Font1 new java.awt.Font( "Trebuchet MS", 1, 23 )
+					"background": &Color5 new java.awt.Color( 0, 0, 0, 255 )
+					"foreground": &Color6 new java.awt.Color( 255, 255, 255, 255 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+						"JavaCodeGenerator.variableGetter": true
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnRegisterActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 170
+					"height": 65
+					"x": 615
+					"y": 440
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnRegisterBack"
+					"text": "Back"
+					"font": #Font1
+					"background": #Color5
+					"foreground": #Color6
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+						"JavaCodeGenerator.variableGetter": true
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnRegisterBackActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 170
+					"height": 65
+					"x": 100
+					"y": 445
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"height": 550
+				"x": 0
+				"y": 0
+				"width": 885
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 890, 580 )
+			"location": new java.awt.Point( 40, 35 )
+		} )
+	}
+}

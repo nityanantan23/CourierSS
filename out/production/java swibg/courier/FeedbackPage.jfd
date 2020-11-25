@@ -1,0 +1,18 @@
+JFDML JFormDesigner: "7.0.2.6.321" Java: "11.0.8" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"defaultCloseOperation": 3
+			auxiliary() {
+				"JavaCodeGenerator.variableModifiers": 10
+				"JavaCodeGenerator.variableGetter": true
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 190, 60 )
+			"size": new java.awt.Dimension( 1045, 680 )
+		} )
+	}
+}

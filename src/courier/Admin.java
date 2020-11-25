@@ -1,11 +1,13 @@
 package courier;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Map;
+
 public class Admin extends Staff{
     public static ArrayList<Admin> adminAl=new ArrayList();
+    private static int AdminID=0;
+
 
     public Admin(){}
 
@@ -13,6 +15,7 @@ public class Admin extends Staff{
         super(id,name, phone,  password);
 
     }
+
 
     @Override
     public void loadStaff() {
@@ -24,8 +27,29 @@ public class Admin extends Staff{
         }
     }
 
+    public static void writeFile(){
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            pw = new PrintWriter(new File("txtFile/temp.txt"));
+            for (int i=0;i<adminAl.size()-(adminAl.size()/2);i++){
+                Admin o= adminAl.get(i);
+                pw.println(o.getId()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+
+        }
+
+    }
+
+
     @Override
     public void writeLine() {
+        generateID();
         FileWriter fw=null;
         BufferedWriter bw=null;
         PrintWriter pw=null;
@@ -34,7 +58,7 @@ public class Admin extends Staff{
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(getId()+","+getName()+","+getPhone()+","+getPassword());
+            pw.println(generateID()+","+getName()+","+getPhone()+","+getPassword());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +72,21 @@ public class Admin extends Staff{
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+
+
+    public static void addAdminID(){
+
+        AdminID=AdminID+1;
+    }
+
+
+    public static String generateID() {
+        addAdminID();
+        return ("A"+ String.format("%04d", AdminID));
     }
 
 
