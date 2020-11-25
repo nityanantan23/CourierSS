@@ -20,11 +20,11 @@ public class Order implements fileReader{
     private Integer postcode;
     private String deliveryStatus;
     private static Integer orderCount=100;
-    private static final String[] lowPriceState={"KUL","SGR","NSN","MLK","PJY"};
-    private static final String[] mediumPriceState={"JHR","PHG","PRK","PNG"};
-    private static final String[] highPriceState={"TRG","KTN","PLS","KDH"};
+    private static final String[] LOW_PRICE_STATE ={"KUL","SGR","NSN","MLK","PJY"};
+    private static final String[] MEDIUM_PRICE_STATE ={"JHR","PHG","PRK","PNG"};
+    private static final String[] HIGH_PRICE_STATE ={"TRG","KTN","PLS","KDH"};
     private static ArrayList<Order> orderAL= new ArrayList<>();
-    public static final NumberFormat df = new DecimalFormat("#0.00");
+    public static final NumberFormat DF = new DecimalFormat("#0.00");
 
 
     public Order(){};
@@ -84,9 +84,9 @@ public class Order implements fileReader{
     public String getDeliveryStatus(){return deliveryStatus;}
     public static ArrayList<Order> getOrderAl(){ return orderAL;}
     public static Integer getOrderCount(){return  orderCount;}
-    public static String[] getLowPriceState(){return lowPriceState;}
-    public static String[] getMediumPriceState(){return mediumPriceState;}
-    public static String[] getHighPriceState(){return highPriceState;}
+    public static String[] getLowPriceState(){return LOW_PRICE_STATE;}
+    public static String[] getMediumPriceState(){return MEDIUM_PRICE_STATE;}
+    public static String[] getHighPriceState(){return HIGH_PRICE_STATE;}
 
     public static void orderCounter(){
         orderCount=orderCount+1;
@@ -148,9 +148,8 @@ public class Order implements fileReader{
         }
     }
 
-
-    //todo should be added to file access
-    public static void writeFile(){
+    @Override
+    public void writeFile() {
         FileWriter fw=null;
         BufferedWriter bw=null;
         PrintWriter pw=null;
@@ -159,9 +158,9 @@ public class Order implements fileReader{
             for (int i=0;i<orderAL.size();i++){
                 Order o= orderAL.get(i);
                 pw.println(o.getOrderID()+";"+o.getCustomerID()+";"+o.getOrderDate().get(GregorianCalendar.DATE)+";"
-                        +(o.getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
+                        +(o.getOrderDate().get(GregorianCalendar.MONTH))+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
                         +o.getRiderID()+";"+o.getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH))+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
                         ";"+o.getOrderPrice()+";"+o.getStreet()+";"+o.getCity()+";"+o.getState()+";"
                         +o.getPostcode()+";"+o.getDeliveryStatus()+";"+o.getOrderPackage().getPackageID());
             }
@@ -172,8 +171,10 @@ public class Order implements fileReader{
             pw.close();
 
         }
-
     }
+
+    //todo should be added to file access
+
 
 
 
@@ -190,9 +191,9 @@ public class Order implements fileReader{
             pw = new PrintWriter(bw);
 
             pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().get(GregorianCalendar.DATE)+";"
-                    +(getOrderDate().get(GregorianCalendar.MONTH)+1)+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
+                    +(getOrderDate().get(GregorianCalendar.MONTH))+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
                     +getRiderID()+";"+getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                    (getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                    (getExpectedDelivery().get(GregorianCalendar.MONTH) )+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
                     ";"+getOrderPrice()+";"+getStreet()+";"+getCity()+";"+getState()+";"
                             +getPostcode()+";"+getDeliveryStatus()+";"+getOrderPackage().getPackageID());
 
@@ -219,13 +220,13 @@ public class Order implements fileReader{
         double price=0;
 
         if (size.toLowerCase().equals("small")){
-                price= (Double.parseDouble(df.format(weight*0.1+3)));
+                price= (Double.parseDouble(DF.format(weight*0.1+3)));
                 pass=true;
             }else if (size.toLowerCase().equals("medium")){
-                price= (Double.parseDouble(df.format(weight*0.3+4)));
+                price= (Double.parseDouble(DF.format(weight*0.3+4)));
                 pass=true;
             }else {
-                price= (Double.parseDouble(df.format(weight*0.5+4)));;
+                price= (Double.parseDouble(DF.format(weight*0.5+4)));;
                 pass=true;
             }
             if (pass==true){
@@ -237,7 +238,7 @@ public class Order implements fileReader{
                     price=price+5;
                 }
             }
-        return Double.parseDouble(df.format(price));
+        return Double.parseDouble(DF.format(price));
     }
 
 

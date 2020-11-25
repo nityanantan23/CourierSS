@@ -9,9 +9,8 @@ import static courier.StaffLogin.resetField;
 public abstract class Staff extends Person {
     //creating a staff
     protected String password;
-    public static Scanner s;
-    private String line;
-    private String[] lineV;
+    protected static Scanner s;
+
 
     public Staff(){
         super();
@@ -41,6 +40,8 @@ public abstract class Staff extends Person {
 
     @Override
     public void readFile() {
+        String line;
+        String[] lineV;
         line=s.nextLine();
         lineV=line.split(",");
         setId(lineV[0]);
@@ -78,8 +79,8 @@ public abstract class Staff extends Person {
                 }
             }
         }else if (pass2!=true){
-            for (int i=0;i<Rider.riderAl.size();i++){
-                if(Rider.riderAl.get(i).getId().equals(id)&&Rider.riderAl.get(i).password.equals(pw)){
+            for (int i=0;i<Rider.getRiderAL().size();i++){
+                if(Rider.getRiderAL().get(i).getId().equals(id)&&Rider.getRiderAL().get(i).password.equals(pw)){
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Rider","Login Successfully",1);

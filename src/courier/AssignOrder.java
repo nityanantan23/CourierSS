@@ -20,13 +20,12 @@ public class AssignOrder extends JFrame {
         loadTable();
         tblOrder=new JTable(tblM);
         cmbRiderID= new JComboBox<>();
-        for (int i=0;i<Rider.riderAl.size();i++){
-            cmbRiderID.addItem(Rider.riderAl.get(i).id);
+        for (int i=0;i<Rider.getRiderAL().size();i++){
+            cmbRiderID.addItem(Rider.getRiderAL().get(i).id);
         }
         initComponents();
     }
 
-    public Object[][] obj;
     private static String[] col={"OrderID","PackageID","CustomerID","OrderDate","ExpectedDelivery","RiderID"};
     private static DefaultTableModel tblM= new DefaultTableModel(col,0){
         public boolean isCellEditable(int row, int column)
@@ -49,18 +48,17 @@ public class AssignOrder extends JFrame {
 
     }
 
-    public void loadTable(){
+    private static void loadTable(){
         for (int i=0;i<Order.getOrderAl().size() ;i++){
             if (Order.getOrderAl().get(i).getRiderID().equals("null")){
                 String orderID= Order.getOrderAl().get(i).getOrderID();
                 String cusID= Order.getOrderAl().get(i).getCustomerID();
                 String pkgID= Order.getOrderAl().get(i).getOrderPackage().getPackageID();
                 String orderDate= Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.DATE)+"-"+
-                        (Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.MONTH)+1)+"-"+Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.YEAR);
+                        (Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.MONTH))+"-"+Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.YEAR);
                 String expDate= Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.DATE)+"-"+
-                        (Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+"-"+Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.YEAR);
+                        (Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.MONTH))+"-"+Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.YEAR);
                 String riderID="Unassigned";
-
                 Object[] data= {orderID,cusID,pkgID,orderDate,expDate,riderID};
                 tblM.addRow(data);
             }
@@ -151,13 +149,12 @@ public class AssignOrder extends JFrame {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
-                . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border . TitledBorder
-                . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "D\u0069alog", java .
-                awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,sPnlManager. getBorder () ) )
-                ; sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
-                ) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
-                ;
+                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
+                .EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER,javax
+                .swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font.BOLD,
+                12),java.awt.Color.red),sPnlManager. getBorder()));sPnlManager. addPropertyChangeListener(new java.beans
+                .PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".equals(e.
+                getPropertyName()))throw new RuntimeException();}});
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -283,10 +280,10 @@ public class AssignOrder extends JFrame {
                     tblOrder.setForeground(Color.black);
                     tblOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     tblOrder.setFillsViewportHeight(true);
-                    tblOrder.setCellSelectionEnabled(true);
                     tblOrder.setRowMargin(3);
                     tblOrder.setRowHeight(35);
                     tblOrder.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+                    tblOrder.setAutoCreateRowSorter(true);
                     tblOrder.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {

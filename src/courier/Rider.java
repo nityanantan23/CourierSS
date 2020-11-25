@@ -7,13 +7,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Rider extends Staff{
-    public static ArrayList<Rider> riderAl=new ArrayList();
-
+    private static ArrayList<Rider> riderAl=new ArrayList();
     public Rider(){}
-
     public Rider(String id , String name, String phone,  String password  ) {
         super(id, name, phone,  password);
     }//rider class creation
+
+    public static ArrayList<Rider> getRiderAL(){
+        return riderAl;
+    }
+
 
     @Override
     public void loadStaff() {
@@ -50,5 +53,10 @@ public class Rider extends Staff{
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void writeFile() {
+
     }
 }

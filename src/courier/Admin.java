@@ -74,6 +74,11 @@ public class Admin extends Staff{
         }
     }
 
+    @Override
+    public void writeFile() {
+
+    }
+
 
 
 

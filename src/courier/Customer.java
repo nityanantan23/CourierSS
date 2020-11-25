@@ -7,8 +7,7 @@ import java.util.Scanner;
 public class Customer extends Person implements fileReader {
     private String ic;
     private static ArrayList<Customer> customerAl= new ArrayList<>();
-    private String line;
-    private String[] lineV;
+
     private static int cusCount = 100;
 
     public Customer(){}
@@ -27,10 +26,11 @@ public class Customer extends Person implements fileReader {
     public static ArrayList<Customer> getCustomerAL(){
         return customerAl;
     }
-    public static Integer getCusCount(){return cusCount;};
 
     @Override
     public void readFile() {
+        String line;
+        String[] lineV;
         try {
             Scanner s= new Scanner(new File("txtFile/Customer.txt"));
             while (s.hasNext()){
@@ -143,6 +143,13 @@ public class Customer extends Person implements fileReader {
         cusCounter();
         return ("C"+cusCount);
     }
+
+    @Override
+    public void writeFile() {
+
+    }
+
+
 
 
 }

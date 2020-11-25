@@ -187,10 +187,10 @@ new FormModel {
 						"foreground": new java.awt.Color( 0, 0, 0, 255 )
 						"selectionMode": 0
 						"fillsViewportHeight": true
-						"cellSelectionEnabled": true
 						"rowMargin": 3
 						"rowHeight": 35
 						"font": new java.awt.Font( "Segoe UI", 0, 22 )
+						"autoCreateRowSorter": true
 						auxiliary() {
 							"JavaCodeGenerator.variableModifiers": 10
 							"JavaCodeGenerator.customCreateCode": "new JTable(tblM);"

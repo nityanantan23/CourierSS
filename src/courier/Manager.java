@@ -50,6 +50,11 @@ public class Manager extends Staff{
         }
     }
 
+    @Override
+    public void writeFile() {
+
+    }
+
 
     //manager class creation
 
