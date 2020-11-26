@@ -325,7 +325,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnRemoveActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnEditActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45

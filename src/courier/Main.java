@@ -9,6 +9,7 @@ public class Main {
     public static Admin_UserMatrix adminUserMatrix;
     public static Report report;
     public static Manager_profile manager_profile;
+    public static FeedbackPage feedbackPage;
 
 
     public static RiderHome riderHome;
@@ -22,6 +23,7 @@ public class Main {
         Customer c= new Customer();
         Rider r= new Rider();
         Order o= new Order();
+        Feedback f = new Feedback();
         orderPackage op= new orderPackage();
         op.readFile();
         o.readFile();
@@ -29,6 +31,7 @@ public class Main {
         m.loadStaff();
         a.loadStaff();
         c.readFile();
+        f.readFile();
 //        assignOrderPage= new AssignOrder();
 //        ManagerPage=new ManagerHome();
 //        CustomerRegister= new CustomerRegistration();
@@ -36,7 +39,8 @@ public class Main {
 //        report = new Report();
         //TODO only assign the rider id when the user login this is for testing purpose
 //        riderHome= new RiderHome("R002");
-        manager_profile = new Manager_profile();
+//        manager_profile = new Manager_profile();
+        feedbackPage = new FeedbackPage();
 
     }
 }
