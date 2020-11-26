@@ -1,4 +1,5 @@
 package courier;
+import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -7,6 +8,7 @@ import java.util.Map;
 public class Admin extends Staff{
     public static ArrayList<Admin> adminAl=new ArrayList();
     private static Integer AdminID=100;
+    private static DefaultTableModel tableModel= new DefaultTableModel();
 
 
     public Admin(){}
@@ -28,9 +30,31 @@ public class Admin extends Staff{
         }
     }
 
+    public static DefaultTableModel getTableStaff(){
+        return tableModel ;
+    }
 
 
+    public void loadTable() {
+//        Admin a = new Admin();
+//        Manager m = new Manager();
+//        Rider r = new Rider();
+//        a.loadStaff();
+//        m.loadStaff();
+//        r.loadStaff();
+        tableModel.setRowCount(0);
 
+
+        for (int i = 0; i < Admin.adminAl.size(); i++) {
+            if (Admin.adminAl.get(i).getId() != null) {
+                String staffID = Admin.adminAl.get(i).getId();
+                String Name = Admin.adminAl.get(i).getName();
+                String Role = "Admin";
+                Object[] data = {staffID, Name, Role};
+                tableModel.addRow(data);
+            }
+        }
+    }
 
 
     @Override

@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -22,16 +23,17 @@ import static courier.StaffLogin.resetField;
 /**
  * @author unknown
  */
-public class Admin_UserMatrix extends GUI {
+public class Admin_UserMatrix extends Admin {
     public Admin_UserMatrix() {
 
-        loadTable();
         tblUser = new JTable(tblM);
         cmbRole = new JComboBox<>();
         cmbRole.addItem("Admin");
         cmbRole.addItem("Manager");
         cmbRole.addItem("Rider");
         initComponents();
+        loadTable();
+
         jfAdmin.setVisible(true);
 
     }
@@ -45,6 +47,11 @@ public class Admin_UserMatrix extends GUI {
         }
     };
 
+    public static DefaultTableModel getTableStaff(){
+        return tblM;
+    }
+
+    @Override
     public void loadTable() {
 //        Admin a = new Admin();
 //        Manager m = new Manager();
@@ -52,6 +59,7 @@ public class Admin_UserMatrix extends GUI {
 //        a.loadStaff();
 //        m.loadStaff();
 //        r.loadStaff();
+        tblM.setRowCount(0);
 
 
         for (int i = 0; i < Admin.adminAl.size(); i++) {
@@ -81,6 +89,7 @@ public class Admin_UserMatrix extends GUI {
                 tblM.addRow(data);
             }
         }
+        jfAdmin.setVisible(false);
 
     }
 
@@ -426,18 +435,11 @@ public class Admin_UserMatrix extends GUI {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.
-                        border.EmptyBorder(0, 0, 0, 0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax.swing.border.TitledBorder.CENTER
-                        , javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.awt.Font
-                        .BOLD, 12), java.awt.Color.red), sPnlManager.getBorder()));
-                sPnlManager.addPropertyChangeListener(
-                        new java.beans.PropertyChangeListener() {
-                            @Override
-                            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                if ("\u0062ord\u0065r"
-                                        .equals(e.getPropertyName())) throw new RuntimeException();
-                            }
-                        });
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
+                0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
+                . BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
+                red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
+                beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -507,7 +509,7 @@ public class Admin_UserMatrix extends GUI {
                 {
                     // compute preferred size
                     Dimension preferredSize = new Dimension();
-                    for (int i = 0; i < sPnlManager.getComponentCount(); i++) {
+                    for(int i = 0; i < sPnlManager.getComponentCount(); i++) {
                         Rectangle bounds = sPnlManager.getComponent(i).getBounds();
                         preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                         preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -546,7 +548,7 @@ public class Admin_UserMatrix extends GUI {
                     {
                         // compute preferred size
                         Dimension preferredSize = new Dimension();
-                        for (int i = 0; i < pnlTitle.getComponentCount(); i++) {
+                        for(int i = 0; i < pnlTitle.getComponentCount(); i++) {
                             Rectangle bounds = pnlTitle.getComponent(i).getBounds();
                             preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                             preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -618,8 +620,6 @@ public class Admin_UserMatrix extends GUI {
                 btnRemove.addActionListener(e -> {
                     try {
                         btnRemoveActionPerformed(e);
-                    } catch (FileNotFoundException fileNotFoundException) {
-                        fileNotFoundException.printStackTrace();
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -640,7 +640,6 @@ public class Admin_UserMatrix extends GUI {
                     public void keyPressed(KeyEvent e) {
                         txtUserKeyPressed(e);
                     }
-
                     @Override
                     public void keyTyped(KeyEvent e) {
                         txtUserKeyTyped(e);
@@ -666,9 +665,7 @@ public class Admin_UserMatrix extends GUI {
                 //---- btnEdit ----
                 btnEdit.setText("Edit");
                 btnEdit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                btnEdit.addActionListener(e -> {
-                    btnEditActionPerformed(e);
-                });
+                btnEdit.addActionListener(e -> btnEditActionPerformed(e));
                 panel1.add(btnEdit);
                 btnEdit.setBounds(40, 90, 145, 45);
 
@@ -684,7 +681,6 @@ public class Admin_UserMatrix extends GUI {
                     public void keyPressed(KeyEvent e) {
                         txtPwKeyPressed(e);
                     }
-
                     @Override
                     public void keyTyped(KeyEvent e) {
                         txtPwKeyTyped(e);
@@ -706,7 +702,6 @@ public class Admin_UserMatrix extends GUI {
                     public void keyPressed(KeyEvent e) {
                         txtUserKeyPressed(e);
                     }
-
                     @Override
                     public void keyTyped(KeyEvent e) {
                         txtUserKeyTyped(e);
@@ -725,7 +720,7 @@ public class Admin_UserMatrix extends GUI {
                 {
                     // compute preferred size
                     Dimension preferredSize = new Dimension();
-                    for (int i = 0; i < panel1.getComponentCount(); i++) {
+                    for(int i = 0; i < panel1.getComponentCount(); i++) {
                         Rectangle bounds = panel1.getComponent(i).getBounds();
                         preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                         preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -743,7 +738,7 @@ public class Admin_UserMatrix extends GUI {
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for (int i = 0; i < jfAdminContentPane.getComponentCount(); i++) {
+                for(int i = 0; i < jfAdminContentPane.getComponentCount(); i++) {
                     Rectangle bounds = jfAdminContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);

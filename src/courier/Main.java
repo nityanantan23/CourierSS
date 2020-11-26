@@ -7,6 +7,8 @@ public class Main {
     public static CustomerRegistration CustomerRegister;
     public static AssignOrder assignOrderPage;
     public static Admin_UserMatrix adminUserMatrix;
+    public static Report report;
+
 
     public static RiderHome riderHome;
 
@@ -29,7 +31,8 @@ public class Main {
 //        assignOrderPage= new AssignOrder();
 //        ManagerPage=new ManagerHome();
 //        CustomerRegister= new CustomerRegistration();
-        adminUserMatrix = new Admin_UserMatrix();
+//        adminUserMatrix = new Admin_UserMatrix();
+        report = new Report();
         //TODO only assign the rider id when the user login this is for testing purpose
 //        riderHome= new RiderHome("R002");
 
