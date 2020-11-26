@@ -1,4 +1,0 @@
-A110,boom,a,aa
-A111,leson fk,0169696969,bitch
-A112,aa,a,aa
-A113,asd,a,asd

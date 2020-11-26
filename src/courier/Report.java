@@ -11,6 +11,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.orsoncharts.plot.PiePlot3D;
 import org.jfree.chart.*;
 import org.jfree.chart.entity.StandardEntityCollection;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.awt.*;
@@ -140,11 +141,13 @@ public class Report extends JFrame {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0
-                ,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
-                ,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.red),
-                sPnlManager. getBorder()));sPnlManager. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("\u0062ord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}});
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
+                . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing. border. TitledBorder
+                . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069al\u006fg" ,java .
+                awt .Font .BOLD ,12 ), java. awt. Color. red) ,sPnlManager. getBorder( )) )
+                ; sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("\u0062or\u0064er" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
+                ;
                 sPnlManager.setLayout(null);
 
                 //---- lblManagerName ----
@@ -274,8 +277,10 @@ public class Report extends JFrame {
                 btnViewStaff.addActionListener(e -> {
                     try {
                         btnViewStaffActionPerformed(e);
-                    } catch (IOException | DocumentException ioException) {
+                    } catch (IOException ioException) {
                         ioException.printStackTrace();
+                    } catch (DocumentException documentException) {
+                        documentException.printStackTrace();
                     }
                 });
                 panel1.add(btnViewStaff);
