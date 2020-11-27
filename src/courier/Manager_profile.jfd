@@ -6,6 +6,7 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "jfManagerProfile"
 			"title": "Manager"
+			"defaultCloseOperation": 3
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 10
 				"JavaCodeGenerator.variableGetter": true

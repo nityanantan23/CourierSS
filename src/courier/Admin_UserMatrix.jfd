@@ -5,6 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "jfAdmin"
+			"defaultCloseOperation": 3
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 10
 				"JavaCodeGenerator.variableGetter": true
@@ -52,6 +53,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnReportActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45
@@ -65,6 +67,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnFeedbackActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45
@@ -92,6 +95,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUserMatrixActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45
@@ -317,6 +321,7 @@ new FormModel {
 					}
 					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtUserKeyTyped", true ) )
 					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtUserKeyPressed", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtPhKeyPressed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 250
 					"height": 40

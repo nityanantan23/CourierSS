@@ -23,7 +23,7 @@ import static courier.StaffLogin.resetField;
 /**
  * @author unknown
  */
-public class Admin_UserMatrix extends Admin {
+public class Admin_UserMatrix extends GUI {
     public Admin_UserMatrix() {
         tblUser = new JTable(tblM);
         cmbRole = new JComboBox<>();
@@ -33,8 +33,12 @@ public class Admin_UserMatrix extends Admin {
         initComponents();
         loadTable();
         jfAdmin.setVisible(true);
+        btnUserMatrix.setEnabled(false);
+        lblAdminName.setText(StaffLogin.loggedPerson.getName());
+
 
     }
+
 
 
     public Object[][] obj;
@@ -49,7 +53,6 @@ public class Admin_UserMatrix extends Admin {
         return tblM;
     }
 
-    @Override
     public void loadTable() {
 //        Admin a = new Admin();
 //        Manager m = new Manager();
@@ -403,9 +406,33 @@ public class Admin_UserMatrix extends Admin {
     }
 
     private void btnLogoutActionPerformed(ActionEvent e) {
-        Main.adminUserMatrix.getJfAdmin().setVisible(false);
-        Main.LoginPage.getJfLogin().setVisible(true);
+        jfAdmin.setVisible(false);
+        Main.LoginPage= new StaffLogin();
     }
+
+    private void btnReportActionPerformed(ActionEvent e) {
+        jfAdmin.setVisible(false);
+        Main.report= new Report();
+    }
+
+    private void btnFeedbackActionPerformed(ActionEvent e) {
+        jfAdmin.setVisible(false);
+        FeedbackPage a = new FeedbackPage();
+        a.getbtnAssignOrder().setVisible(false);
+        a.getbtnEdit().setVisible(false);
+        a.getbtnNewOrder().setVisible(false);
+        a.getbtnOverview().setVisible(false);
+        a.getbtnProfile().setVisible(false);
+        a.getlbltitle().setText("Admin Portal");
+    }
+        private void btnUserMatrixActionPerformed(ActionEvent e) {
+            jfAdmin.setVisible(false);
+            Main.adminUserMatrix= new Admin_UserMatrix();
+        }
+
+        private void txtPhKeyPressed(KeyEvent e) {
+            super.numCheck1(e,"Phone",txtPh);
+        }
 
 
     private void initComponents() {
@@ -439,19 +466,20 @@ public class Admin_UserMatrix extends Admin {
 
         //======== jfAdmin ========
         {
+            jfAdmin.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             var jfAdminContentPane = jfAdmin.getContentPane();
             jfAdminContentPane.setLayout(null);
 
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-                . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing
-                .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-                Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-                ) ,sPnlManager. getBorder () ) ); sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-                public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName (
-                ) ) )throw new RuntimeException( ) ;} } );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
+                javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax
+                . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
+                .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
+                . Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans.
+                PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .
+                equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -472,12 +500,14 @@ public class Admin_UserMatrix extends Admin {
                 //---- btnReport ----
                 btnReport.setText("Report");
                 btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnReport.addActionListener(e -> btnReportActionPerformed(e));
                 sPnlManager.add(btnReport);
                 btnReport.setBounds(45, 195, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnFeedback.addActionListener(e -> btnFeedbackActionPerformed(e));
                 sPnlManager.add(btnFeedback);
                 btnFeedback.setBounds(45, 265, 145, 45);
 
@@ -491,6 +521,7 @@ public class Admin_UserMatrix extends Admin {
                 //---- btnUserMatrix ----
                 btnUserMatrix.setText("User Matrix");
                 btnUserMatrix.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnUserMatrix.addActionListener(e -> btnUserMatrixActionPerformed(e));
                 sPnlManager.add(btnUserMatrix);
                 btnUserMatrix.setBounds(45, 335, 145, 45);
 
@@ -689,6 +720,7 @@ public class Admin_UserMatrix extends Admin {
                     @Override
                     public void keyPressed(KeyEvent e) {
                         txtUserKeyPressed(e);
+                        txtPhKeyPressed(e);
                     }
                     @Override
                     public void keyTyped(KeyEvent e) {

@@ -41,6 +41,8 @@ public class FeedbackPage {
 
         loadTable();
         initComponents();
+
+        btnFeedback.setEnabled(false);
         lblManagerName.setText(StaffLogin.loggedPerson.getName());
         jfFeedbackManger.setVisible(true);
     }
@@ -81,6 +83,27 @@ public class FeedbackPage {
     public JComboBox getCmbOrderID() {
         return cmbOrderID;
     }
+
+    public JButton getbtnNewOrder() {
+        return btnNewOrder;
+    }
+
+    public JButton getbtnAssignOrder() {
+        return btnAssignOrder;
+    }
+    public JButton getbtnOverview() {
+        return btnOverview;
+    }
+    public JButton getbtnProfile() {
+        return btnProfile;
+    }
+    public JButton getbtnEdit() {
+        return btnEdit;
+    }
+    public JLabel getlbltitle() {
+        return lblMHomeTitle;
+    }
+   
 
     public JLabel getLblManagerName() {
         return lblManagerName;
@@ -128,7 +151,8 @@ public class FeedbackPage {
     }
 
     private void btnFeedbackActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        jfFeedbackManger.setVisible(false);
+
     }
 
     private void btnProfileActionPerformed(ActionEvent e) {
@@ -162,6 +186,14 @@ public class FeedbackPage {
         Main.orderOverview.getJfOrderOverview().setVisible(true);
     }
 
+    private void btnUserMatrixActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.adminUserMatrix= new Admin_UserMatrix(); }
+
+    private void btnReportActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.report= new Report();    }
+
 
 
     private void initComponents() {
@@ -189,6 +221,9 @@ public class FeedbackPage {
         btnNewOrder = new JButton();
         btnProfile = new JButton();
         btnLogout = new JButton();
+        btnUserMatrix = new JButton();
+        btnFeedback = new JButton();
+        btnReport = new JButton();
 
         //======== jfFeedbackManger ========
         {
@@ -199,13 +234,12 @@ public class FeedbackPage {
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax .
-                swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border
-                . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "D\u0069alog"
-                , java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,panel1. getBorder
-                () ) ); panel1. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java
-                . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException
-                ( ) ;} } );
+                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
+                . EmptyBorder( 0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing. border. TitledBorder. CENTER, javax
+                . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069al\u006fg" ,java .awt .Font .BOLD ,
+                12 ), java. awt. Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (new java. beans
+                . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062or\u0064er" .equals (e .
+                getPropertyName () )) throw new RuntimeException( ); }} );
                 panel1.setLayout(null);
 
                 //======== pnlTitle ========
@@ -401,6 +435,33 @@ public class FeedbackPage {
                 sPnlManager.add(btnLogout);
                 btnLogout.setBounds(50, 615, 145, 45);
 
+                //---- btnUserMatrix ----
+                btnUserMatrix.setText("User Matrix");
+                btnUserMatrix.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnUserMatrix.addActionListener(e -> {
+			btnUserMatrixActionPerformed(e);
+		});
+                sPnlManager.add(btnUserMatrix);
+                btnUserMatrix.setBounds(50, 320, 145, 45);
+
+                //---- btnFeedback ----
+                btnFeedback.setText("Feedback");
+                btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnFeedback.addActionListener(e -> {
+			btnFeedbackActionPerformed(e);
+		});
+                sPnlManager.add(btnFeedback);
+                btnFeedback.setBounds(50, 255, 145, 45);
+
+                //---- btnReport ----
+                btnReport.setText("Report");
+                btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnReport.addActionListener(e -> {
+			btnReportActionPerformed(e);
+		});
+                sPnlManager.add(btnReport);
+                btnReport.setBounds(50, 190, 145, 45);
+
                 {
                     // compute preferred size
                     Dimension preferredSize = new Dimension();
@@ -464,5 +525,8 @@ public class FeedbackPage {
     private static JButton btnNewOrder;
     private static JButton btnProfile;
     private static JButton btnLogout;
+    private static JButton btnUserMatrix;
+    private static JButton btnFeedback;
+    private static JButton btnReport;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

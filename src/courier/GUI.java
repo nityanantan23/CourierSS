@@ -38,6 +38,24 @@ abstract public class GUI {
         }
     }
 
+    public void numCheck1(KeyEvent e,String inputName,JTextArea inputItem) {
+        if(!((e.getKeyCode()>=48&&e.getKeyCode()<=57)||(e.getKeyCode()>=0 &&e.getKeyCode()<=32)
+                ||e.getKeyCode()==127||e.isActionKey()||e.isControlDown()||e.isShiftDown())
+                ||ArrayUtils.contains(splChr,e.getKeyChar())){
+            JOptionPane.showMessageDialog(null,
+                    inputName+" can only contain Number.",
+                    "Invalid "+inputName,2);
+            //remove  the last input
+            if(inputItem.getText().length()==1){
+                inputItem.setText("");
+            }else {
+                inputItem.setText(inputItem.getText().substring(0,inputItem.getText().length()-1));
+                e.consume();
+            }
+            e.consume();
+        }
+    }
+
       public void numCheck(KeyEvent e,String inputName,JTextField inputItem) {
         if(!((e.getKeyCode()>=48&&e.getKeyCode()<=57)||(e.getKeyCode()>=0 &&e.getKeyCode()<=32)
                 ||e.getKeyCode()==127||e.isActionKey()||e.isControlDown()||e.isShiftDown())

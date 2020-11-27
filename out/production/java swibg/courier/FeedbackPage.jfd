@@ -298,6 +298,53 @@ new FormModel {
 					"x": 50
 					"y": 615
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnUserMatrix"
+					"text": "User Matrix"
+					"font": &Font2 new java.awt.Font( "Trebuchet MS", 0, 18 )
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUserMatrixActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUserMatrixActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUserMatrixActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 145
+					"height": 45
+					"x": 50
+					"y": 320
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnFeedback"
+					"text": "Feedback"
+					"font": #Font2
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnFeedbackActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnFeedbackActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnFeedbackActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 145
+					"height": 45
+					"x": 50
+					"y": 255
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnReport"
+					"text": "Report"
+					"font": #Font2
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnReportActionPerformed", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnReportActionPerformed", true ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 145
+					"height": 45
+					"x": 50
+					"y": 190
+				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 255
 				"height": 760

@@ -33,9 +33,13 @@ import javax.swing.table.DefaultTableModel;
 public class Report extends JFrame {
     public Report() {
         initComponents();
-        jfReport.setVisible(false);
+        jfReport.setVisible(true);
+        btnReport.setEnabled(false);
+        lblManagerName.setText(StaffLogin.loggedPerson.getName());
+
 
     }
+
 
     private void btnAssignOrderActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -111,6 +115,34 @@ public class Report extends JFrame {
         return lblManagerName;
     }
 
+    private void btnReportActionPerformed(ActionEvent e) {
+        jfReport.setVisible(false);
+        Main.report= new Report();
+    }
+
+    private void btnFeedbackActionPerformed(ActionEvent e) {
+        jfReport.setVisible(false);
+        FeedbackPage a = new FeedbackPage();
+        a.getbtnAssignOrder().setVisible(false);
+        a.getbtnEdit().setVisible(false);
+        a.getbtnNewOrder().setVisible(false);
+        a.getbtnOverview().setVisible(false);
+        a.getbtnProfile().setVisible(false);
+        a.getlbltitle().setText("Admin Portal");
+
+    }
+
+
+    private void btnUserMatrixActionPerformed(ActionEvent e) {
+        jfReport.setVisible(false);
+        Main.adminUserMatrix= new Admin_UserMatrix();
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfReport.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -118,14 +150,10 @@ public class Report extends JFrame {
         sPnlManager = new JPanel();
         lblManagerName = new JLabel();
         lblMHomeTitle = new JLabel();
-        btnOverview = new JButton();
-        btnOrder = new JButton();
-        btnRider = new JButton();
         btnReport = new JButton();
         btnFeedback = new JButton();
-        btnLogout = new JButton();
-        btnAssignOrder = new JButton();
         btnUserMatrix = new JButton();
+        btnLogout = new JButton();
         panel1 = new JPanel();
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
@@ -134,18 +162,18 @@ public class Report extends JFrame {
 
         //======== jfReport ========
         {
+            jfReport.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             var jfReportContentPane = jfReport.getContentPane();
             jfReportContentPane.setLayout(null);
 
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
-                EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax. swing. border. TitledBorder. CENTER, javax. swing
-                . border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ),
-                java. awt. Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( )
-                { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .equals (e .getPropertyName () ))
-                throw new RuntimeException( ); }} );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder( 0
+                , 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
+                , new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,
+                sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+                ) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblManagerName ----
@@ -163,54 +191,44 @@ public class Report extends JFrame {
                 sPnlManager.add(lblMHomeTitle);
                 lblMHomeTitle.setBounds(20, 15, 210, 50);
 
-                //---- btnOverview ----
-                btnOverview.setText("Overview");
-                btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 160, 145, 45);
-
-                //---- btnOrder ----
-                btnOrder.setText("New Order");
-                btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOrder);
-                btnOrder.setBounds(45, 220, 145, 45);
-
-                //---- btnRider ----
-                btnRider.setText("Rider");
-                btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 345, 145, 45);
-
                 //---- btnReport ----
                 btnReport.setText("Report");
                 btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnReport.addActionListener(e -> {
+			btnReportActionPerformed(e);
+			btnReportActionPerformed(e);
+		});
                 sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 410, 145, 45);
+                btnReport.setBounds(50, 170, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnFeedback.addActionListener(e -> {
+			btnFeedbackActionPerformed(e);
+		});
                 sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 475, 145, 45);
-
-                //---- btnLogout ----
-                btnLogout.setText("Logout");
-                btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 610, 145, 45);
-
-                //---- btnAssignOrder ----
-                btnAssignOrder.setText("Assign Order");
-                btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
-                sPnlManager.add(btnAssignOrder);
-                btnAssignOrder.setBounds(45, 285, 145, 45);
+                btnFeedback.setBounds(50, 240, 145, 45);
 
                 //---- btnUserMatrix ----
                 btnUserMatrix.setText("User Matrix");
                 btnUserMatrix.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnUserMatrix.addActionListener(e -> {
+			btnUserMatrixActionPerformed(e);
+			btnUserMatrixActionPerformed(e);
+		});
                 sPnlManager.add(btnUserMatrix);
-                btnUserMatrix.setBounds(45, 540, 145, 45);
+                btnUserMatrix.setBounds(50, 310, 145, 45);
+
+                //---- btnLogout ----
+                btnLogout.setText("Logout");
+                btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> {
+			btnLogoutActionPerformed(e);
+			btnLogoutActionPerformed(e);
+		});
+                sPnlManager.add(btnLogout);
+                btnLogout.setBounds(60, 480, 145, 45);
 
                 {
                     // compute preferred size
@@ -339,14 +357,10 @@ public class Report extends JFrame {
     private static JPanel sPnlManager;
     private static JLabel lblManagerName;
     private static JLabel lblMHomeTitle;
-    private static JButton btnOverview;
-    private static JButton btnOrder;
-    private static JButton btnRider;
     private static JButton btnReport;
     private static JButton btnFeedback;
-    private static JButton btnLogout;
-    private static JButton btnAssignOrder;
     private static JButton btnUserMatrix;
+    private static JButton btnLogout;
     private JPanel panel1;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;
