@@ -37,7 +37,7 @@ public class CustomerRegistration extends GUI {
     }
 
     private void txtRegCPhoneKeyTyped(KeyEvent e) {
-        lengthChecker(e,"Phone",txtRegCPhone,9);
+        lengthChecker(e,"Phone",txtRegCPhone,10);
     }
 
 
@@ -118,12 +118,12 @@ public class CustomerRegistration extends GUI {
             //======== panel2 ========
             {
                 panel2.setBackground(Color.white);
-                panel2.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border
-                .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER ,javax
-                . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,
-                12 ) ,java . awt. Color .red ) ,panel2. getBorder () ) ); panel2. addPropertyChangeListener( new java. beans
-                .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e.
-                getPropertyName () ) )throw new RuntimeException( ) ;} } );
+                panel2.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
+                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER
+                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font
+                .BOLD ,12 ), java. awt. Color. red) ,panel2. getBorder( )) ); panel2. addPropertyChangeListener (
+                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r"
+                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
                 panel2.setLayout(null);
 
                 //======== pnlTitleReg ========

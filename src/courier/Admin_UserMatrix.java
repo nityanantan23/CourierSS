@@ -388,6 +388,8 @@ public class Admin_UserMatrix extends GUI {
         txtName.setText("");
         txtPw.setText("");
         txtName.grabFocus();
+        txtPh.setText("");
+        cmbRole.setSelectedIndex(0);
     }
 
 
@@ -449,7 +451,19 @@ public class Admin_UserMatrix extends GUI {
         }
 
         private void txtPhKeyPressed(KeyEvent e) {
-            super.numCheck1(e,"Phone",txtPh);
+            super.numCheck(e,"Phone",txtPh);
+        }
+
+        private void txtPhKeyTyped(KeyEvent e) {
+            super.lengthChecker(e,"Phone",txtPh,10);
+        }
+
+        private void txtRegCPhoneKeyPressed(KeyEvent e) {
+            super.numCheck(e,"Phone",txtPh);
+        }
+
+        private void txtRegCPhoneKeyTyped(KeyEvent e) {
+            lengthChecker(e,"Phone",txtPh,10);
         }
 
 
@@ -479,8 +493,8 @@ public class Admin_UserMatrix extends GUI {
         lblName = new JLabel();
         btnEdit = new JButton();
         txtPw = new JPasswordField();
-        txtPh = new JTextArea();
         lblPhoneNumber = new JLabel();
+        txtPh = new JTextField();
 
         //======== jfAdmin ========
         {
@@ -491,13 +505,12 @@ public class Admin_UserMatrix extends GUI {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
-                javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax
-                . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
-                .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-                . Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans.
-                PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .
-                equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
+                . EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax. swing. border. TitledBorder. CENTER, javax
+                . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,
+                12 ), java. awt. Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans
+                . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .equals (e .
+                getPropertyName () )) throw new RuntimeException( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -726,34 +739,31 @@ public class Admin_UserMatrix extends GUI {
                 panel1.add(txtPw);
                 txtPw.setBounds(570, 320, 250, 40);
 
-                //---- txtPh ----
-                txtPh.setBackground(new Color(239, 234, 234));
-                txtPh.setBorder(new LineBorder(Color.black, 3, true));
-                txtPh.setFont(new Font("Montserrat Light", Font.PLAIN, 31));
-                txtPh.setForeground(Color.black);
-                txtPh.setToolTipText("Username");
-                txtPh.setMargin(new Insets(1, 1, 1, 1));
-                txtPh.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-                txtPh.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        txtUserKeyPressed(e);
-                        txtPhKeyPressed(e);
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        txtUserKeyTyped(e);
-                    }
-                });
-                panel1.add(txtPh);
-                txtPh.setBounds(570, 415, 250, 40);
-
                 //---- lblPhoneNumber ----
                 lblPhoneNumber.setText("Phone number");
                 lblPhoneNumber.setFont(new Font("Nirmala UI", Font.BOLD, 30));
                 lblPhoneNumber.setForeground(Color.black);
                 panel1.add(lblPhoneNumber);
                 lblPhoneNumber.setBounds(570, 365, 260, 45);
+
+                //---- txtPh ----
+                txtPh.setBackground(Color.white);
+                txtPh.setCaretColor(Color.black);
+                txtPh.setForeground(Color.black);
+                txtPh.setFont(txtPh.getFont().deriveFont(txtPh.getFont().getSize() + 8f));
+                txtPh.setDisabledTextColor(Color.black);
+                txtPh.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        txtRegCPhoneKeyPressed(e);
+                    }
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        txtRegCPhoneKeyTyped(e);
+                    }
+                });
+                panel1.add(txtPh);
+                txtPh.setBounds(570, 425, 255, 40);
 
                 {
                     // compute preferred size
@@ -818,7 +828,7 @@ public class Admin_UserMatrix extends GUI {
     private JLabel lblName;
     private static JButton btnEdit;
     private static JPasswordField txtPw;
-    private static JTextArea txtPh;
     private JLabel lblPhoneNumber;
+    private static JTextField txtPh;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
