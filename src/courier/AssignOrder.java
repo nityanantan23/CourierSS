@@ -6,6 +6,7 @@ package courier;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -17,16 +18,20 @@ import javax.swing.table.*;
  */
 public class AssignOrder extends JFrame {
     public AssignOrder() {
-        loadTable();
+
+
+
         tblOrder=new JTable(tblM);
         cmbRiderID= new JComboBox<>();
         for (int i=0;i<Rider.getRiderAL().size();i++){
             cmbRiderID.addItem(Rider.getRiderAL().get(i).id);
         }
+        loadTable();
         initComponents();
+        lblManagerName.setText(StaffLogin.loggedPerson.name);
     }
 
-    private static String[] col={"OrderID","PackageID","CustomerID","OrderDate","ExpectedDelivery","RiderID"};
+    private static String[] col={"OrderID","CustomerID","PackageID","OrderDate","ExpectedDelivery","RiderID"};
     private static DefaultTableModel tblM= new DefaultTableModel(col,0){
         public boolean isCellEditable(int row, int column)
         {
@@ -58,10 +63,10 @@ public class AssignOrder extends JFrame {
                 String orderID= Order.getOrderAl().get(i).getOrderID();
                 String cusID= Order.getOrderAl().get(i).getCustomerID();
                 String pkgID= Order.getOrderAl().get(i).getOrderPackage().getPackageID();
-                String orderDate= Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.DATE)+"-"+
-                        (Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.MONTH))+"-"+Order.getOrderAl().get(i).getOrderDate().get(GregorianCalendar.YEAR);
-                String expDate= Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.DATE)+"-"+
-                        (Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.MONTH))+"-"+Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.YEAR);
+                String orderDate= Order.getOrderAl().get(i).getOrderDate().getDayOfMonth()+"-"+
+                        (Order.getOrderAl().get(i).getOrderDate().getMonthValue())+"-"+Order.getOrderAl().get(i).getOrderDate().getYear();
+                String expDate= Order.getOrderAl().get(i).getExpectedDelivery().getDayOfMonth()+"-"+
+                        (Order.getOrderAl().get(i).getExpectedDelivery().getMonthValue())+"-"+Order.getOrderAl().get(i).getExpectedDelivery().getYear();
                 String riderID="Unassigned";
                 Object[] data= {orderID,cusID,pkgID,orderDate,expDate,riderID};
                 tblM.addRow(data);
@@ -113,6 +118,42 @@ public class AssignOrder extends JFrame {
 
     }
 
+    private void btnFeedbackActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.feedbackPage= new FeedbackPage();
+        Main.feedbackPage.getJfFeedbackManger().setVisible(true);
+    }
+
+    private void btnProfileActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.manager_profile= new Manager_profile();
+        Main.manager_profile.getJfManagerProfile().setVisible(true);
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+
+    }
+
+    private void btnNewOrderActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.ManagerPage= new ManagerHome();
+        Main.ManagerPage.getJfManager().setVisible(true);
+    }
+
+    private void btnOverview2ActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.editOrder= new EditOrder();
+        Main.editOrder.getJfEditOrder().setVisible(true);
+    }
+
+    private void btnOverviewActionPerformed(ActionEvent e) {
+        jfAssignOrder.setVisible(false);
+        Main.orderOverview= new OrderOverview();
+        Main.orderOverview.getJfOrderOverview().setVisible(true);
+    }
+
 
 
     private void initComponents() {
@@ -124,13 +165,12 @@ public class AssignOrder extends JFrame {
         sPnlManager = new JPanel();
         lblMHomeTitle = new JLabel();
         lblManagerName = new JLabel();
+        btnNewOrder = new JButton();
         btnOverview = new JButton();
-        btnOrder = new JButton();
-        btnRider = new JButton();
-        btnReport = new JButton();
+        btnEdit = new JButton();
         btnFeedback = new JButton();
+        btnProfile = new JButton();
         btnLogout = new JButton();
-        btnAssignOrder = new JButton();
         panel1 = new JPanel();
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
@@ -153,13 +193,12 @@ public class AssignOrder extends JFrame {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-                . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e" , javax. swing
-                .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-                Font ( "D\u0069al\u006fg", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-                ) ,sPnlManager. getBorder () ) ); sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-                public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062or\u0064er" .equals ( e. getPropertyName (
-                ) ) )throw new RuntimeException( ) ;} } );
+                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing.
+                border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e" , javax. swing .border . TitledBorder. CENTER
+                ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dialo\u0067", java .awt . Font
+                . BOLD ,12 ) ,java . awt. Color .red ) ,sPnlManager. getBorder () ) ); sPnlManager. addPropertyChangeListener(
+                new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "borde\u0072"
+                .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -177,48 +216,47 @@ public class AssignOrder extends JFrame {
                 sPnlManager.add(lblManagerName);
                 lblManagerName.setBounds(25, 70, 200, 60);
 
+                //---- btnNewOrder ----
+                btnNewOrder.setText("New Order");
+                btnNewOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnNewOrder.addActionListener(e -> btnNewOrderActionPerformed(e));
+                sPnlManager.add(btnNewOrder);
+                btnNewOrder.setBounds(45, 160, 145, 45);
+
                 //---- btnOverview ----
                 btnOverview.setText("Overview");
                 btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnOverview.addActionListener(e -> btnOverviewActionPerformed(e));
                 sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 160, 145, 45);
+                btnOverview.setBounds(45, 225, 145, 45);
 
-                //---- btnOrder ----
-                btnOrder.setText("New Order");
-                btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOrder);
-                btnOrder.setBounds(45, 235, 145, 45);
-
-                //---- btnRider ----
-                btnRider.setText("Rider");
-                btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 365, 145, 45);
-
-                //---- btnReport ----
-                btnReport.setText("Report");
-                btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 425, 145, 45);
+                //---- btnEdit ----
+                btnEdit.setText("Edit Order");
+                btnEdit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnEdit.addActionListener(e -> btnOverview2ActionPerformed(e));
+                sPnlManager.add(btnEdit);
+                btnEdit.setBounds(45, 285, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnFeedback.addActionListener(e -> btnFeedbackActionPerformed(e));
                 sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 490, 145, 45);
+                btnFeedback.setBounds(45, 345, 145, 45);
+
+                //---- btnProfile ----
+                btnProfile.setText("Profile");
+                btnProfile.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnProfile.addActionListener(e -> btnProfileActionPerformed(e));
+                sPnlManager.add(btnProfile);
+                btnProfile.setBounds(45, 410, 145, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
                 sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 555, 145, 45);
-
-                //---- btnAssignOrder ----
-                btnAssignOrder.setText("Assign Order");
-                btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
-                sPnlManager.add(btnAssignOrder);
-                btnAssignOrder.setBounds(45, 300, 145, 45);
+                btnLogout.setBounds(45, 595, 145, 45);
 
                 {
                     // compute preferred size
@@ -381,13 +419,12 @@ public class AssignOrder extends JFrame {
     private static JPanel sPnlManager;
     private static JLabel lblMHomeTitle;
     private static JLabel lblManagerName;
+    private static JButton btnNewOrder;
     private static JButton btnOverview;
-    private static JButton btnOrder;
-    private static JButton btnRider;
-    private static JButton btnReport;
+    private static JButton btnEdit;
     private static JButton btnFeedback;
+    private static JButton btnProfile;
     private static JButton btnLogout;
-    private static JButton btnAssignOrder;
     private JPanel panel1;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;

@@ -10,14 +10,10 @@ public class Admin extends Staff{
     private static Integer AdminID=100;
     private static DefaultTableModel tableModel= new DefaultTableModel();
 
-
     public Admin(){}
-
     public Admin(String id,String name, String phone, String password  ){
-        super(id,name, phone,  password);
-
+        super(id,name, phone, password);
     }
-
 
     @Override
     public void loadStaff() {
@@ -26,7 +22,6 @@ public class Admin extends Staff{
             readFile();
             Admin a= new Admin(getId(),getName(),getPhone(),getPassword());
             adminAl.add(a);
-
         }
     }
 
@@ -66,9 +61,7 @@ public class Admin extends Staff{
             fw = new FileWriter("txtFile/Admin_account.txt", true);
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
-
             pw.println(getId()+","+getName()+","+getPhone()+","+getPassword());
-
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -105,14 +98,10 @@ public class Admin extends Staff{
     }
 
 
-    public static void addAdminID(){
 
+    @Override
+    public String generateID() {
         AdminID=AdminID+1;
-    }
-
-
-    public static String generateID() {
-        addAdminID();
         return ("A"+ AdminID);
     }
 

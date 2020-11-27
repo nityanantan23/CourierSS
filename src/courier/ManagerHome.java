@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -20,45 +21,43 @@ public class ManagerHome extends courier.GUI{
     public ManagerHome() {
         super();
         initComponents();
+        if (StaffLogin.loggedPerson instanceof Manager){
+            lblManagerName.setText(StaffLogin.loggedPerson.getName());
+        }else {
+            lblManagerName.setText("");
+        }
 
     }
 
     public static JFrame getJfManager() {
         return jfManager;
     }
-
     public static JLabel getLblManagerName() {
         return lblManagerName;
     }
-
-
     private void txtICKeyPressed(KeyEvent e) {
         super.numCheck(e,"IC",txtIC);
     }
-
     private void txtICKeyTyped(KeyEvent e) {
         super.lengthChecker(e,"IC",txtIC,11);
     }
-
     private void txtCityKeyTyped(KeyEvent e) {
         lengthChecker(e,"City",txtCity,29);
     }
-
     private void txtCityKeyPressed(KeyEvent e) {
         super.spCharCheck(e,txtCity);
     }
-
     private void txtPostKeyPressed(KeyEvent e) {
         super.numCheck(e,"Postcode",txtPost);
     }
-
     private void txtPostKeyTyped(KeyEvent e) {
         lengthChecker(e,"Postcode",txtPost,4);
     }
-
     private void txtStreetKeyPressed(KeyEvent e) {
         spCharCheck(e,txtStreet);
     }
+
+
 
     private void btnOrderProceed1ActionPerformed(ActionEvent e) throws InvalidValueException{
         boolean pass=false;
@@ -74,25 +73,29 @@ public class ManagerHome extends courier.GUI{
             }else if (Double.parseDouble(txtPkgWeight.getText())>51){
                 txtPkgWeight.setText("");
                 throw new InvalidValueException(50,"Weight");
+
             }
             else{
                 for(int i=0;i<Customer.getCustomerAL().size();i++){
                     if(Customer.getCustomerAL().get(i).getIc().equals(txtIC.getText())){
                         //todo add a new package here
                         //todo create new package and order
-                        String id=Order.generateID();
-                        GregorianCalendar g= new GregorianCalendar();
-                        orderPackage op= new orderPackage(orderPackage.generateID(),id,Double.parseDouble(txtPkgWeight.getText()),cmbPkgSize.getSelectedItem().toString().toLowerCase());
+                        Order o1= new Order();
+                        orderPackage op1= new orderPackage();
+                        String id=o1.generateID();
+                        LocalDate g= LocalDate.now();
+                        orderPackage op= new orderPackage(op1.generateID(),id,Double.parseDouble(txtPkgWeight.getText()),cmbPkgSize.getSelectedItem().toString().toLowerCase());
                         orderPackage.getOrderPackagesAl().add(op);
                         op.writeLine();
 
-                        Order o = new Order(id,Customer.getCustomerAL().get(i).getId(),g,null,Order.expectedDateCal(g,cmbState.getSelectedItem().toString()),
+                        Order o = new Order(id,Customer.getCustomerAL().get(i).getId(),g,Order.expectedDateCal(g,cmbState.getSelectedItem().toString()),
                                 Order.priceCal(cmbState.getSelectedItem().toString(),op.getPackageSize(),op.getPackageWeight()),
-                                op,txtStreet.getText(),txtCity.getText(),cmbState.getSelectedItem().toString(),Integer.parseInt(txtPost.getText()),"Order Placed");
+                                op,txtStreet.getText(),txtCity.getText(),cmbState.getSelectedItem().toString(),Integer.parseInt(txtPost.getText()));
                         Order.getOrderAl().add(o);
                         o.writeLine();
+
                         JOptionPane.showMessageDialog(null,"Successfully Generated an Order. The price is RM"+o.getOrderPrice()+" and the expected delivery date is "+
-                                        o.getExpectedDelivery().get(GregorianCalendar.DATE)+"-"+(o.getExpectedDelivery().get(GregorianCalendar.MONTH)+1)+"-"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+".","Successfully Added order",1);
+                                        o.getExpectedDelivery().getDayOfMonth()+"-"+(o.getExpectedDelivery().getMonthValue())+"-"+o.getExpectedDelivery().getYear()+".","Successfully Added order",1);
                         clearPage();
                         pass=true;
                         break;
@@ -119,8 +122,6 @@ public class ManagerHome extends courier.GUI{
         cmbPkgSize.setSelectedIndex(0);
         cmbState.setSelectedIndex(0);
     }
-
-
 
     private void txtRegCPhoneKeyTyped(KeyEvent e) {
         lengthChecker(e,"Postcode",txtPost,11);
@@ -151,10 +152,45 @@ public class ManagerHome extends courier.GUI{
     }
 
     private void btnAssignOrderActionPerformed(ActionEvent e) {
-        ManagerHome.getJfManager().setVisible(false);
-        Main.assignOrderPage.getJfAssignOrder().setVisible(true);
+        jfManager.setVisible(false);
+        Main.assignOrderPage= new AssignOrder();
+
 
     }
+
+    private void btnFeedbackActionPerformed(ActionEvent e) {
+        jfManager.setVisible(false);
+        Main.feedbackPage= new FeedbackPage();
+        Main.feedbackPage.getJfFeedbackManger().setVisible(true);
+    }
+
+    private void btnProfileActionPerformed(ActionEvent e) {
+        jfManager.setVisible(false);
+        Main.manager_profile= new Manager_profile();
+        Main.manager_profile.getJfManagerProfile().setVisible(true);
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfManager.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+    }
+
+
+
+    private void btnEditActionPerformed(ActionEvent e) {
+        jfManager.setVisible(false);
+        Main.editOrder= new EditOrder();
+        Main.editOrder.getJfEditOrder().setVisible(true);
+    }
+
+    private void btnOverviewActionPerformed(ActionEvent e) {
+        jfManager.setVisible(false);
+        Main.orderOverview= new OrderOverview();
+        Main.orderOverview.getJfOrderOverview().setVisible(true);
+    }
+
+
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -164,12 +200,11 @@ public class ManagerHome extends courier.GUI{
         lblMHomeTitle = new JLabel();
         lblManagerName = new JLabel();
         btnOverview = new JButton();
-        btnOrder = new JButton();
-        btnRider = new JButton();
-        btnReport = new JButton();
         btnFeedback = new JButton();
         btnLogout = new JButton();
         btnAssignOrder = new JButton();
+        btnProfile = new JButton();
+        btnEdit = new JButton();
         panel1 = new JPanel();
         lblIC = new JLabel();
         txtIC = new JTextField();
@@ -204,12 +239,12 @@ public class ManagerHome extends courier.GUI{
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder
-                ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border
-                .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt
-                . Color .red ) ,sPnlManager. getBorder () ) ); sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void
-                propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
-                ;} } );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
+                EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing
+                . border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ),
+                java. awt. Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( )
+                { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () ))
+                throw new RuntimeException( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -230,45 +265,44 @@ public class ManagerHome extends courier.GUI{
                 //---- btnOverview ----
                 btnOverview.setText("Overview");
                 btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnOverview.addActionListener(e -> btnOverviewActionPerformed(e));
                 sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 160, 145, 45);
-
-                //---- btnOrder ----
-                btnOrder.setText("New Order");
-                btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOrder);
-                btnOrder.setBounds(45, 235, 145, 45);
-
-                //---- btnRider ----
-                btnRider.setText("Rider");
-                btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 365, 145, 45);
-
-                //---- btnReport ----
-                btnReport.setText("Report");
-                btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 425, 145, 45);
+                btnOverview.setBounds(45, 240, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnFeedback.addActionListener(e -> btnFeedbackActionPerformed(e));
                 sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 490, 145, 45);
+                btnFeedback.setBounds(45, 360, 145, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
                 sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 555, 145, 45);
+                btnLogout.setBounds(45, 610, 145, 45);
 
                 //---- btnAssignOrder ----
                 btnAssignOrder.setText("Assign Order");
                 btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
                 sPnlManager.add(btnAssignOrder);
-                btnAssignOrder.setBounds(45, 300, 145, 45);
+                btnAssignOrder.setBounds(45, 175, 145, 45);
+
+                //---- btnProfile ----
+                btnProfile.setText("Profile");
+                btnProfile.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnProfile.addActionListener(e -> btnProfileActionPerformed(e));
+                sPnlManager.add(btnProfile);
+                btnProfile.setBounds(45, 425, 145, 45);
+
+                //---- btnEdit ----
+                btnEdit.setText("Edit Order");
+                btnEdit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnEdit.addActionListener(e -> btnEditActionPerformed(e));
+                sPnlManager.add(btnEdit);
+                btnEdit.setBounds(45, 300, 145, 45);
 
                 {
                     // compute preferred size
@@ -575,12 +609,11 @@ public class ManagerHome extends courier.GUI{
     private static JLabel lblMHomeTitle;
     private static JLabel lblManagerName;
     private static JButton btnOverview;
-    private static JButton btnOrder;
-    private static JButton btnRider;
-    private static JButton btnReport;
     private static JButton btnFeedback;
     private static JButton btnLogout;
     private static JButton btnAssignOrder;
+    private static JButton btnProfile;
+    private static JButton btnEdit;
     private JPanel panel1;
     private JLabel lblIC;
     private static JTextField txtIC;

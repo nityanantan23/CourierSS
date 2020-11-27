@@ -16,38 +16,37 @@ import javax.swing.table.TableModel;
  */
 public class FeedbackPage {
     private static JTable tblUser;
-
-
     public FeedbackPage() {
         tblFeedback = new JTable(tbluser);
         cmbOrderID= new JComboBox<>();
         cmbRating= new JComboBox<>();
-
-
         for (int i = 0; i < Order.getOrderAl().size(); i++) {
-            cmbOrderID.addItem(Order.getOrderAl().get(i).getOrderID());
+            boolean pass=true;
+            if (Order.getOrderAl().get(i).getDeliveryStatus().equals("Delivered")){
+                for (int i2=0;i2<Feedback.getfeedbackAL().size();i2++){
+                if (Order.getOrderAl().get(i).getOrderID().equals(Feedback.getfeedbackAL().get(i2).getOrderID())){
+                    pass=false;
+                    break;
+                    }
+                }
+                if (pass!=false){
+                    cmbOrderID.addItem(Order.getOrderAl().get(i).getOrderID());
+                }
+            }
         }
 
         for (int i = 1; i < 6; i++) {
             cmbRating.addItem(i);
         }
 
-        initComponents();
-//        cmbRating = new JComboBox<>();
-//        cmbRating.addItem("1");
-//        cmbRating.addItem("2");
-//        cmbRating.addItem("3");
-//        cmbRating.addItem("4");
-//        cmbRating.addItem("5");
-
-
         loadTable();
-
-        jfFeedback.setVisible(true);
+        initComponents();
+        lblManagerName.setText(StaffLogin.loggedPerson.getName());
+        jfFeedbackManger.setVisible(true);
     }
 
     public Object[][] obj;
-    private static String[] col = {"ID","OrderID", "Name", "Subject", "Description", "Rating"};
+    private static String[] col = {"ID","OrderID", "Description", "Rating"};
     private static DefaultTableModel tbluser = new DefaultTableModel(col, 0) {
         public boolean isCellEditable(int row, int column) {
             return false;//This causes all cells to be not editable
@@ -55,20 +54,14 @@ public class FeedbackPage {
     };
 
     public void loadTable() {
-
         tbluser.setRowCount(0);
-
-
         for (int i = 0; i < Feedback.getfeedbackAL().size(); i++) {
             if (Feedback.getfeedbackAL().get(i).getFeedbackID() != null) {
                 String ID = Feedback.getfeedbackAL().get(i).getFeedbackID();
-                String Name = Feedback.getfeedbackAL().get(i).getName();
-                String subject = Feedback.getfeedbackAL().get(i).getSubject();
                 String description = Feedback.getfeedbackAL().get(i).getDescription();
                 String rating = Feedback.getfeedbackAL().get(i).getRating();
                 String orderID = Feedback.getfeedbackAL().get(i).getOrderID();
-
-                Object[] data = {ID, orderID, Name, subject, description, rating};
+                Object[] data = {ID, orderID, description, rating};
                 tbluser.addRow(data);
             }
         }
@@ -79,32 +72,10 @@ public class FeedbackPage {
         // TODO add your code here
     }
 
-    private void btnAddActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void btnRemoveActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void txtUserKeyTyped(KeyEvent e) {
-        // TODO add your code here
-    }
-
-    private void txtUserKeyPressed(KeyEvent e) {
-        // TODO add your code here
-    }
-
-    private void txtPwKeyTyped(KeyEvent e) {
-        // TODO add your code here
-    }
-
-    private void txtPwKeyPressed(KeyEvent e) {
-        // TODO add your code here
-    }
 
     private void btnAssignOrderActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        jfFeedbackManger.setVisible(false);
+        Main.assignOrderPage= new AssignOrder();
     }
 
     public JComboBox getCmbOrderID() {
@@ -121,46 +92,84 @@ public class FeedbackPage {
 
     private void btnAddFbActionPerformed(ActionEvent e) {
 
-        if (txtName.getText().isBlank() || txtSubject.getText().isBlank()) {
+        if (txtDescription.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "fields are empty!", "Invalid ", 3);
 
         } else {
             if (txtDescription.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "fields are empty!", "Invalid ", 3);
             } else {
-                Feedback a = new Feedback(Feedback.generateID(), cmbOrderID.getSelectedItem().toString(), txtName.getText()
-                        , txtSubject.getText(), txtDescription.getText(), cmbRating.getSelectedItem().toString());
+                Feedback a = new Feedback(cmbOrderID.getSelectedItem().toString(),txtDescription.getText(), cmbRating.getSelectedItem().toString());
                 Feedback.getfeedbackAL().add(a);
                 a.writeLine();
-                JOptionPane.showMessageDialog(null, "Successfully added "
-                        + txtSubject.getText());
+                JOptionPane.showMessageDialog(null, "Successfully added ");
                 resetField();
-//                loadTable();
+                tblFeedback = new JTable(tbluser);
             }
 
         }
     }
 
     public static void resetField() {
-        txtName.setText("");
-        txtSubject.setText("");
-        txtName.grabFocus();
+        txtDescription.setText("");
+        txtDescription.grabFocus();
     }
 
-    public JFrame getJfFeedback() {
-        return jfFeedback;
+    public JFrame getJfFeedbackManger() {
+        return jfFeedbackManger;
     }
 
     public JComboBox getCmbRating() {
         return cmbRating;
     }
 
+    private void btnFeedbackMenuActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void btnFeedbackActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void btnProfileActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.manager_profile= new Manager_profile();
+        Main.manager_profile.getJfManagerProfile().setVisible(true);
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+    }
+
+    private void btnNewOrderActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.ManagerPage= new ManagerHome();
+        Main.ManagerPage.getJfManager().setVisible(true);
+    }
+
+
+
+    private void btnEditActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.editOrder= new EditOrder();
+        Main.editOrder.getJfEditOrder().setVisible(true);
+    }
+
+    private void btnOverviewActionPerformed(ActionEvent e) {
+        jfFeedbackManger.setVisible(false);
+        Main.orderOverview= new OrderOverview();
+        Main.orderOverview.getJfOrderOverview().setVisible(true);
+    }
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         createUIComponents();
 
-        jfFeedback = new JFrame();
+        jfFeedbackManger = new JFrame();
         panel1 = new JPanel();
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
@@ -168,43 +177,35 @@ public class FeedbackPage {
         lblRole = new JLabel();
         lblSelOrderId = new JLabel();
         btnAddFb = new JButton();
-        txtName = new JTextArea();
-        lblPassword = new JLabel();
-        lblName = new JLabel();
         lblPhoneNumber = new JLabel();
-        scrollPane1 = new JScrollPane();
-        txtDescription = new JTextArea();
         lblRole2 = new JLabel();
-        txtSubject = new JTextArea();
+        txtDescription = new JTextField();
         sPnlManager = new JPanel();
         lblMHomeTitle = new JLabel();
         lblManagerName = new JLabel();
-        btnOverview = new JButton();
-        btnOrder = new JButton();
-        btnRider = new JButton();
-        btnReport = new JButton();
-        btnFeedback = new JButton();
-        btnLogout = new JButton();
         btnAssignOrder = new JButton();
-        btnUserMatrix = new JButton();
+        btnOverview = new JButton();
+        btnEdit = new JButton();
+        btnNewOrder = new JButton();
+        btnProfile = new JButton();
+        btnLogout = new JButton();
 
-        //======== jfFeedback ========
+        //======== jfFeedbackManger ========
         {
-            jfFeedback.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            var jfFeedbackContentPane = jfFeedback.getContentPane();
-            jfFeedbackContentPane.setLayout(null);
+            jfFeedbackManger.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            var jfFeedbackMangerContentPane = jfFeedbackManger.getContentPane();
+            jfFeedbackMangerContentPane.setLayout(null);
 
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
-                new javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e"
-                ,javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
-                ,new java.awt.Font("D\u0069al\u006fg",java.awt.Font.BOLD,12)
-                ,java.awt.Color.red),panel1. getBorder()));panel1. addPropertyChangeListener(
-                new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-                ){if("\u0062or\u0064er".equals(e.getPropertyName()))throw new RuntimeException()
-                ;}});
+                panel1.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax .
+                swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border
+                . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "D\u0069alog"
+                , java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,panel1. getBorder
+                () ) ); panel1. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java
+                . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException
+                ( ) ;} } );
                 panel1.setLayout(null);
 
                 //======== pnlTitle ========
@@ -265,11 +266,11 @@ public class FeedbackPage {
                 scrollPane2.setBounds(40, 150, 495, 490);
 
                 //---- lblRole ----
-                lblRole.setText("Order ID");
+                lblRole.setText("Unrated Order ID");
                 lblRole.setFont(new Font("Nirmala UI", Font.BOLD, 30));
                 lblRole.setForeground(Color.black);
                 panel1.add(lblRole);
-                lblRole.setBounds(575, 455, 140, 45);
+                lblRole.setBounds(575, 335, 280, 45);
 
                 //---- cmbOrderID ----
                 cmbOrderID.setFont(cmbOrderID.getFont().deriveFont(cmbOrderID.getFont().getSize() + 9f));
@@ -277,7 +278,7 @@ public class FeedbackPage {
                 cmbOrderID.setMaximumRowCount(3);
                 cmbOrderID.setForeground(new Color(86, 83, 83));
                 panel1.add(cmbOrderID);
-                cmbOrderID.setBounds(570, 500, 250, 45);
+                cmbOrderID.setBounds(570, 380, 250, 45);
 
                 //---- lblSelOrderId ----
                 lblSelOrderId.setFont(new Font("Nirmala UI", Font.PLAIN, 25));
@@ -292,58 +293,12 @@ public class FeedbackPage {
                 panel1.add(btnAddFb);
                 btnAddFb.setBounds(610, 675, 145, 45);
 
-                //---- txtName ----
-                txtName.setBackground(new Color(239, 234, 234));
-                txtName.setBorder(new LineBorder(Color.black, 3, true));
-                txtName.setFont(new Font("Montserrat Light", Font.PLAIN, 31));
-                txtName.setForeground(Color.black);
-                txtName.setToolTipText("Username");
-                txtName.setMargin(new Insets(1, 1, 1, 1));
-                txtName.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-                txtName.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        txtUserKeyPressed(e);
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        txtUserKeyTyped(e);
-                    }
-                });
-                panel1.add(txtName);
-                txtName.setBounds(570, 155, 250, 40);
-
-                //---- lblPassword ----
-                lblPassword.setText("Subject");
-                lblPassword.setFont(new Font("Nirmala UI", Font.BOLD, 30));
-                lblPassword.setForeground(Color.black);
-                panel1.add(lblPassword);
-                lblPassword.setBounds(570, 205, 195, 45);
-
-                //---- lblName ----
-                lblName.setText("Name ");
-                lblName.setFont(new Font("Nirmala UI", Font.BOLD, 30));
-                lblName.setForeground(Color.black);
-                panel1.add(lblName);
-                lblName.setBounds(570, 105, 140, 45);
-
                 //---- lblPhoneNumber ----
                 lblPhoneNumber.setText("Description");
                 lblPhoneNumber.setFont(new Font("Nirmala UI", Font.BOLD, 30));
                 lblPhoneNumber.setForeground(Color.black);
                 panel1.add(lblPhoneNumber);
-                lblPhoneNumber.setBounds(570, 305, 260, 45);
-
-                //======== scrollPane1 ========
-                {
-
-                    //---- txtDescription ----
-                    txtDescription.setBackground(new Color(235, 234, 234));
-                    txtDescription.setBorder(LineBorder.createBlackLineBorder());
-                    scrollPane1.setViewportView(txtDescription);
-                }
-                panel1.add(scrollPane1);
-                scrollPane1.setBounds(570, 350, 235, 100);
+                lblPhoneNumber.setBounds(560, 155, 260, 45);
 
                 //---- cmbRating ----
                 cmbRating.setFont(cmbRating.getFont().deriveFont(cmbRating.getFont().getSize() + 9f));
@@ -351,35 +306,20 @@ public class FeedbackPage {
                 cmbRating.setMaximumRowCount(3);
                 cmbRating.setForeground(new Color(86, 83, 83));
                 panel1.add(cmbRating);
-                cmbRating.setBounds(570, 600, 250, 45);
+                cmbRating.setBounds(570, 480, 250, 45);
 
                 //---- lblRole2 ----
                 lblRole2.setText("Ratings");
                 lblRole2.setFont(new Font("Nirmala UI", Font.BOLD, 30));
                 lblRole2.setForeground(Color.black);
                 panel1.add(lblRole2);
-                lblRole2.setBounds(575, 550, 140, 45);
+                lblRole2.setBounds(575, 430, 140, 45);
 
-                //---- txtSubject ----
-                txtSubject.setBackground(new Color(239, 234, 234));
-                txtSubject.setBorder(new LineBorder(Color.black, 3, true));
-                txtSubject.setFont(new Font("Montserrat Light", Font.PLAIN, 31));
-                txtSubject.setForeground(Color.black);
-                txtSubject.setToolTipText("Username");
-                txtSubject.setMargin(new Insets(1, 1, 1, 1));
-                txtSubject.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-                txtSubject.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        txtUserKeyPressed(e);
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        txtUserKeyTyped(e);
-                    }
-                });
-                panel1.add(txtSubject);
-                txtSubject.setBounds(565, 260, 250, 40);
+                //---- txtDescription ----
+                txtDescription.setBackground(Color.white);
+                txtDescription.setForeground(Color.black);
+                panel1.add(txtDescription);
+                txtDescription.setBounds(565, 215, 275, 45);
 
                 {
                     // compute preferred size
@@ -396,7 +336,7 @@ public class FeedbackPage {
                     panel1.setPreferredSize(preferredSize);
                 }
             }
-            jfFeedbackContentPane.add(panel1);
+            jfFeedbackMangerContentPane.add(panel1);
             panel1.setBounds(255, 0, 895, 760);
 
             //======== sPnlManager ========
@@ -405,7 +345,7 @@ public class FeedbackPage {
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
-                lblMHomeTitle.setText("Admin Portal");
+                lblMHomeTitle.setText("Manager Portal");
                 lblMHomeTitle.setFont(new Font("Myanmar Text", Font.BOLD, 27));
                 lblMHomeTitle.setForeground(Color.white);
                 sPnlManager.add(lblMHomeTitle);
@@ -419,54 +359,47 @@ public class FeedbackPage {
                 sPnlManager.add(lblManagerName);
                 lblManagerName.setBounds(25, 70, 200, 60);
 
-                //---- btnOverview ----
-                btnOverview.setText("Overview");
-                btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 160, 145, 45);
-
-                //---- btnOrder ----
-                btnOrder.setText("New Order");
-                btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOrder);
-                btnOrder.setBounds(45, 220, 145, 45);
-
-                //---- btnRider ----
-                btnRider.setText("Rider");
-                btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 345, 145, 45);
-
-                //---- btnReport ----
-                btnReport.setText("Report");
-                btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 410, 145, 45);
-
-                //---- btnFeedback ----
-                btnFeedback.setText("Feedback");
-                btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 475, 145, 45);
-
-                //---- btnLogout ----
-                btnLogout.setText("Logout");
-                btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 610, 145, 45);
-
                 //---- btnAssignOrder ----
                 btnAssignOrder.setText("Assign Order");
                 btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
                 sPnlManager.add(btnAssignOrder);
-                btnAssignOrder.setBounds(45, 285, 145, 45);
+                btnAssignOrder.setBounds(50, 255, 145, 45);
 
-                //---- btnUserMatrix ----
-                btnUserMatrix.setText("User Matrix");
-                btnUserMatrix.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnUserMatrix);
-                btnUserMatrix.setBounds(45, 540, 145, 45);
+                //---- btnOverview ----
+                btnOverview.setText("Overview");
+                btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnOverview.addActionListener(e -> btnOverviewActionPerformed(e));
+                sPnlManager.add(btnOverview);
+                btnOverview.setBounds(50, 320, 145, 45);
+
+                //---- btnEdit ----
+                btnEdit.setText("Edit Order");
+                btnEdit.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnEdit.addActionListener(e -> btnEditActionPerformed(e));
+                sPnlManager.add(btnEdit);
+                btnEdit.setBounds(50, 385, 145, 45);
+
+                //---- btnNewOrder ----
+                btnNewOrder.setText("New Order");
+                btnNewOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnNewOrder.addActionListener(e -> btnNewOrderActionPerformed(e));
+                sPnlManager.add(btnNewOrder);
+                btnNewOrder.setBounds(50, 190, 145, 45);
+
+                //---- btnProfile ----
+                btnProfile.setText("Profile");
+                btnProfile.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnProfile.addActionListener(e -> btnProfileActionPerformed(e));
+                sPnlManager.add(btnProfile);
+                btnProfile.setBounds(50, 460, 145, 45);
+
+                //---- btnLogout ----
+                btnLogout.setText("Logout");
+                btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
+                sPnlManager.add(btnLogout);
+                btnLogout.setBounds(50, 615, 145, 45);
 
                 {
                     // compute preferred size
@@ -483,32 +416,32 @@ public class FeedbackPage {
                     sPnlManager.setPreferredSize(preferredSize);
                 }
             }
-            jfFeedbackContentPane.add(sPnlManager);
+            jfFeedbackMangerContentPane.add(sPnlManager);
             sPnlManager.setBounds(0, 0, 255, 760);
 
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < jfFeedbackContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = jfFeedbackContentPane.getComponent(i).getBounds();
+                for(int i = 0; i < jfFeedbackMangerContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = jfFeedbackMangerContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
                 }
-                Insets insets = jfFeedbackContentPane.getInsets();
+                Insets insets = jfFeedbackMangerContentPane.getInsets();
                 preferredSize.width += insets.right;
                 preferredSize.height += insets.bottom;
-                jfFeedbackContentPane.setMinimumSize(preferredSize);
-                jfFeedbackContentPane.setPreferredSize(preferredSize);
+                jfFeedbackMangerContentPane.setMinimumSize(preferredSize);
+                jfFeedbackMangerContentPane.setPreferredSize(preferredSize);
             }
-            jfFeedback.pack();
-            jfFeedback.setLocationRelativeTo(jfFeedback.getOwner());
+            jfFeedbackManger.pack();
+            jfFeedbackManger.setLocationRelativeTo(jfFeedbackManger.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private static JFrame jfFeedback;
+    private static JFrame jfFeedbackManger;
     private JPanel panel1;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;
@@ -518,25 +451,18 @@ public class FeedbackPage {
     private static JComboBox cmbOrderID;
     private static JLabel lblSelOrderId;
     private static JButton btnAddFb;
-    private static JTextArea txtName;
-    private JLabel lblPassword;
-    private JLabel lblName;
     private JLabel lblPhoneNumber;
-    private JScrollPane scrollPane1;
-    private JTextArea txtDescription;
     private static JComboBox cmbRating;
     private JLabel lblRole2;
-    private static JTextArea txtSubject;
+    private static JTextField txtDescription;
     private static JPanel sPnlManager;
     private static JLabel lblMHomeTitle;
     private static JLabel lblManagerName;
-    private static JButton btnOverview;
-    private static JButton btnOrder;
-    private static JButton btnRider;
-    private static JButton btnReport;
-    private static JButton btnFeedback;
-    private static JButton btnLogout;
     private static JButton btnAssignOrder;
-    private static JButton btnUserMatrix;
+    private static JButton btnOverview;
+    private static JButton btnEdit;
+    private static JButton btnNewOrder;
+    private static JButton btnProfile;
+    private static JButton btnLogout;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

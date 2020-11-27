@@ -12,48 +12,6 @@ public class Rider extends Staff{
         super(id, name, phone,  password);
     }//rider class creation
 
-    public static ArrayList<Rider> getRiderAL(){
-        return riderAl;
-    }
-
-
-    @Override
-    public void loadStaff() {
-        findStaffFile("txtFile/Rider_account.txt");
-        while (s.hasNext()){
-            readFile();
-            Rider r= new Rider(getId(),getName(),getPhone(),getPassword());
-            riderAl.add(r);
-        }
-    }
-
-
-    @Override
-    public void writeLine() {
-        FileWriter fw=null;
-        BufferedWriter bw=null;
-        PrintWriter pw=null;
-        try{
-            fw = new FileWriter("txtFile/Rider_account.txt", true);
-            bw = new BufferedWriter(fw);
-            pw = new PrintWriter(bw);
-
-            pw.println(getId()+","+getName()+","+getPhone()+","+getPassword());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                pw.close();
-                bw.close();
-                fw.close();
-
-            } catch (IOException e) { //instances where the i/o cannot be close
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void writeFile() {
         FileWriter fw=null;
@@ -74,14 +32,59 @@ public class Rider extends Staff{
         }
     }
 
-    public static void addRiderID(){
+    public static ArrayList<Rider> getRiderAL(){
+        return riderAl;
+    }
 
+    @Override
+    public void loadStaff() {
+        findStaffFile("txtFile/Rider_account.txt");
+        while (s.hasNext()){
+            readFile();
+            Rider r= new Rider(getId(),getName(),getPhone(),getPassword());
+            riderAl.add(r);
+        }
+    }
+
+    @Override
+    public String generateID() {
+        addRiderID();
+        return ("R"+ RiderID);
+    }
+
+    @Override
+    public void writeLine() {
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        PrintWriter pw=null;
+        try{
+            fw = new FileWriter("txtFile/Rider_account.txt", true);
+            bw = new BufferedWriter(fw);
+            pw = new PrintWriter(bw);
+            pw.println(getId()+","+getName()+","+getPhone()+","+getPassword());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                pw.close();
+                bw.close();
+                fw.close();
+
+            } catch (IOException e) { //instances where the i/o cannot be close
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public static void addRiderID(){
         RiderID=RiderID+1;
     }
 
 
-    public static String generateID() {
-        addRiderID();
-        return ("R"+ RiderID);
-    }
+
+
+
 }

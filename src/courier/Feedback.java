@@ -2,10 +2,9 @@ package courier;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-public class Feedback {
+public class Feedback implements IDGenerator,fileReader{
     private static Integer Feed=100;
     private String feedbackID;
     private String orderID;
@@ -34,15 +33,14 @@ public class Feedback {
 
     public Feedback(){};
 
-    public Feedback(String feedbackID, String orderID, String name, String subject, String description, String rating){
+    public Feedback(String orderID, String description, String rating){
         //place all setter method here
         setOrderID(orderID);
-        setFeedbackID(feedbackID);
+        setFeedbackID(generateID());
         setName(name);
         setSubject(subject);
         setDescription(description);
         setRating(rating);
-        generateID();
     }
 
     public void readFile() {
@@ -55,13 +53,10 @@ public class Feedback {
                 lineV=line.split(",");
                 setFeedbackID(lineV[0]);
                 setOrderID(lineV[1]);
-                setName(lineV[2]);
-                setSubject(lineV[3]);
-                setDescription(lineV[4]);
-                setRating(lineV[5]);
+                setDescription(lineV[2]);
+                setRating(lineV[3]);
                 //retrieve matching
-
-                Feedback o= new Feedback(getFeedbackID(),getOrderID(),getName(),getSubject(),getDescription(),getRating());
+                Feedback o= new Feedback(getOrderID(),getDescription(),getRating());
                 feedbackAL.add(o);
 
             }
@@ -78,8 +73,7 @@ public class Feedback {
             pw = new PrintWriter(new File("txtFile/Feedback.txt"));
             for (int i=0;i<feedbackAL.size();i++){
                 Feedback o= feedbackAL.get(i);
-                pw.println(o.getFeedbackID()+","+o.getOrderID()+","+o.getName()+","
-                        +o.getSubject()+","+o.getDescription()+","
+                pw.println(o.getFeedbackID()+","+o.getOrderID()+","+o.getDescription()+","
                         +o.getRating());
             }
 
@@ -101,8 +95,7 @@ public class Feedback {
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(getFeedbackID()+","+getOrderID()+","+getName()+","
-                    +getSubject()+","+getDescription()+","
+            pw.println(getFeedbackID()+","+getOrderID()+","+getDescription()+","
                     +getRating());
 
         } catch (IOException e) {
@@ -119,7 +112,8 @@ public class Feedback {
         }
     }
 
-    public static String generateID() {
+    @Override
+    public String generateID() {
         feedCounter();
         return ("F"+Feed);
     }

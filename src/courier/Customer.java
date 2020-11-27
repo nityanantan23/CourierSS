@@ -4,17 +4,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Customer extends Person implements fileReader {
+public class Customer extends Person{
     private String ic;
     private static ArrayList<Customer> customerAl= new ArrayList<>();
-
     private static int cusCount = 100;
 
     public Customer(){}
-    //customer class creation
     public Customer(String id,String name,  String phone ,String ic){
         super(id,name, phone);
         setIc(ic);
+        generateID();
     }
 
     public String getIc() {
@@ -45,68 +44,12 @@ public class Customer extends Person implements fileReader {
                 setIc(lineV[3]);
                 Customer c= new Customer(getId(),getName(),getPhone(),getIc());
                 customerAl.add(c);
-                cusCounter();
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
-
-//    @Override
-//    public void writeLine() {
-//        FileWriter fw=null;
-//        BufferedWriter bw=null;
-//        PrintWriter pw=null;
-//        try{
-//            fw = new FileWriter("txtFile/Customer.txt", true);
-//            bw = new BufferedWriter(fw);
-//            pw = new PrintWriter(bw);
-//
-//            pw.println(o.id +","+c.name+","+c.phone+","+c.ic);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                pw.close();
-//                bw.close();
-//                fw.close();
-//
-//            } catch (IOException e) { //instances where the i/o cannot be close
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-//    public static void writeLine(Customer c){
-//        ////func created a credential setter for all staff class
-//
-//        FileWriter fw=null;
-//        BufferedWriter bw=null;
-//        PrintWriter pw=null;
-//        try{
-//            fw = new FileWriter("txtFile/Customer.txt", true);
-//            bw = new BufferedWriter(fw);
-//            pw = new PrintWriter(bw);
-//
-//            pw.println(c.id+","+c.name+","+c.phone+","+c.ic);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                pw.close();
-//                bw.close();
-//                fw.close();
-//
-//            } catch (IOException e) { //instances where the i/o cannot be close
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 
     @Override
     public void writeLine() {
@@ -134,13 +77,9 @@ public class Customer extends Person implements fileReader {
         }
     }
 
-    public static void cusCounter(){
+    @Override
+    public String generateID() {
         cusCount=cusCount+1;
-    }
-
-
-    public static String generateID() {
-        cusCounter();
         return ("C"+cusCount);
     }
 

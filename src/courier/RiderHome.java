@@ -16,7 +16,6 @@ import javax.swing.table.TableColumnModel;
  * @author unknown
  */
 public class RiderHome extends JFrame {
-    private String riderIDSessionCache;
     private static String[] riderCol= {"Order ID","Street","City","Postcode","State","ExpectedDeliveryDate","Order Status"};
     int[] columnsWidth = {60, 220, 90 , 80, 70, 120, 150};
     private static DefaultTableModel tblRiderM= new DefaultTableModel(riderCol,0){
@@ -25,8 +24,8 @@ public class RiderHome extends JFrame {
             return false;//This causes all cells to be not editable
         }
     };
-    public RiderHome(String RiderID) {
-        riderIDSessionCache=RiderID;
+    public RiderHome() {
+
         loadTable();
         tblRiderOrder= new JTable(tblRiderM);
         tblRiderOrder.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -38,18 +37,19 @@ public class RiderHome extends JFrame {
             column.setPreferredWidth(width);
         }
         initComponents();
+        lblManagerName.setText(StaffLogin.loggedPerson.getName());
     }
 
     private void loadTable(){
         for (int i=0;i<Order.getOrderAl().size() ;i++){
-            if (Order.getOrderAl().get(i).getRiderID().equals(riderIDSessionCache)&&!Order.getOrderAl().get(i).getDeliveryStatus().equals("Delivered")){
+            if (Order.getOrderAl().get(i).getRiderID().equals(StaffLogin.loggedPerson.id)&&!Order.getOrderAl().get(i).getDeliveryStatus().equals("Delivered")){
                 String orderID= Order.getOrderAl().get(i).getOrderID();
                 String street= Order.getOrderAl().get(i).getStreet();
                 String city= Order.getOrderAl().get(i).getCity();
                 Integer postcode=Order.getOrderAl().get(i).getPostcode();
                 String state=Order.getOrderAl().get(i).getState();
-                String expDate= Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.DATE)+"-"+
-                        (Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.MONTH))+"-"+Order.getOrderAl().get(i).getExpectedDelivery().get(GregorianCalendar.YEAR);
+                String expDate= Order.getOrderAl().get(i).getExpectedDelivery().getDayOfMonth()+"-"+
+                        (Order.getOrderAl().get(i).getExpectedDelivery().getMonthValue())+"-"+Order.getOrderAl().get(i).getExpectedDelivery().getYear();
                 String orderStatus=Order.getOrderAl().get(i).getDeliveryStatus();
                 Object[] data= {orderID,street,state,city,postcode,expDate,orderStatus};
                 tblRiderM.addRow(data);
@@ -135,6 +135,17 @@ public class RiderHome extends JFrame {
         }
     }
 
+    private void btnProfileActionPerformed(ActionEvent e) {
+        jfRider.setVisible(false);
+        Main.riderProfile= new Rider_profile();
+        
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfRider.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -144,8 +155,7 @@ public class RiderHome extends JFrame {
         sPnlManager = new JPanel();
         lblMHomeTitle = new JLabel();
         lblManagerName = new JLabel();
-        btnOverview = new JButton();
-        btnFeedback = new JButton();
+        btnProfile = new JButton();
         btnLogout = new JButton();
         panel1 = new JPanel();
         btnUpdateStatus = new JButton();
@@ -170,12 +180,13 @@ public class RiderHome extends JFrame {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(12, 36, 97));
-                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
-                . EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax
-                . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,
-                12 ), java. awt. Color. red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans
-                . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order" .equals (e .
-                getPropertyName () )) throw new RuntimeException( ); }} );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
+                swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border
+                . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067"
+                ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,sPnlManager. getBorder
+                ( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java
+                .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () )) throw new RuntimeException
+                ( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -193,21 +204,17 @@ public class RiderHome extends JFrame {
                 sPnlManager.add(lblManagerName);
                 lblManagerName.setBounds(25, 80, 200, 60);
 
-                //---- btnOverview ----
-                btnOverview.setText("Delivery Order");
-                btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 180, 145, 45);
-
-                //---- btnFeedback ----
-                btnFeedback.setText("Setting");
-                btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 265, 145, 45);
+                //---- btnProfile ----
+                btnProfile.setText("Profile Setting");
+                btnProfile.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnProfile.addActionListener(e -> btnProfileActionPerformed(e));
+                sPnlManager.add(btnProfile);
+                btnProfile.setBounds(30, 215, 190, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
                 sPnlManager.add(btnLogout);
                 btnLogout.setBounds(45, 555, 145, 45);
 
@@ -380,8 +387,7 @@ public class RiderHome extends JFrame {
     private static JPanel sPnlManager;
     private static JLabel lblMHomeTitle;
     private static JLabel lblManagerName;
-    private static JButton btnOverview;
-    private static JButton btnFeedback;
+    private static JButton btnProfile;
     private static JButton btnLogout;
     private JPanel panel1;
     private static JButton btnUpdateStatus;

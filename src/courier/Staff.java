@@ -11,31 +11,10 @@ public abstract class Staff extends Person {
     protected String password;
     protected static Scanner s;
 
-
-    public Staff(){
-        super();
-    }
-
+    public Staff(){}
     public Staff(String id ,String name , String phone,String password) {
         super(id,name,phone);
         setPassword(password);
-    }
-
-    public abstract void loadStaff() ;
-    public void setPassword(String password){
-        this.password=password;
-    }
-    public String getPassword(){
-        return password;
-    }
-
-
-    public void findStaffFile(String fileName){
-        try {
-            s = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -50,21 +29,37 @@ public abstract class Staff extends Person {
         setPassword(lineV[3]);
     }
 
+    public void setPassword(String password){
+        this.password=password;
+    }
+    public String getPassword(){
+        return password;
+    }
 
+    public void findStaffFile(String fileName){
+        try {
+            s = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public abstract void loadStaff() ;
 
     public static void credentialChecker(String  id, String pw){
         boolean pass1 = false,pass2= false;
         //check for admin first
         id=id.toUpperCase();
         for (int i=0;i<Admin.adminAl.size();i++){
-
             if(Admin.adminAl.get(i).getId().equals(id)&&Admin.adminAl.get(i).password.equals(pw)){
-                System.out.println(Admin.adminAl.get(i).getId());
-                System.out.println(Admin.adminAl.get(i).password);
                 pass1=true;
                 pass2=true;
                 JOptionPane.showMessageDialog(null,"Successfully login as Admin","Login Successfully",1);
-
+                StaffLogin.getJfLogin().setVisible(false);
+                StaffLogin.loggedPerson=Admin.adminAl.get(i);
+                Main.adminUserMatrix= new Admin_UserMatrix();
+                Main.adminUserMatrix.getJfAdmin().setVisible(true);
+                break;
             }
         }
         if (pass1!=true){
@@ -73,17 +68,24 @@ public abstract class Staff extends Person {
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Manager","Login Successfully",1);
-                    ManagerHome.getJfManager().setVisible(true);
-                    ManagerHome.getLblManagerName().setText(Manager.managerAl.get(i).name);
                     StaffLogin.getJfLogin().setVisible(false);
+                    StaffLogin.loggedPerson=Manager.managerAl.get(i);
+                    Main.ManagerPage= new ManagerHome();
+                    Main.ManagerPage.getJfManager().setVisible(true);
+                    break;
                 }
             }
-        }else if (pass2!=true){
+        }
+        if (pass2!=true){
             for (int i=0;i<Rider.getRiderAL().size();i++){
                 if(Rider.getRiderAL().get(i).getId().equals(id)&&Rider.getRiderAL().get(i).password.equals(pw)){
                     pass1=true;
                     pass2=true;
                     JOptionPane.showMessageDialog(null,"Successfully login as Rider","Login Successfully",1);
+                    StaffLogin.loggedPerson=Rider.getRiderAL().get(i);
+                    Main.riderHome =new RiderHome();
+                    StaffLogin.getJfLogin().setVisible(false);
+                    break;
                 }
             }
         }

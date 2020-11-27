@@ -1,2 +1,2 @@
-M101,weng keat,0161234416,manager
-M102,leson gey, 0169696969,lgmanager
+M101,weng keat,0131231252,manager1
+M102,LT,0161123416,manager2

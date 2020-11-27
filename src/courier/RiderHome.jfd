@@ -52,30 +52,18 @@ new FormModel {
 					"y": 80
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnOverview"
-					"text": "Delivery Order"
+					name: "btnProfile"
+					"text": "Profile Setting"
 					"font": &Font0 new java.awt.Font( "Trebuchet MS", 0, 18 )
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnProfileActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 45
-					"y": 180
-					"width": 145
+					"width": 190
 					"height": 45
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnFeedback"
-					"text": "Setting"
-					"font": #Font0
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 10
-					}
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 145
-					"height": 45
-					"x": 45
-					"y": 265
+					"x": 30
+					"y": 215
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "btnLogout"
@@ -84,6 +72,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLogoutActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45

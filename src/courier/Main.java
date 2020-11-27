@@ -10,26 +10,22 @@ public class Main {
     public static Report report;
     public static Manager_profile manager_profile;
     public static FeedbackPage feedbackPage;
-
-
     public static RiderHome riderHome;
+    public static EditOrder editOrder;
+    public static OrderOverview orderOverview;
+    public static Rider_profile riderProfile;
+
 
 
     public static void main(String[] args) {
-//        launch(args);
-        //LoginPage= new StaffLogin();
-        Admin a= new Admin();
-        Manager m= new Manager();
+
+        LoginPage= new StaffLogin();
         Customer c= new Customer();
-        Rider r= new Rider();
         Order o= new Order();
         Feedback f = new Feedback();
         orderPackage op= new orderPackage();
         op.readFile();
         o.readFile();
-        r.loadStaff();
-        m.loadStaff();
-        a.loadStaff();
         c.readFile();
         f.readFile();
 //        assignOrderPage= new AssignOrder();
@@ -40,7 +36,7 @@ public class Main {
         //TODO only assign the rider id when the user login this is for testing purpose
 //        riderHome= new RiderHome("R002");
 //        manager_profile = new Manager_profile();
-        feedbackPage = new FeedbackPage();
+//        feedbackPage = new FeedbackPage();
 
     }
 }

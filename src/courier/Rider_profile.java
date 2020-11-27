@@ -11,17 +11,15 @@ import javax.swing.*;
 /**
  * @author unknown
  */
-public class Rider_profile {
+public class Rider_profile extends GUI {
     public Rider_profile() {
         initComponents();
-        loadTable();
+        loadTable((Rider)StaffLogin.loggedPerson);
         jfRiderProfile.setVisible(true);
+
     }
 
-    public void loadTable() {
-        Rider m = new Rider();
-        m.loadStaff();
-
+    public void loadTable(Rider m) {
         lblName.setText(m.getName());
         txtPw.setText(m.getPassword());
         txtIPh.setText(m.getPhone());
@@ -45,20 +43,16 @@ public class Rider_profile {
     private void btnOrderProceed1ActionPerformed(ActionEvent e) {
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit " +
                 lblName.getText().toString() + "?", " Confirmation", 0);
-        if (confirm == 0) {
-            for (int i = 0; i < Rider.getRiderAL().size(); i++) {
-                if (Rider.getRiderAL().get(i).getPhone().equals(txtIPh.getText().toString())) {
-                    Rider.getRiderAL().get(i).setName(lblName.getText().toString());
-                    Rider.getRiderAL().get(i).setPhone(txtIPh.getText().toString());
-                    Rider.getRiderAL().get(i).setPassword(txtPw.getText().toString());
-                    JOptionPane.showMessageDialog(null, "Successfully edited" +
-                            " " + Rider.getRiderAL().get(i).getName());
-                    Rider o = new Rider();
-                    o.writeFile();
-                    break;
-                }else {
-                    System.out.println("sad");
-                }
+
+        if (txtIPh.getText().length()<8||txtPw.getText().length()<8){
+            JOptionPane.showMessageDialog(null,"Phone number must greater than 8 digits and Password must greater than 7 digit.","Invalid Input",2);
+        }else {
+            if (confirm == 0) {
+                StaffLogin.loggedPerson.setPhone(txtIPh.getText());
+                StaffLogin.loggedPerson.setPassword(txtPw.getText());
+                Rider r= new Rider();
+                r.writeFile();
+                JOptionPane.showMessageDialog(null,"Successfully modified the data.","Modification Success",1);
             }
         }
     }
@@ -75,16 +69,35 @@ public class Rider_profile {
         return lblManagerName;
     }
 
-    public JButton getBtnUpdateStatus() {
-        return btnUpdateStatus;
-    }
-
     private void createUIComponents() {
         // TODO: add custom component creation code here
     }
 
     public JButton getBtnSave() {
         return btnSave;
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        jfRiderProfile.setVisible(false);
+        Main.LoginPage= new StaffLogin();
+    }
+
+    private void btnOverviewActionPerformed(ActionEvent e) {
+        jfRiderProfile.setVisible(false);
+        Main.riderHome= new RiderHome();
+        Main.riderHome.setVisible(true);
+    }
+
+    private void txtPwKeyPressed(KeyEvent e) {
+        lengthChecker(e,"Phone",txtPw,12);
+    }
+
+    private void txtIPhKeyTyped(KeyEvent e) {
+        lengthChecker(e,"Phone",txtIPh,10);
+    }
+
+    private void txtIPhKeyPressed(KeyEvent e) {
+        super.numCheck(e,"Phone",txtIPh);
     }
 
     private void initComponents() {
@@ -95,11 +108,8 @@ public class Rider_profile {
         lblMHomeTitle = new JLabel();
         lblManagerName = new JLabel();
         btnOverview = new JButton();
-        btnFeedback = new JButton();
         btnLogout = new JButton();
-        btnProfile = new JButton();
         panel1 = new JPanel();
-        btnUpdateStatus = new JButton();
         pnlTitle = new JPanel();
         lblTitle = new JLabel();
         lblPw = new JLabel();
@@ -112,17 +122,20 @@ public class Rider_profile {
 
         //======== jfRiderProfile ========
         {
+            jfRiderProfile.setTitle("Rider Profile");
             var jfRiderProfileContentPane = jfRiderProfile.getContentPane();
             jfRiderProfileContentPane.setLayout(null);
 
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(12, 36, 97));
-                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder(
-                0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder
-                . BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt. Color.
-                red) ,sPnlManager. getBorder( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .
-                beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                sPnlManager.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
+                swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border
+                . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067"
+                ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,sPnlManager. getBorder
+                ( )) ); sPnlManager. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java
+                .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .getPropertyName () )) throw new RuntimeException
+                ( ); }} );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -143,26 +156,16 @@ public class Rider_profile {
                 //---- btnOverview ----
                 btnOverview.setText("Delivery Order");
                 btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnOverview.addActionListener(e -> btnOverviewActionPerformed(e));
                 sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 180, 145, 45);
-
-                //---- btnFeedback ----
-                btnFeedback.setText("Setting");
-                btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 250, 145, 45);
+                btnOverview.setBounds(25, 220, 180, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
                 sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 460, 145, 45);
-
-                //---- btnProfile ----
-                btnProfile.setText("Profile");
-                btnProfile.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnProfile);
-                btnProfile.setBounds(45, 320, 145, 45);
+                btnLogout.setBounds(40, 495, 145, 45);
 
                 {
                     // compute preferred size
@@ -187,15 +190,6 @@ public class Rider_profile {
                 panel1.setBackground(new Color(242, 242, 242));
                 panel1.setForeground(new Color(214, 162, 232));
                 panel1.setLayout(null);
-
-                //---- btnUpdateStatus ----
-                btnUpdateStatus.setText("Confirm");
-                btnUpdateStatus.setFont(new Font("Trebuchet MS", Font.BOLD, 23));
-                btnUpdateStatus.setBackground(Color.black);
-                btnUpdateStatus.setForeground(Color.white);
-                btnUpdateStatus.addActionListener(e -> btnUpdateStatusActionPerformed(e));
-                panel1.add(btnUpdateStatus);
-                btnUpdateStatus.setBounds(625, 665, 170, 65);
 
                 //======== pnlTitle ========
                 {
@@ -247,11 +241,7 @@ public class Rider_profile {
                 txtPw.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        txtICKeyPressed(e);
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        txtICKeyTyped(e);
+                        txtPwKeyPressed(e);
                     }
                 });
                 panel1.add(txtPw);
@@ -264,7 +254,7 @@ public class Rider_profile {
                 btnSave.setForeground(Color.white);
                 btnSave.addActionListener(e -> btnOrderProceed1ActionPerformed(e));
                 panel1.add(btnSave);
-                btnSave.setBounds(190, 455, 170, 65);
+                btnSave.setBounds(260, 475, 170, 65);
 
                 //---- lblPh ----
                 lblPh.setText("Phone Number");
@@ -282,11 +272,11 @@ public class Rider_profile {
                 txtIPh.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        txtICKeyPressed(e);
+                        txtIPhKeyPressed(e);
                     }
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        txtICKeyTyped(e);
+                        txtIPhKeyTyped(e);
                     }
                 });
                 panel1.add(txtIPh);
@@ -351,11 +341,8 @@ public class Rider_profile {
     private static JLabel lblMHomeTitle;
     private static JLabel lblManagerName;
     private static JButton btnOverview;
-    private static JButton btnFeedback;
     private static JButton btnLogout;
-    private static JButton btnProfile;
     private JPanel panel1;
-    private static JButton btnUpdateStatus;
     private JPanel pnlTitle;
     protected static JLabel lblTitle;
     private JLabel lblPw;

@@ -4,16 +4,17 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.Scanner;
 
-public class Order implements fileReader{
+public class Order implements fileReader,IDGenerator{
     private String orderID;
     private String customerID;
-    private GregorianCalendar orderDate;
+    private LocalDate orderDate;
     private String riderID;
-    private static GregorianCalendar expectedDelivery;
+    private LocalDate expectedDelivery;
     private double orderPrice;
     private orderPackage pkg;
     private String street,city,state;
@@ -27,53 +28,57 @@ public class Order implements fileReader{
     public static final NumberFormat DF = new DecimalFormat("#0.00");
 
 
-    public Order(){};
 
-    public Order(String orderID,String customerID, GregorianCalendar orderDate, String riderID, GregorianCalendar expectedDelivery, double orderPrice,
-                 orderPackage orderPackage,String street,String city,String state,Integer postcode, String deliveryStatus){
-        //place all setter method here
-        setOrderID(orderID);
-        setCustomerID(customerID);
-        setOrderDate(orderDate);
+    public Order(String orderID,String customerID, LocalDate orderDate,LocalDate expectedDelivery,
+                 double orderPrice,orderPackage orderPackage,String street,String city,String state,
+                 Integer postcode){
+        this.orderID=(orderID);
+        this.customerID=(customerID);
+        this.orderDate=(orderDate);
+        setRiderID("null");
+        this.expectedDelivery =(expectedDelivery);
+        this.orderPrice=(orderPrice);
+        this.city=(city);
+        this.pkg=orderPackage;
+        this.state=state;
+        this.street=street;
+        this.postcode=postcode;
+        setDeliveryStatus("Order Placed");
+        generateID();
+    }
+
+    public Order(String orderID,String customerID, LocalDate orderDate, String riderID,
+                 LocalDate expectedDelivery, double orderPrice,
+                 orderPackage orderPackage,String street,String city,String state,
+                 Integer postcode, String deliveryStatus){
+        this.orderID=(orderID);
+        this.customerID=(customerID);
+        this.orderDate=(orderDate);
         setRiderID(riderID);
-        setExpectedDelivery(expectedDelivery);
-        setOrderPrice(orderPrice);
-        setCity(city);
-        setOrderPackage(orderPackage);
-        setState(state);
-        setStreet(street);
-        setPostcode(postcode);
+        this.expectedDelivery =(expectedDelivery);
+        this.orderPrice=(orderPrice);
+        this.city=(city);
+        this.pkg=orderPackage;
+        this.state=state;
+        this.street=street;
+        this.postcode=postcode;
         setDeliveryStatus(deliveryStatus);
         generateID();
     }
+
+    public Order(){};
 
 //##############################################################
     //Getter and Setters
 //##############################################################
     //setter
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
-    public void setExpectedDelivery(GregorianCalendar expectedDelivery) {
-        this.expectedDelivery = expectedDelivery;
-    }
-    public void setOrderDate(GregorianCalendar orderDate) {this.orderDate = orderDate;}
-    public void setOrderID(String orderID) {this.orderID = orderID;}
-    public void setOrderPrice(double orderPrice) {this.orderPrice = orderPrice; }
     public void setRiderID(String riderID) { this.riderID = riderID; }
-    public void setOrderPackage(orderPackage orderPackage) {  this.pkg= orderPackage; }
-    public void setStreet(String street) {this.street = street;}
-    public void setCity(String city) {this.city = city;}
-    public void setState(String state) {this.state = state;}
-    public void setPostcode(Integer postcode) {this.postcode = postcode;}
     public void setDeliveryStatus(String deliveryStatus){this.deliveryStatus=deliveryStatus;}
-
-
     //getter
     public orderPackage getOrderPackage() {return pkg;}
     public double getOrderPrice() {return orderPrice;}
-    public GregorianCalendar getExpectedDelivery() {return expectedDelivery;}
-    public GregorianCalendar getOrderDate() {return orderDate;}
+    public LocalDate getExpectedDelivery() {return expectedDelivery;}
+    public LocalDate getOrderDate() {return orderDate;}
     public String getOrderID() {return orderID;}
     public String getCustomerID() {return customerID;}
     public String getRiderID() { return riderID;}
@@ -83,23 +88,21 @@ public class Order implements fileReader{
     public Integer getPostcode() { return postcode; }
     public String getDeliveryStatus(){return deliveryStatus;}
     public static ArrayList<Order> getOrderAl(){ return orderAL;}
-    public static Integer getOrderCount(){return  orderCount;}
-    public static String[] getLowPriceState(){return LOW_PRICE_STATE;}
-    public static String[] getMediumPriceState(){return MEDIUM_PRICE_STATE;}
-    public static String[] getHighPriceState(){return HIGH_PRICE_STATE;}
 
-    public static void orderCounter(){
-        orderCount=orderCount+1;
-    }
-    public static GregorianCalendar expectedDateCal(GregorianCalendar g,String state){
-        if (ArrayUtils.contains(getLowPriceState(),state)){
-            g.add((GregorianCalendar.DATE),3);
-        }else if(ArrayUtils.contains(getMediumPriceState(),state)){
-            g.add((GregorianCalendar.DATE),5);
+
+
+
+    public static LocalDate expectedDateCal(LocalDate g,String state){
+        LocalDate expDate=  g;
+
+        if (ArrayUtils.contains(LOW_PRICE_STATE,state)){
+            expDate.plusDays(3);
+        }else if(ArrayUtils.contains(MEDIUM_PRICE_STATE,state)){
+            expDate.plusDays(5);
         }else {
-            g.add((GregorianCalendar.DATE),7);
+            expDate.plusDays(7);
         }
-        return g;
+        return expDate;
     }
 
 
@@ -112,30 +115,29 @@ public class Order implements fileReader{
             while (scanner.hasNext()){
                 line= scanner.nextLine();
                 lineV=line.split(";");
-                setOrderID(lineV[0]);
-                setCustomerID(lineV[1]);
+                this.orderID=lineV[0];
+                this.customerID=lineV[1];
                 int day= Integer.parseInt(lineV[2]);
                 int month= Integer.parseInt(lineV[3]);
                 int year= Integer.parseInt(lineV[4]);
-                GregorianCalendar Date= new GregorianCalendar();
-                Date.set(year,month,day);
-                setOrderDate(Date);
+                LocalDate Date1= LocalDate.of(year,month,day);
+                this.orderDate=Date1;
                 setRiderID(lineV[5]);
                 day= Integer.parseInt(lineV[6]);
                 month=Integer.parseInt(lineV[7]);
                 year=Integer.parseInt(lineV[8]);
-                Date.set(year,month,day);
-                setExpectedDelivery(Date);
-                setOrderPrice( Double.parseDouble(lineV[9]));
-                setStreet(lineV[10]);
-                setCity(lineV[11]);
-                setState(lineV[12]);
-                setPostcode(Integer.parseInt(lineV[13]));
+                LocalDate Date2= LocalDate.of(year,month,day);
+                this.expectedDelivery=Date2;
+                this.orderPrice=Double.parseDouble(lineV[9]);
+                this.street=lineV[10];
+                this.city=lineV[11];
+                this.state=lineV[12];
+                this.postcode=Integer.parseInt(lineV[13]);
                 setDeliveryStatus(lineV[14]);
                 //retrieve matching
                 for (int i2 =0;i2< courier.orderPackage.getOrderPackagesAl().size();i2++){
                     if (courier.orderPackage.getOrderPackagesAl().get(i2).getPackageID().equals(lineV[15])){
-                        setOrderPackage(courier.orderPackage.getOrderPackagesAl().get(i2));
+                        this.pkg=courier.orderPackage.getOrderPackagesAl().get(i2);
                         break;
                     }
                 }
@@ -157,10 +159,10 @@ public class Order implements fileReader{
             pw = new PrintWriter(new File("txtFile/Order.txt"));
             for (int i=0;i<orderAL.size();i++){
                 Order o= orderAL.get(i);
-                pw.println(o.getOrderID()+";"+o.getCustomerID()+";"+o.getOrderDate().get(GregorianCalendar.DATE)+";"
-                        +(o.getOrderDate().get(GregorianCalendar.MONTH))+";"+o.getOrderDate().get(GregorianCalendar.YEAR)+";"
-                        +o.getRiderID()+";"+o.getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                        (o.getExpectedDelivery().get(GregorianCalendar.MONTH))+";"+o.getExpectedDelivery().get(GregorianCalendar.YEAR)+
+                pw.println(o.getOrderID()+";"+o.getCustomerID()+";"+o.getOrderDate().getDayOfMonth()+";"
+                        +(o.getOrderDate().getMonthValue())+";"+o.getOrderDate().getYear()+";"
+                        +o.getRiderID()+";"+o.getExpectedDelivery().getDayOfMonth()+";"+
+                        (o.getExpectedDelivery().getMonthValue())+";"+o.getExpectedDelivery().getYear()+
                         ";"+o.getOrderPrice()+";"+o.getStreet()+";"+o.getCity()+";"+o.getState()+";"
                         +o.getPostcode()+";"+o.getDeliveryStatus()+";"+o.getOrderPackage().getPackageID());
             }
@@ -190,10 +192,10 @@ public class Order implements fileReader{
             bw = new BufferedWriter(fw);
             pw = new PrintWriter(bw);
 
-            pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().get(GregorianCalendar.DATE)+";"
-                    +(getOrderDate().get(GregorianCalendar.MONTH))+";"+getOrderDate().get(GregorianCalendar.YEAR)+";"
-                    +getRiderID()+";"+getExpectedDelivery().get(GregorianCalendar.DATE)+";"+
-                    (getExpectedDelivery().get(GregorianCalendar.MONTH) )+";"+getExpectedDelivery().get(GregorianCalendar.YEAR)+
+            pw.println(getOrderID()+";"+getCustomerID()+";"+getOrderDate().getDayOfMonth()+";"
+                    +(getOrderDate().getMonthValue())+";"+getOrderDate().getYear()+";"
+                    +getRiderID()+";"+getExpectedDelivery().getDayOfMonth()+";"+
+                    (getExpectedDelivery().getMonthValue() )+";"+getExpectedDelivery().getYear()+
                     ";"+getOrderPrice()+";"+getStreet()+";"+getCity()+";"+getState()+";"
                             +getPostcode()+";"+getDeliveryStatus()+";"+getOrderPackage().getPackageID());
 
@@ -230,9 +232,9 @@ public class Order implements fileReader{
                 pass=true;
             }
             if (pass==true){
-                if (ArrayUtils.contains(Order.getLowPriceState(),state)){
+                if (ArrayUtils.contains(Order.LOW_PRICE_STATE,state)){
                     price=price+0;
-                }else if (ArrayUtils.contains(Order.getMediumPriceState(),state)){
+                }else if (ArrayUtils.contains(Order.MEDIUM_PRICE_STATE,state)){
                     price=price+3;
                 }else {
                     price=price+5;
@@ -246,17 +248,20 @@ public class Order implements fileReader{
 
 
     public static void main(String[] args){
-        Order o= new Order();
-        o.readFile();
-        System.out.println(Order.getOrderAl().get(0).getStreet());
-        GregorianCalendar g= new GregorianCalendar();
-        System.out.println(g.get(GregorianCalendar.MONTH)+1);
-
+//        Order o= new Order();
+//        o.readFile();
+//        System.out.println(Order.getOrderAl().get(0).getStreet());
+//        LocalDate g= new LocalDate();
+//        System.out.println(g.get(LocalDate.MONTH)+1);
+        LocalDate g1= LocalDate.now();
+        LocalDate g2= LocalDate.now();
+        g2.plusDays(100);
+        System.out.println(g1.compareTo(g1));
     }
 
-
-    public static String generateID() {
-        orderCounter();
+    @Override
+    public String generateID() {
+        orderCount=orderCount+1;
         return ("O"+orderCount);
     }
 }

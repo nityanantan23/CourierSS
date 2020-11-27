@@ -56,11 +56,10 @@ public class Manager extends Staff{
         PrintWriter pw=null;
         try{
             pw = new PrintWriter(new File("txtFile/Manager_account.txt"));
-            for (int i=0;i<managerAl.size()-(managerAl.size())/2;i++){
+            for (int i=0;i<managerAl.size();i++){
                 Manager o= managerAl.get(i);
                 pw.println(o.generateID()+","+o.getName()+","+o.getPhone()+","+o.getPassword());
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -74,11 +73,14 @@ public class Manager extends Staff{
         ManagerID=ManagerID+1;
     }
 
-
-    public static String generateID() {
+    @Override
+    public String generateID() {
         addAdminID();
         return ("M"+ ManagerID);
+
     }
+
+
     //manager class creation
 
 }

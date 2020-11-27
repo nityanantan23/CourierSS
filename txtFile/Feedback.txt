@@ -1,2 +1,1 @@
-F101,O001,nity,broken,poor,1
-F102,O102,test,test,test,5
+F101,O001,poor,1

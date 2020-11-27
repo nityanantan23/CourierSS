@@ -25,7 +25,6 @@ import static courier.StaffLogin.resetField;
  */
 public class Admin_UserMatrix extends Admin {
     public Admin_UserMatrix() {
-
         tblUser = new JTable(tblM);
         cmbRole = new JComboBox<>();
         cmbRole.addItem("Admin");
@@ -33,7 +32,6 @@ public class Admin_UserMatrix extends Admin {
         cmbRole.addItem("Rider");
         initComponents();
         loadTable();
-
         jfAdmin.setVisible(true);
 
     }
@@ -98,7 +96,8 @@ public class Admin_UserMatrix extends Admin {
         if (txtName.getText().isBlank() || txtPw.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "fields are empty!", "Invalid ", 3);
         } else if (cmbRole.getSelectedItem().toString().equals("Admin")) {
-            Admin a= new Admin(Admin.generateID(),txtName.getText(),txtPh.getText()
+            Admin a1= new Admin();
+            Admin a= new Admin(a1.generateID(),txtName.getText(),txtPh.getText()
                     ,txtPw.getText());
             Admin.adminAl.add(a);
             a.writeLine();
@@ -111,7 +110,8 @@ public class Admin_UserMatrix extends Admin {
 
 
         } else if (cmbRole.getSelectedItem().toString().equals("Manager")) {
-            Manager a= new Manager(Manager.generateID(),txtName.getText(),txtPh.getText()
+            Manager m1= new Manager();
+            Manager a= new Manager(m1.generateID(),txtName.getText(),txtPh.getText()
                     ,txtPw.getText());
             Manager.managerAl.add(a);
             a.writeLine();
@@ -121,7 +121,8 @@ public class Admin_UserMatrix extends Admin {
             tblM.setRowCount(0);
             loadTable();
         } else if (cmbRole.getSelectedItem().toString().equals("Rider")) {
-            Rider a= new Rider(Rider.generateID(),txtName.getText(),txtPh.getText()
+            Rider r1= new Rider();
+            Rider a= new Rider(r1.generateID(),txtName.getText(),txtPh.getText()
                     ,txtPw.getText());
             Rider.getRiderAL().add(a);
             a.writeLine();
@@ -236,8 +237,8 @@ public class Admin_UserMatrix extends Admin {
         }
     }
 
-    public JLabel getLblManagerName() {
-        return lblManagerName;
+    public JLabel getLblAdminName() {
+        return lblAdminName;
     }
 
     public JComboBox getCmbRole() {
@@ -393,6 +394,19 @@ public class Admin_UserMatrix extends Admin {
         // TODO add your code here
     }
 
+    public static JFrame getJfAdmin() {
+        return jfAdmin;
+    }
+
+    private void btnLogoutMouseClicked(MouseEvent e) {
+
+    }
+
+    private void btnLogoutActionPerformed(ActionEvent e) {
+        Main.adminUserMatrix.getJfAdmin().setVisible(false);
+        Main.LoginPage.getJfLogin().setVisible(true);
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -402,14 +416,10 @@ public class Admin_UserMatrix extends Admin {
         jfAdmin = new JFrame();
         sPnlManager = new JPanel();
         lblMHomeTitle = new JLabel();
-        lblManagerName = new JLabel();
-        btnOverview = new JButton();
-        btnOrder = new JButton();
-        btnRider = new JButton();
+        lblAdminName = new JLabel();
         btnReport = new JButton();
         btnFeedback = new JButton();
         btnLogout = new JButton();
-        btnAssignOrder = new JButton();
         btnUserMatrix = new JButton();
         panel1 = new JPanel();
         pnlTitle = new JPanel();
@@ -435,13 +445,13 @@ public class Admin_UserMatrix extends Admin {
             //======== sPnlManager ========
             {
                 sPnlManager.setBackground(new Color(21, 29, 65));
-                sPnlManager.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
-                javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax
-                .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
-                .awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
-                .Color.red),sPnlManager. getBorder()));sPnlManager. addPropertyChangeListener(new java.beans.
-                PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062ord\u0065r".
-                equals(e.getPropertyName()))throw new RuntimeException();}});
+                sPnlManager.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+                . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing
+                .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+                Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+                ) ,sPnlManager. getBorder () ) ); sPnlManager. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+                public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName (
+                ) ) )throw new RuntimeException( ) ;} } );
                 sPnlManager.setLayout(null);
 
                 //---- lblMHomeTitle ----
@@ -451,62 +461,38 @@ public class Admin_UserMatrix extends Admin {
                 sPnlManager.add(lblMHomeTitle);
                 lblMHomeTitle.setBounds(20, 15, 210, 50);
 
-                //---- lblManagerName ----
-                lblManagerName.setText("Loges");
-                lblManagerName.setFont(new Font("Myanmar Text", Font.BOLD, 26));
-                lblManagerName.setForeground(Color.white);
-                lblManagerName.setHorizontalAlignment(SwingConstants.CENTER);
-                sPnlManager.add(lblManagerName);
-                lblManagerName.setBounds(25, 70, 200, 60);
-
-                //---- btnOverview ----
-                btnOverview.setText("Overview");
-                btnOverview.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOverview);
-                btnOverview.setBounds(45, 160, 145, 45);
-
-                //---- btnOrder ----
-                btnOrder.setText("New Order");
-                btnOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnOrder);
-                btnOrder.setBounds(45, 220, 145, 45);
-
-                //---- btnRider ----
-                btnRider.setText("Rider");
-                btnRider.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                sPnlManager.add(btnRider);
-                btnRider.setBounds(45, 345, 145, 45);
+                //---- lblAdminName ----
+                lblAdminName.setText("Loges");
+                lblAdminName.setFont(new Font("Myanmar Text", Font.BOLD, 26));
+                lblAdminName.setForeground(Color.white);
+                lblAdminName.setHorizontalAlignment(SwingConstants.CENTER);
+                sPnlManager.add(lblAdminName);
+                lblAdminName.setBounds(25, 70, 200, 60);
 
                 //---- btnReport ----
                 btnReport.setText("Report");
                 btnReport.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnReport);
-                btnReport.setBounds(45, 410, 145, 45);
+                btnReport.setBounds(45, 195, 145, 45);
 
                 //---- btnFeedback ----
                 btnFeedback.setText("Feedback");
                 btnFeedback.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnFeedback);
-                btnFeedback.setBounds(45, 475, 145, 45);
+                btnFeedback.setBounds(45, 265, 145, 45);
 
                 //---- btnLogout ----
                 btnLogout.setText("Logout");
                 btnLogout.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+                btnLogout.addActionListener(e -> btnLogoutActionPerformed(e));
                 sPnlManager.add(btnLogout);
-                btnLogout.setBounds(45, 610, 145, 45);
-
-                //---- btnAssignOrder ----
-                btnAssignOrder.setText("Assign Order");
-                btnAssignOrder.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
-                btnAssignOrder.addActionListener(e -> btnAssignOrderActionPerformed(e));
-                sPnlManager.add(btnAssignOrder);
-                btnAssignOrder.setBounds(45, 285, 145, 45);
+                btnLogout.setBounds(45, 540, 145, 45);
 
                 //---- btnUserMatrix ----
                 btnUserMatrix.setText("User Matrix");
                 btnUserMatrix.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
                 sPnlManager.add(btnUserMatrix);
-                btnUserMatrix.setBounds(45, 540, 145, 45);
+                btnUserMatrix.setBounds(45, 335, 145, 45);
 
                 {
                     // compute preferred size
@@ -735,7 +721,7 @@ public class Admin_UserMatrix extends Admin {
                 }
             }
             jfAdminContentPane.add(panel1);
-            panel1.setBounds(255, 0, 895, 760);
+            panel1.setBounds(255, 0, 900, 760);
 
             {
                 // compute preferred size
@@ -759,17 +745,13 @@ public class Admin_UserMatrix extends Admin {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JFrame jfAdmin;
+    private static JFrame jfAdmin;
     private static JPanel sPnlManager;
     private static JLabel lblMHomeTitle;
-    private static JLabel lblManagerName;
-    private static JButton btnOverview;
-    private static JButton btnOrder;
-    private static JButton btnRider;
+    private static JLabel lblAdminName;
     private static JButton btnReport;
     private static JButton btnFeedback;
     private static JButton btnLogout;
-    private static JButton btnAssignOrder;
     private static JButton btnUserMatrix;
     private JPanel panel1;
     private JPanel pnlTitle;

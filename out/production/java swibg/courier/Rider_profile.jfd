@@ -48,24 +48,12 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnOverviewActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 45
-					"y": 180
-					"width": 145
+					"x": 25
+					"y": 220
+					"width": 180
 					"height": 45
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnFeedback"
-					"text": "Setting"
-					"font": #Font0
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 10
-					}
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 145
-					"height": 45
-					"x": 45
-					"y": 250
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "btnLogout"
@@ -74,24 +62,12 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnLogoutActionPerformed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 145
 					"height": 45
-					"x": 45
-					"y": 460
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnProfile"
-					"text": "Profile"
-					"font": new java.awt.Font( "Trebuchet MS", 0, 18 )
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 10
-					}
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 145
-					"height": 45
-					"x": 45
-					"y": 320
+					"x": 40
+					"y": 495
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 255
@@ -103,23 +79,6 @@ new FormModel {
 				name: "panel1"
 				"background": new java.awt.Color( 242, 242, 242, 255 )
 				"foreground": new java.awt.Color( 214, 162, 232, 255 )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "btnUpdateStatus"
-					"text": "Confirm"
-					"font": new java.awt.Font( "Trebuchet MS", 1, 23 )
-					"background": new java.awt.Color( 0, 0, 0, 255 )
-					"foreground": new java.awt.Color( 255, 255, 255, 255 )
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 10
-						"JavaCodeGenerator.variableGetter": true
-					}
-					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnUpdateStatusActionPerformed", true ) )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"width": 170
-					"height": 65
-					"x": 625
-					"y": 665
-				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "pnlTitle"
 					"background": new java.awt.Color( 192, 192, 192, 43 )
@@ -168,8 +127,7 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
-					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtICKeyPressed", true ) )
-					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtICKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtPwKeyPressed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 255
 					"height": 40
@@ -190,8 +148,8 @@ new FormModel {
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 170
 					"height": 65
-					"x": 190
-					"y": 455
+					"x": 260
+					"y": 475
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "lblPh"
@@ -214,8 +172,8 @@ new FormModel {
 					auxiliary() {
 						"JavaCodeGenerator.variableModifiers": 10
 					}
-					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtICKeyPressed", true ) )
-					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtICKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "txtIPhKeyTyped", true ) )
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "txtIPhKeyPressed", true ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 					"width": 255
 					"height": 40

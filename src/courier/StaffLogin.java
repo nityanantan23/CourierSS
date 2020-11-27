@@ -13,6 +13,8 @@ import javax.swing.border.*;
  * @author unknown
  */
 public class StaffLogin {
+    public static Staff loggedPerson;
+
     public StaffLogin() {
         Admin a= new Admin();
         Manager m= new Manager();
@@ -22,14 +24,13 @@ public class StaffLogin {
         r.loadStaff();
         initComponents();
         jfLogin.setVisible(true);
+
     }
 
     private void btnLoginActionPerformed(ActionEvent e) {
-
         String id= txtUser.getText();
         String pw= String.valueOf(txtPw.getPassword());
         Staff.credentialChecker(id,pw);
-
     }
 
 
@@ -68,7 +69,6 @@ public class StaffLogin {
             txtUser.transferFocus();
             e.consume();
         }
-
 
     }
 
@@ -113,12 +113,13 @@ public class StaffLogin {
             //======== panel1 ========
             {
                 panel1.setBackground(Color.white);
-                panel1.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
-                border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER
-                , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font
-                .BOLD ,12 ), java. awt. Color. red) ,panel1. getBorder( )) ); panel1. addPropertyChangeListener (
-                new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order"
-                .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+                panel1.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.
+                swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing.border
+                .TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("D\u0069alog"
+                ,java.awt.Font.BOLD,12),java.awt.Color.red),panel1. getBorder
+                ()));panel1. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java
+                .beans.PropertyChangeEvent e){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException
+                ();}});
                 panel1.setLayout(null);
 
                 //---- lblLoginTitle ----
