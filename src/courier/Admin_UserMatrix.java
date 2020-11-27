@@ -110,6 +110,8 @@ public class Admin_UserMatrix extends GUI {
             tblM.setRowCount(0);
             resetField();
             loadTable();
+            jfAdmin.setVisible(true);
+
 
 
         } else if (cmbRole.getSelectedItem().toString().equals("Manager")) {
@@ -123,6 +125,8 @@ public class Admin_UserMatrix extends GUI {
             resetField();
             tblM.setRowCount(0);
             loadTable();
+            jfAdmin.setVisible(true);
+
         } else if (cmbRole.getSelectedItem().toString().equals("Rider")) {
             Rider r1= new Rider();
             Rider a= new Rider(r1.generateID(),txtName.getText(),txtPh.getText()
@@ -134,6 +138,8 @@ public class Admin_UserMatrix extends GUI {
             resetField();
             tblM.setRowCount(0);
             loadTable();
+            jfAdmin.setVisible(true);
+
         }
     }
 
@@ -156,6 +162,8 @@ public class Admin_UserMatrix extends GUI {
                                     + cmbRole.getSelectedItem().toString() + " " + Admin.adminAl.get(i).getName());
                             tblM.setRowCount(0);
                             loadTable();
+                            jfAdmin.setVisible(true);
+
                             cmbRole.setSelectedIndex(0);
                             Admin o = new Admin();
                             o.writeFile();
@@ -177,6 +185,8 @@ public class Admin_UserMatrix extends GUI {
                                     + cmbRole.getSelectedItem().toString() + " " + Manager.managerAl.get(i).getName());
                             tblM.setRowCount(0);
                             loadTable();
+                            jfAdmin.setVisible(true);
+
                             cmbRole.setSelectedIndex(0);
                             Manager o = new Manager();
                             o.writeFile();
@@ -198,6 +208,8 @@ public class Admin_UserMatrix extends GUI {
                                     + cmbRole.getSelectedItem().toString() + " " + Rider.getRiderAL().get(i).getName());
                             tblM.setRowCount(0);
                             loadTable();
+                            jfAdmin.setVisible(true);
+
                             cmbRole.setSelectedIndex(0);
                             Rider o = new Rider();
                             o.writeFile();
@@ -294,6 +306,8 @@ public class Admin_UserMatrix extends GUI {
                         boolean renameTo = tempFile.renameTo(orifile);
                         tblM.setRowCount(0);
                         loadTable();
+                        jfAdmin.setVisible(true);
+
                     }
                 }
 
@@ -326,6 +340,8 @@ public class Admin_UserMatrix extends GUI {
                         boolean renameTo = tempFile.renameTo(orifile);
                         tblM.setRowCount(0);
                         loadTable();
+                        jfAdmin.setVisible(true);
+
                     }
                 }
 
@@ -359,6 +375,8 @@ public class Admin_UserMatrix extends GUI {
                         boolean renameTo = tempFile.renameTo(orifile);
                         tblM.setRowCount(0);
                         loadTable();
+                        jfAdmin.setVisible(true);
+
                     }
                 }
 
